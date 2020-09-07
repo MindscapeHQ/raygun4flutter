@@ -1,11 +1,39 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:isolate';
 
-import 'package:flutter/services.dart';
-import 'package:raygun4flutter/raygun4flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:raygun4flutter/raygun.dart';
 
 void main() {
-  runApp(MyApp());
+  // Configure Flutter to report errors to Raygun
+  //
+  // Called whenever the Flutter framework catches an error.
+  FlutterError.onError = (details) {
+    // Default error handling
+    FlutterError.presentError(details);
+
+    // Raygun error handling
+    Raygun.sendException(
+      details.exception,
+      details.stack,
+    );
+  };
+
+  // Catch any errors in the main() function.
+  Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+    var isolateError = pair as List<dynamic>;
+    await Raygun.sendException(
+      isolateError.first.toString(),
+      // isolateError.last,
+    );
+  }).sendPort);
+
+  // To catch any 'Dart' errors 'outside' of the Flutter framework.
+  runZonedGuarded<Future<void>>(() async {
+    runApp(MyApp());
+  }, (Object error, StackTrace stackTrace) {
+    Raygun.sendException(error, stackTrace);
+  });
 }
 
 class MyApp extends StatefulWidget {
@@ -14,43 +42,58 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await Raygun4flutter.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Raygun4Flutter example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Column(
+          children: [
+            RaisedButton(
+              child: Text('Cause Dart Exception'),
+              onPressed: () {
+                throw new StateError('This is a Dart exception.');
+              },
+            ),
+            RaisedButton(
+              child: Text('Cause Async Dart Exception'),
+              onPressed: () async {
+                foo() async {
+                  throw new StateError('This is an async Dart exception.');
+                }
+
+                bar() async {
+                  await foo();
+                }
+
+                await bar();
+              },
+            ),
+            RaisedButton(
+              child: Text('Send custom error'),
+              onPressed: () {
+                Raygun.sendCustom(
+                  'MyApp',
+                  'test error message',
+                  StackTrace.current,
+                );
+              },
+            ),
+            RaisedButton(
+              child: Text('Breadcrumb'),
+              onPressed: () {
+                Raygun.breadcrumb('test breadcrumb');
+              },
+            ),
+            RaisedButton(
+              child: Text('User Id'),
+              onPressed: () {
+                Raygun.setUserId('1234');
+              },
+            ),
+          ],
         ),
       ),
     );
