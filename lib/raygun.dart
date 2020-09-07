@@ -8,7 +8,14 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  static const _channel = MethodChannel('com.raygun.raygun4flutter');
+  static const _channel =
+      MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
+
+  static Future init(String apiKey) async {
+    await _channel.invokeMethod('init', <String, String>{
+      'apiKey': apiKey,
+    });
+  }
 
   /// Sends an exception to Raygun.
   static Future sendException(

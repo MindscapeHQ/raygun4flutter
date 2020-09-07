@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:raygun4flutter/raygun.dart';
@@ -8,6 +7,7 @@ void main() {
   // Configure Flutter to report errors to Raygun
   //
   // Called whenever the Flutter framework catches an error.
+  // Only works when running in Release.
   FlutterError.onError = (details) {
     // Default error handling
     FlutterError.presentError(details);
@@ -18,15 +18,6 @@ void main() {
       details.stack,
     );
   };
-
-  // Catch any errors in the main() function.
-  Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-    var isolateError = pair as List<dynamic>;
-    await Raygun.sendException(
-      isolateError.first.toString(),
-      // isolateError.last,
-    );
-  }).sendPort);
 
   // To catch any 'Dart' errors 'outside' of the Flutter framework.
   runZonedGuarded<Future<void>>(() async {
@@ -42,6 +33,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    Raygun.init('12345');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
