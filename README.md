@@ -7,7 +7,9 @@ error messages to Raygun.
 
 ## Requirements
 
-TBD
+- Android API 16
+- iOS 10.0
+- Web and desktop not supported.
 
 ## Installation
 
@@ -17,6 +19,9 @@ Add this to your package's `pubspec.yaml` file:
 dependencies:
   raygun4flutter: ^0.0.1
 ```
+
+No other steps are required, as the necessary Android manifest changes
+and iOS CocoaPods are already included in the plugin.
 
 ### Capturing errors
 
@@ -49,22 +54,9 @@ captured errors to Raygun.
   });
 ```
 
-### Platform specifics
-
-#### Android
-
-With Flutter 1.12, all the dependencies are automatically added to your project.
-If your project was created before Flutter 1.12, you may need to follow [this](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects).
-
-#### iOS
-
-TBD
-
-#### Other platforms
-
-TBD
-
 ## Usage
+
+For a working sample, check the Flutter project in `example`.
 
 ### Initialisation
 

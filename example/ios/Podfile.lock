@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - raygun4apple (1.4.2)
+  - raygun4flutter (0.0.1):
+    - Flutter
+    - raygun4apple
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - raygun4flutter (from `.symlinks/plugins/raygun4flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - raygun4apple
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  raygun4flutter:
+    :path: ".symlinks/plugins/raygun4flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  raygun4apple: f06505ac1830cbb88afa7f6f530a138459413d86
+  raygun4flutter: da99c40db5028d03c1d381e1cb4035c1b4e7507d
+
+PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+
+COCOAPODS: 1.9.3
