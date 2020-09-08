@@ -21,12 +21,14 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
 
-    private lateinit var context: Context
+    // Application Context
+    // Null when Flutter Engine is not attached
+    private var context: Context? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        context = flutterPluginBinding.applicationContext
         channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "com.raygun.raygun4flutter/raygun4flutter")
         channel.setMethodCallHandler(this);
-        context = flutterPluginBinding.applicationContext
     }
 
     override fun onMethodCall(@NonNull methodCall: MethodCall, @NonNull result: Result) {
@@ -48,6 +50,7 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        context = null
     }
 
     private fun onSend(methodCall: MethodCall) {
