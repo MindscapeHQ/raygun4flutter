@@ -29,6 +29,8 @@ To be able to capture errors inside Flutter, you need to add the following chang
 
 Provide a custom `FlutterError.onError` that redirects Flutter errors to Raygun.
 
+Note: This only works when the app is running in "Release" mode.
+
 ```dart
   FlutterError.onError = (details) {
     // Default error handling
@@ -43,7 +45,9 @@ Provide a custom `FlutterError.onError` that redirects Flutter errors to Raygun.
 ```
 
 Catch errors outside of the Flutter framework by calling to `runApp` from a `runZonedGuarded` and redirecting
-captured errors to Raygun.
+captured errors to Raygun. For example, errors happening in asynchronous code.
+
+Note: This works both in "Release" and "Debug" modes.
 
 ```dart
   // To catch any 'Dart' errors 'outside' of the Flutter framework.
@@ -61,6 +65,18 @@ For a working sample, check the Flutter project in `example`.
 ### Initialisation
 
 Call `Raygun.init(API_KEY)` to initialise RaygunClient on app start, for example, from your `initState` method.
+
+```dart
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    Raygun.init('12345');
+  }
+
+}
+```
 
 ### Sending errors manually
 
