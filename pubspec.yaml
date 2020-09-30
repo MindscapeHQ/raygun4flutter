@@ -1,7 +1,8 @@
 name: raygun
 description: Flutter crash reporting provider for Raygun.
-version: 0.0.2
+version: 0.0.3
 homepage: https://raygun.com
+repository: https://github.com/MindscapeHQ/Raygun4Flutter
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

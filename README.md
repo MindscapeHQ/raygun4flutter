@@ -1,4 +1,4 @@
-# Raygun4flutter
+# Raygun
 
 The world's best Flutter Crash Reporting and Real User Monitoring solution.
 
