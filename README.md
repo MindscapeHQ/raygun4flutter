@@ -17,7 +17,13 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  raygun4flutter: ^0.0.1
+  raygun: ^0.0.2
+```
+
+Import with:
+
+```dart
+import 'package:raygun/raygun.dart';
 ```
 
 No other steps are required, as the necessary Android manifest changes
