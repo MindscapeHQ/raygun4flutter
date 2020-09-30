@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:raygun4flutter/raygun.dart';
+import 'package:raygun4flutter/raygun4flutter.dart';
 
 void main() {
   // Configure Flutter to report errors to Raygun

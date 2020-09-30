@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Renamed package to raygun4flutter because pub.dev conventions
+
 ## 0.0.3
 
 * Updated README.md
