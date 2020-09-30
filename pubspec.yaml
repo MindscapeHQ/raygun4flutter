@@ -1,4 +1,4 @@
-name: raygun
+name: raygun4flutter
 description: Flutter crash reporting provider for Raygun.
 version: 0.0.3
 homepage: https://raygun.com
