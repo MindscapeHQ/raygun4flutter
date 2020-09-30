@@ -1,4 +1,4 @@
-# Raygun
+# raygun4flutter
 
 The world's best Flutter Crash Reporting and Real User Monitoring solution.
 
@@ -13,21 +13,11 @@ error messages to Raygun.
 
 ## Installation
 
-Add this to your package's `pubspec.yaml` file:
+Check the "Installing" tab in pub.dev for more info.
 
-```yaml
-dependencies:
-  raygun: ^0.0.2
-```
+## Usage
 
-Import with:
-
-```dart
-import 'package:raygun/raygun.dart';
-```
-
-No other steps are required, as the necessary Android manifest changes
-and iOS CocoaPods are already included in the plugin.
+For a working sample, check the Flutter project in `example`.
 
 ### Capturing errors
 
@@ -63,10 +53,6 @@ Note: This works both in "Release" and "Debug" modes.
     Raygun.sendException(error, stackTrace);
   });
 ```
-
-## Usage
-
-For a working sample, check the Flutter project in `example`.
 
 ### Initialisation
 
