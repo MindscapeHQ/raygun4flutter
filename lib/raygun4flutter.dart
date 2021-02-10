@@ -60,8 +60,6 @@ class Raygun {
       stringToSend = userId.toString();
     } else if (userId is String) {
       stringToSend = userId;
-    } else {
-      throw ("Error in setUserId: userId should be a String or int");
     }
 
     await _channel.invokeMethod('userId', <String, String>{
