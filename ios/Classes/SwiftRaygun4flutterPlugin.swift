@@ -53,8 +53,8 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
     }
 
     func setUserId(data: NSDictionary?, result: FlutterResult) {
-        if let userId = data?.value(forKey: "userId") as? Int {
-            RaygunClient.sharedInstance().userInformation = RaygunUserInformation.init(identifier: String(userId))
+        if let userId = data?.value(forKey: "userId") as? String {
+            RaygunClient.sharedInstance().userInformation = RaygunUserInformation.init(identifier: userId)
         } else {
             RaygunClient.sharedInstance().userInformation = RaygunUserInformation.anonymousUser
         }

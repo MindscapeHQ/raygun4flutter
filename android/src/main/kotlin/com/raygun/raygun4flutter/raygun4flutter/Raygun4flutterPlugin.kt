@@ -81,9 +81,9 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun onUserId(methodCall: MethodCall) {
-        val userId = methodCall.argument<Int>("userId")
+        val userId = methodCall.argument<String>("userId")
         val userInfo = userId?.let {
-            RaygunUserInfo(it.toString(), "", "", "");
+            RaygunUserInfo(it, "", "", "");
         } ?: RaygunUserInfo()
         RaygunClient.setUser(userInfo)
     }

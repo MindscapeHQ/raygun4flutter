@@ -8,8 +8,7 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  static const _channel =
-      MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
+  static const _channel = MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
 
   static Future init(String apiKey) async {
     await _channel.invokeMethod('init', <String, String>{
@@ -37,10 +36,7 @@ class Raygun {
   ]) async {
     var traceLocations = '';
     if (stackTrace != null) {
-      traceLocations = Trace.from(stackTrace)
-          .frames
-          .map((frame) => '${frame.member}#${frame.location}')
-          .join(';');
+      traceLocations = Trace.from(stackTrace).frames.map((frame) => '${frame.member}#${frame.location}').join(';');
     }
 
     await _channel.invokeMethod('send', <String, String>{
@@ -58,9 +54,18 @@ class Raygun {
   }
 
   /// Sets User Id to Raygun
-  static Future setUserId(String userId) async {
+  static Future setUserId(dynamic userId) async {
+    String stringToSend;
+    if (userId is int) {
+      stringToSend = userId.toString();
+    } else if (userId is String) {
+      stringToSend = userId;
+    } else {
+      throw ("Error in setUserId: userId should be a String or int");
+    }
+
     await _channel.invokeMethod('userId', <String, String>{
-      'userId': userId,
+      'userId': stringToSend,
     });
   }
 }
