@@ -8,7 +8,8 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  static const _channel = MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
+  static const _channel =
+      MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
 
   static Future init(String apiKey) async {
     await _channel.invokeMethod('init', <String, String>{
@@ -36,7 +37,10 @@ class Raygun {
   ]) async {
     var traceLocations = '';
     if (stackTrace != null) {
-      traceLocations = Trace.from(stackTrace).frames.map((frame) => '${frame.member}#${frame.location}').join(';');
+      traceLocations = Trace.from(stackTrace)
+          .frames
+          .map((frame) => '${frame.member}#${frame.location}')
+          .join(';');
     }
 
     await _channel.invokeMethod('send', <String, String>{
