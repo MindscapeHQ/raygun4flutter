@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -8,10 +9,12 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  static const _channel = MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
+  @visibleForTesting
+  static const channel =
+      MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
 
   static Future init(String apiKey) async {
-    await _channel.invokeMethod('init', <String, String>{
+    await channel.invokeMethod('init', <String, String>{
       'apiKey': apiKey,
     });
   }
@@ -36,10 +39,13 @@ class Raygun {
   ]) async {
     var traceLocations = '';
     if (stackTrace != null) {
-      traceLocations = Trace.from(stackTrace).frames.map((frame) => '${frame.member}#${frame.location}').join(';');
+      traceLocations = Trace.from(stackTrace)
+          .frames
+          .map((frame) => '${frame.member}#${frame.location}')
+          .join(';');
     }
 
-    await _channel.invokeMethod('send', <String, String>{
+    await channel.invokeMethod('send', <String, String>{
       'className': className,
       'reason': reason,
       'stackTrace': traceLocations,
@@ -48,7 +54,7 @@ class Raygun {
 
   /// Sends a breadcrumb to Raygun
   static Future breadcrumb(String message) async {
-    await _channel.invokeMethod('breadcrumb', <String, String>{
+    await channel.invokeMethod('breadcrumb', <String, String>{
       'message': message,
     });
   }
@@ -56,7 +62,7 @@ class Raygun {
   /// Sets User Id to Raygun
   /// Set to null to clear User Id
   static Future setUserId(String? userId) async {
-    await _channel.invokeMethod('userId', <String, String?>{
+    await channel.invokeMethod('userId', <String, String?>{
       'userId': userId,
     });
   }

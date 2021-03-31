@@ -21,19 +21,20 @@ void main() {
 
   // To catch any 'Dart' errors 'outside' of the Flutter framework.
   runZonedGuarded<Future<void>>(() async {
-    runApp(MyApp());
+    runApp(const MyApp());
   }, (Object error, StackTrace stackTrace) {
     Raygun.sendException(error, stackTrace);
   });
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -49,28 +50,27 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            RaisedButton(
-              child: Text('Cause Dart Exception'),
+            ElevatedButton(
               onPressed: () {
-                throw new StateError('This is a Dart exception.');
+                throw StateError('This is a Dart exception.');
               },
+              child: const Text('Cause Dart Exception'),
             ),
-            RaisedButton(
-              child: Text('Cause Async Dart Exception'),
+            ElevatedButton(
               onPressed: () async {
-                foo() async {
-                  throw new StateError('This is an async Dart exception.');
+                Future<void> foo() async {
+                  throw StateError('This is an async Dart exception.');
                 }
 
-                bar() async {
+                Future<void> bar() async {
                   await foo();
                 }
 
                 await bar();
               },
+              child: const Text('Cause Async Dart Exception'),
             ),
-            RaisedButton(
-              child: Text('Send custom error'),
+            ElevatedButton(
               onPressed: () {
                 Raygun.sendCustom(
                   'MyApp',
@@ -78,18 +78,19 @@ class _MyAppState extends State<MyApp> {
                   StackTrace.current,
                 );
               },
+              child: const Text('Send custom error'),
             ),
-            RaisedButton(
-              child: Text('Breadcrumb'),
+            ElevatedButton(
               onPressed: () {
                 Raygun.breadcrumb('test breadcrumb');
               },
+              child: const Text('Breadcrumb'),
             ),
-            RaisedButton(
-              child: Text('User Id'),
+            ElevatedButton(
               onPressed: () {
                 Raygun.setUserId('1234');
               },
+              child: const Text('User Id'),
             ),
           ],
         ),
