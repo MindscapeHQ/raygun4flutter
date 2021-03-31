@@ -19,7 +19,7 @@ class Raygun {
   /// Sends an exception to Raygun.
   static Future sendException(
     Object error, [
-    StackTrace stackTrace,
+    StackTrace? stackTrace,
   ]) async {
     await sendCustom(
       error.runtimeType.toString(),
@@ -32,7 +32,7 @@ class Raygun {
   static Future sendCustom(
     String className,
     String reason, [
-    StackTrace stackTrace,
+    StackTrace? stackTrace,
   ]) async {
     var traceLocations = '';
     if (stackTrace != null) {
@@ -55,14 +55,14 @@ class Raygun {
 
   /// Sets User Id to Raygun
   static Future setUserId(dynamic userId) async {
-    String stringToSend;
+    String? stringToSend;
     if (userId is int) {
       stringToSend = userId.toString();
     } else if (userId is String) {
       stringToSend = userId;
     }
 
-    await _channel.invokeMethod('userId', <String, String>{
+    await _channel.invokeMethod('userId', <String, String?>{
       'userId': stringToSend,
     });
   }
