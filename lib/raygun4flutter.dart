@@ -54,16 +54,10 @@ class Raygun {
   }
 
   /// Sets User Id to Raygun
-  static Future setUserId(dynamic userId) async {
-    String? stringToSend;
-    if (userId is int) {
-      stringToSend = userId.toString();
-    } else if (userId is String) {
-      stringToSend = userId;
-    }
-
+  /// Set to null to clear User Id
+  static Future setUserId(String? userId) async {
     await _channel.invokeMethod('userId', <String, String?>{
-      'userId': stringToSend,
+      'userId': userId,
     });
   }
 }

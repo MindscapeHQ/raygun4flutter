@@ -1,6 +1,7 @@
 ## 0.1.0
 
 * Null safety migration
+* BREAKING: setUserId accepts only String or null, Int is not accepted anymore
 
 ## 0.0.5
 
