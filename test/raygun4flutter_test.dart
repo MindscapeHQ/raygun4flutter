@@ -17,31 +17,70 @@ void main() {
   });
 
   test('init', () {
-    Raygun.init('KEY');
+    Raygun.init(apiKey: 'KEY');
     expect(fakeChannel.invocation, {
-      'init': {'apiKey': 'KEY'}
+      'init': {
+        'apiKey': 'KEY',
+        'version': null,
+      }
+    });
+  });
+
+  test('init with version', () {
+    Raygun.init(apiKey: 'KEY', version: 'x.y.z');
+    expect(fakeChannel.invocation, {
+      'init': {
+        'apiKey': 'KEY',
+        'version': 'x.y.z',
+      }
     });
   });
 
   test('sendException without StackTrace', () {
-    Raygun.sendException(Exception('MESSAGE'));
-    expect(fakeChannel.invocation, {
-      'send': {
-        'className': '_Exception',
-        'reason': 'Exception: MESSAGE',
-        'stackTrace': '',
-      },
-    });
-  });
-
-  test('sendException with StackTrace', () {
-    Raygun.sendException(Exception('MESSAGE'), StackTrace.current);
+    Raygun.sendException(error: Exception('MESSAGE'));
     expect(fakeChannel.invocation, {
       'send': {
         'className': '_Exception',
         'reason': 'Exception: MESSAGE',
         'stackTrace':
-            'main.<fn>#test/raygun4flutter_test.dart 38:59;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart'
+            'main.<fn>#test/raygun4flutter_test.dart 40:12;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
+        'tags': null,
+        'customData': null,
+      },
+    });
+  });
+
+  test('sendException with StackTrace', () {
+    Raygun.sendException(
+      error: Exception('MESSAGE'),
+      stackTrace: StackTrace.current,
+    );
+    expect(fakeChannel.invocation, {
+      'send': {
+        'className': '_Exception',
+        'reason': 'Exception: MESSAGE',
+        'stackTrace':
+            'main.<fn>#test/raygun4flutter_test.dart 56:30;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
+        'tags': null,
+        'customData': null,
+      },
+    });
+  });
+
+  test('sendException with tags', () {
+    Raygun.sendException(
+      error: Exception('MESSAGE'),
+      stackTrace: StackTrace.current,
+      tags: ['tag1', 'tag2']
+    );
+    expect(fakeChannel.invocation, {
+      'send': {
+        'className': '_Exception',
+        'reason': 'Exception: MESSAGE',
+        'stackTrace':
+        'main.<fn>#test/raygun4flutter_test.dart 73:30;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
+        'tags': ['tag1', 'tag2'],
+        'customData': null,
       },
     });
   });
@@ -69,6 +108,24 @@ void main() {
     expect(fakeChannel.invocation, {
       'userId': {
         'userId': null,
+      },
+    });
+  });
+
+  test('Set user with RaygunUserInfo', () {
+    final raygunUserInfo = RaygunUserInfo(
+      identifier: 'ID',
+      firstName: 'FIRST',
+      fullName: 'FULL',
+      email: 'EMAIL',
+    );
+    Raygun.setUser(raygunUserInfo);
+    expect(fakeChannel.invocation, {
+      'user': {
+        'identifier': 'ID',
+        'firstName': 'FIRST',
+        'fullName': 'FULL',
+        'email': 'EMAIL',
       },
     });
   });
