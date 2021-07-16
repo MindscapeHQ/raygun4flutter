@@ -1,3 +1,7 @@
+## xxx
+
+* Change `init()` signature to named parameters and added optional `version`.
+
 ## 0.1.0
 
 * Null safety migration
