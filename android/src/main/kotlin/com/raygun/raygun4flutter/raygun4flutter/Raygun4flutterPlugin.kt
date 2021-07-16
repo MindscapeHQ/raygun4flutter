@@ -44,7 +44,8 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun onInit(methodCall: MethodCall) {
         val apiKey = methodCall.argument<String>("apiKey")
-        RaygunClient.init(context as Application, apiKey)
+        val version = methodCall.argument<String?>("version")
+        RaygunClient.init(context as Application, apiKey, version)
         RaygunClient.enableCrashReporting()
     }
 

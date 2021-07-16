@@ -13,9 +13,16 @@ class Raygun {
   static const channel =
       MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
 
-  static Future init(String apiKey) async {
-    await channel.invokeMethod('init', <String, String>{
+  /// Initalizes the Raygun client with your Raygun API [apiKey].
+  /// [version] is optional, if not provided it will be obtained from your
+  /// pubspec.yaml.
+  static Future init({
+    required String apiKey,
+    String? version,
+  }) async {
+    await channel.invokeMethod('init', <String, dynamic>{
       'apiKey': apiKey,
+      'version': version,
     });
   }
 
