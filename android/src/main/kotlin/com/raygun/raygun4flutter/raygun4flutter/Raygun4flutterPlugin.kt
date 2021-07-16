@@ -43,9 +43,15 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
             "user" -> onUser(methodCall)
             "setTags" -> onSetTags(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
+            "version" -> onVersion(methodCall)
             else -> result.notImplemented()
         }
         result.success(null)
+    }
+
+    private fun onVersion(methodCall: MethodCall) {
+        val version = methodCall.argument<String?>("version")
+        RaygunClient.setVersion(version)
     }
 
     private fun onUser(methodCall: MethodCall) {

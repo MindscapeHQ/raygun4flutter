@@ -21,7 +21,7 @@ class Raygun {
   ///
   /// [version] is optional, if not provided it will be obtained from your
   /// pubspec.yaml.
-  static Future init({
+  static Future<void> init({
     required String apiKey,
     String? version,
   }) async {
@@ -31,10 +31,24 @@ class Raygun {
     });
   }
 
+  /// Manually stores the version of your application to be transmitted with
+  /// each message, for version filtering. This is normally read from your
+  /// pubspec.yaml or passed in on init(); this is only provided as a convenience.
+  ///
+  /// [version] The version of your application, format x.x.x.x, where x is a
+  /// positive integer.
+  static Future<void> setVersion(
+    String? version,
+  ) async {
+    await channel.invokeMethod('version', <String, dynamic>{
+      'version': version,
+    });
+  }
+
   /// Sends an exception to Raygun.
   /// Convenience method that wraps [sendCustom].
   /// The class name and the message are obtained from the [error] object.
-  static Future sendException({
+  static Future<void> sendException({
     required Object error,
     List<String>? tags,
     Map<String, dynamic>? customData,
@@ -64,7 +78,7 @@ class Raygun {
   ///
   /// [stackTrace] optional parameter, if not provided this method will obtain
   /// the current stacktrace automatically.
-  static Future sendCustom({
+  static Future<void> sendCustom({
     required String className,
     required String reason,
     List<String>? tags,
@@ -114,7 +128,7 @@ class Raygun {
   }
 
   /// Sends a breadcrumb to Raygun
-  static Future breadcrumb(String message) async {
+  static Future<void> breadcrumb(String message) async {
     await channel.invokeMethod('breadcrumb', <String, String>{
       'message': message,
     });
@@ -131,7 +145,7 @@ class Raygun {
   /// [userId] A user name or email address representing the current user.
   ///
   /// Set to null to clear User Id
-  static Future setUserId(String? userId) async {
+  static Future<void> setUserId(String? userId) async {
     await channel.invokeMethod('userId', <String, String?>{
       'userId': userId,
     });
@@ -150,7 +164,7 @@ class Raygun {
   /// [userInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
   ///
   /// Set to null to clear
-  static Future setUser(RaygunUserInfo? raygunUserInfo) async {
+  static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
     await channel.invokeMethod('user', raygunUserInfo?.toMap());
   }
 }
