@@ -27,7 +27,10 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "com.raygun.raygun4flutter/raygun4flutter")
+        channel = MethodChannel(
+            flutterPluginBinding.getFlutterEngine().getDartExecutor(),
+            "com.raygun.raygun4flutter/raygun4flutter"
+        )
         channel.setMethodCallHandler(this);
     }
 
@@ -70,21 +73,16 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
         val className = methodCall.argument<String>("className")
         val reason = methodCall.argument<String>("reason")
         val flutterStackTrace = methodCall.argument<String>("stackTrace")
+        val tags = methodCall.argument<List<*>>("tags")
+        val customData = methodCall.argument<Map<*, *>>("customData")
         RaygunClient.send(
-                FlutterException(
-                        message = reason,
-                        flutterStackTrace = flutterStackTrace,
-                        className = className
-                ),
-                listOf(
-                        "Android",
-                        "Flutter"
-                ),
-                mapOf(
-                        "className" to className,
-                        "reason" to reason,
-                        "stackTrace" to flutterStackTrace
-                )
+            FlutterException(
+                message = reason,
+                flutterStackTrace = flutterStackTrace,
+                className = className
+            ),
+            tags,
+            customData
         )
     }
 
@@ -103,9 +101,9 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 }
 
 class FlutterException(
-        val className: String?,
-        override val message: String?,
-        flutterStackTrace: String?
+    val className: String?,
+    override val message: String?,
+    flutterStackTrace: String?
 ) : Throwable(message = message) {
 
     init {
@@ -115,17 +113,17 @@ class FlutterException(
                 val parts = it.split("#")
                 if (parts.size == 2) {
                     StackTraceElement(
-                            parts[0],
-                            "",
-                            parts[1], // Already contains fileName and line:column
-                            0
+                        parts[0],
+                        "",
+                        parts[1], // Already contains fileName and line:column
+                        0
                     )
                 } else {
                     StackTraceElement(
-                            "",
-                            "",
-                            it, // Already contains fileName and line:column
-                            0
+                        "",
+                        "",
+                        it, // Already contains fileName and line:column
+                        0
                     )
                 }
             }.toTypedArray()

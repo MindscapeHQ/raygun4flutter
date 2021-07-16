@@ -29,35 +29,66 @@ class Raygun {
 
   /// Sends an exception to Raygun.
   /// Convenience method that wraps [sendCustom].
-  static Future sendException(
-    Object error, [
+  /// The class name and the message are obtained from the [error] object.
+  static Future sendException({
+    required Object error,
+    List<String>? tags,
+    Map<String, dynamic>? customData,
     StackTrace? stackTrace,
-  ]) async {
+  }) async {
     await sendCustom(
-      error.runtimeType.toString(),
-      error.toString(),
-      stackTrace,
+      className: error.runtimeType.toString(),
+      reason: error.toString(),
+      tags: tags,
+      customData: customData,
+      stackTrace: stackTrace,
     );
   }
 
   /// Sends a custom error message to Raygun.
-  static Future sendCustom(
-    String className,
-    String reason, [
+  ///
+  /// [className] and [reason] correspond to the class name and message displayed
+  /// in Raygun's dashboard.
+  ///
+  /// [tags] A list of data that will be attached to the Raygun message and
+  /// visible on the error in the dashboard.
+  /// This could be a build tag, lifecycle state, debug/production version etc.
+  ///
+  /// [customData] A set of custom key-value pairs relating to your application
+  /// and its current state. This is a bucket
+  /// where you can attach any related data you want to see to the error.
+  ///
+  /// [stackTrace] optional parameter, if not provided this method will obtain
+  /// the current stacktrace automatically.
+  static Future sendCustom({
+    required String className,
+    required String reason,
+    List<String>? tags,
+    Map<String, dynamic>? customData,
     StackTrace? stackTrace,
-  ]) async {
+  }) async {
     var traceLocations = '';
-    if (stackTrace != null) {
+    if (stackTrace == null) {
+      // if no stackTrace provided, create one
+      traceLocations = Trace.current()
+          .frames
+          // skip all frames that reference to this file
+          .skipWhile((element) => element.location.contains('raygun4flutter.dart'))
+          .map((frame) => '${frame.member}#${frame.location}')
+          .join(';');
+    } else {
       traceLocations = Trace.from(stackTrace)
           .frames
           .map((frame) => '${frame.member}#${frame.location}')
           .join(';');
     }
 
-    await channel.invokeMethod('send', <String, String>{
+    await channel.invokeMethod('send', <String, dynamic>{
       'className': className,
       'reason': reason,
       'stackTrace': traceLocations,
+      'tags': tags,
+      'customData': customData,
     });
   }
 
