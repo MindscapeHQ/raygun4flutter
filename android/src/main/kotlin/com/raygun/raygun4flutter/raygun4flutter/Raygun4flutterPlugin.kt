@@ -40,11 +40,21 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
             "send" -> onSend(methodCall)
             "breadcrumb" -> onBreadcrumb(methodCall)
             "userId" -> onUserId(methodCall)
+            "user" -> onUser(methodCall)
             "setTags" -> onSetTags(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
             else -> result.notImplemented()
         }
         result.success(null)
+    }
+
+    private fun onUser(methodCall: MethodCall) {
+        val identifier = methodCall.argument<String?>("identifier")
+        val email = methodCall.argument<String?>("email")
+        val firstName = methodCall.argument<String?>("firstName")
+        val fullName = methodCall.argument<String?>("fullName")
+        val info = RaygunUserInfo(identifier, firstName, fullName, email);
+        RaygunClient.setUser(info)
     }
 
     private fun onSetCustomData(methodCall: MethodCall) {

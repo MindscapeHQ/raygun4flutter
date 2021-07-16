@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+import 'src/raygun_user_info.dart';
+
+export 'src/raygun_user_info.dart';
+
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for
 /// sending exceptions to the Raygun service.
@@ -73,7 +77,8 @@ class Raygun {
       traceLocations = Trace.current()
           .frames
           // skip all frames that reference to this file
-          .skipWhile((element) => element.location.contains('raygun4flutter.dart'))
+          .skipWhile(
+              (element) => element.location.contains('raygun4flutter.dart'))
           .map((frame) => '${frame.member}#${frame.location}')
           .join(';');
     } else {
@@ -115,12 +120,37 @@ class Raygun {
     });
   }
 
-  /// Sets User Id to Raygun
+  /// Sets the current user of your application.
+  ///
+  /// This is a convenience method wrapping [setUser].
+  ///
+  /// If you use an email address to identify the user, please consider using
+  /// [setUser] instead of this method as it would allow you to set the email
+  /// address into both the identifier and email fields of the crash data to be sent.
+  ///
+  /// [userId] A user name or email address representing the current user.
   ///
   /// Set to null to clear User Id
   static Future setUserId(String? userId) async {
     await channel.invokeMethod('userId', <String, String?>{
       'userId': userId,
     });
+  }
+
+  /// Sets the current user of your application.
+  ///
+  /// If user is an email address which is associated with a Gravatar,
+  /// their picture will be displayed in the error view.
+  ///
+  /// If [setUser] is not called, a random ID will be assigned.
+  ///
+  /// If the user context changes in your application (i.e log in/out), be sure
+  /// to call this again with the updated user name/email address.
+  ///
+  /// [userInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
+  ///
+  /// Set to null to clear
+  static Future setUser(RaygunUserInfo? raygunUserInfo) async {
+    await channel.invokeMethod('user', raygunUserInfo?.toMap());
   }
 }
