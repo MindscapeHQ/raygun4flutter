@@ -14,6 +14,7 @@ class Raygun {
       MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
 
   /// Initalizes the Raygun client with your Raygun API [apiKey].
+  ///
   /// [version] is optional, if not provided it will be obtained from your
   /// pubspec.yaml.
   static Future init({
@@ -27,6 +28,7 @@ class Raygun {
   }
 
   /// Sends an exception to Raygun.
+  /// Convenience method that wraps [sendCustom].
   static Future sendException(
     Object error, [
     StackTrace? stackTrace,
@@ -59,6 +61,22 @@ class Raygun {
     });
   }
 
+  /// Sets a List of tags which will be sent along with every exception.
+  /// This will be merged with any other tags passed in [sendException] and [sendCustom].
+  ///
+  /// Set to null to clear the value.
+  static Future<void> setTags(List<String>? tags) async {
+    await channel.invokeMethod('setTags', tags);
+  }
+
+  /// Sets a key-value Map which, like the tags, will be sent along with every exception.
+  /// This will be merged with any other custom data passed in [sendException] and [sendCustom].
+  ///
+  /// Set to null to clear the value.
+  static Future<void> setCustomData(Map<String, dynamic>? tags) async {
+    await channel.invokeMethod('setCustomData', tags);
+  }
+
   /// Sends a breadcrumb to Raygun
   static Future breadcrumb(String message) async {
     await channel.invokeMethod('breadcrumb', <String, String>{
@@ -67,6 +85,7 @@ class Raygun {
   }
 
   /// Sets User Id to Raygun
+  ///
   /// Set to null to clear User Id
   static Future setUserId(String? userId) async {
     await channel.invokeMethod('userId', <String, String?>{
