@@ -69,16 +69,15 @@ void main() {
 
   test('sendException with tags', () {
     Raygun.sendException(
-      error: Exception('MESSAGE'),
-      stackTrace: StackTrace.current,
-      tags: ['tag1', 'tag2']
-    );
+        error: Exception('MESSAGE'),
+        stackTrace: StackTrace.current,
+        tags: ['tag1', 'tag2']);
     expect(fakeChannel.invocation, {
       'send': {
         'className': '_Exception',
         'reason': 'Exception: MESSAGE',
         'stackTrace':
-        'main.<fn>#test/raygun4flutter_test.dart 73:30;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
+            'main.<fn>#test/raygun4flutter_test.dart 73:30;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
         'tags': ['tag1', 'tag2'],
         'customData': null,
       },
@@ -126,6 +125,44 @@ void main() {
         'firstName': 'FIRST',
         'fullName': 'FULL',
         'email': 'EMAIL',
+      },
+    });
+  });
+
+  test('Send custom breadcrumb', () {
+    final object = RaygunBreadcrumbMessage(message: 'MESSAGE');
+    Raygun.recordBreadcrumbObject(object);
+    expect(fakeChannel.invocation, {
+      'recordBreadcrumbObject': {
+        'message': 'MESSAGE',
+        'category': null,
+        'level': 1,
+        'customData': null,
+        'className': null,
+        'methodName': null,
+        'lineNumber': null,
+      },
+    });
+
+    final object2 = RaygunBreadcrumbMessage(
+      message: 'MESSAGE',
+      category: 'CATEGORY',
+      level: RaygunBreadcrumbLevel.error,
+      customData: {'test': 'value'},
+      className: 'CLASS',
+      methodName: 'METHOD',
+      lineNumber: 'LINE',
+    );
+    Raygun.recordBreadcrumbObject(object2);
+    expect(fakeChannel.invocation, {
+      'recordBreadcrumbObject': {
+        'message': 'MESSAGE',
+        'category': 'CATEGORY',
+        'level': 3,
+        'customData': {'test': 'value'},
+        'className': 'CLASS',
+        'methodName': 'METHOD',
+        'lineNumber': 'LINE',
       },
     });
   });

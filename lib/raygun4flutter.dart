@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'src/raygun_user_info.dart';
+import 'src/raygun_breadcrumb_message.dart';
 
 export 'src/raygun_user_info.dart';
+export 'src/raygun_breadcrumb_message.dart';
 
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for
@@ -127,11 +129,16 @@ class Raygun {
     await channel.invokeMethod('setCustomData', tags);
   }
 
-  /// Sends a breadcrumb to Raygun
+  /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
     await channel.invokeMethod('recordBreadcrumb', <String, String>{
       'message': message,
     });
+  }
+
+  /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
+  static Future<void> recordBreadcrumbObject(RaygunBreadcrumbMessage raygunBreadcrumbMessage) async {
+    await channel.invokeMethod('recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
   }
 
   /// Sets the current user of your application.
