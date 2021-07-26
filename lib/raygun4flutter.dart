@@ -40,7 +40,7 @@ class Raygun {
   static Future<void> setVersion(
     String? version,
   ) async {
-    await channel.invokeMethod('version', <String, dynamic>{
+    await channel.invokeMethod('setVersion', <String, dynamic>{
       'version': version,
     });
   }

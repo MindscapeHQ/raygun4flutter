@@ -43,7 +43,7 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
             "user" -> onUser(methodCall)
             "setTags" -> onSetTags(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
-            "version" -> onVersion(methodCall)
+            "setVersion" -> onVersion(methodCall)
             else -> result.notImplemented()
         }
         result.success(null)
