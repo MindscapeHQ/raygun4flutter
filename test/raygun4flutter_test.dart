@@ -88,7 +88,7 @@ void main() {
   test('Breadcrumb', () {
     Raygun.recordBreadcrumb('BREADCRUMB');
     expect(fakeChannel.invocation, {
-      'breadcrumb': {
+      'recordBreadcrumb': {
         'message': 'BREADCRUMB',
       },
     });
@@ -97,7 +97,7 @@ void main() {
   test('UserId with ID', () {
     Raygun.setUserId('ID');
     expect(fakeChannel.invocation, {
-      'userId': {
+      'setUserId': {
         'userId': 'ID',
       },
     });
@@ -106,7 +106,7 @@ void main() {
   test('UserId to null', () {
     Raygun.setUserId(null);
     expect(fakeChannel.invocation, {
-      'userId': {
+      'setUserId': {
         'userId': null,
       },
     });
@@ -121,7 +121,7 @@ void main() {
     );
     Raygun.setUser(raygunUserInfo);
     expect(fakeChannel.invocation, {
-      'user': {
+      'setUser': {
         'identifier': 'ID',
         'firstName': 'FIRST',
         'fullName': 'FULL',

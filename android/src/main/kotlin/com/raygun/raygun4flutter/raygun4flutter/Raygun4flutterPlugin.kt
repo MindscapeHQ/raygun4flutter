@@ -38,9 +38,9 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
         when (methodCall.method) {
             "init" -> onInit(methodCall)
             "send" -> onSend(methodCall)
-            "breadcrumb" -> onBreadcrumb(methodCall)
+            "recordBreadcrumb" -> onBreadcrumb(methodCall)
             "setUserId" -> onUserId(methodCall)
-            "user" -> onUser(methodCall)
+            "setUser" -> onUser(methodCall)
             "setTags" -> onSetTags(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
             "setVersion" -> onVersion(methodCall)

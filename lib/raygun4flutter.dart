@@ -129,7 +129,7 @@ class Raygun {
 
   /// Sends a breadcrumb to Raygun
   static Future<void> recordBreadcrumb(String message) async {
-    await channel.invokeMethod('breadcrumb', <String, String>{
+    await channel.invokeMethod('recordBreadcrumb', <String, String>{
       'message': message,
     });
   }
@@ -165,6 +165,6 @@ class Raygun {
   ///
   /// Set to null to clear
   static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
-    await channel.invokeMethod('user', raygunUserInfo?.toMap());
+    await channel.invokeMethod('setUser', raygunUserInfo?.toMap());
   }
 }
