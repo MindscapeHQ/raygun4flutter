@@ -146,7 +146,7 @@ class Raygun {
   ///
   /// Set to null to clear User Id
   static Future<void> setUserId(String? userId) async {
-    await channel.invokeMethod('userId', <String, String?>{
+    await channel.invokeMethod('setUserId', <String, String?>{
       'userId': userId,
     });
   }
