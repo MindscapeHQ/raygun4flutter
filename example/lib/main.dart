@@ -14,8 +14,8 @@ void main() {
 
     // Raygun error handling
     Raygun.sendException(
-      details.exception,
-      details.stack,
+      error: details.exception,
+      stackTrace: details.stack,
     );
   };
 
@@ -23,7 +23,10 @@ void main() {
   runZonedGuarded<Future<void>>(() async {
     runApp(const MyApp());
   }, (Object error, StackTrace stackTrace) {
-    Raygun.sendException(error, stackTrace);
+    Raygun.sendException(
+      error: error,
+      stackTrace: stackTrace,
+    );
   });
 }
 
@@ -73,16 +76,39 @@ class _MyAppState extends State<MyApp> {
             ElevatedButton(
               onPressed: () {
                 Raygun.sendCustom(
-                  'MyApp',
-                  'test error message',
-                  StackTrace.current,
+                  className: 'MyApp',
+                  reason: 'test error message',
                 );
               },
               child: const Text('Send custom error'),
             ),
             ElevatedButton(
               onPressed: () {
-                Raygun.breadcrumb('test breadcrumb');
+                Raygun.sendCustom(
+                  className: 'MyApp',
+                  reason: 'test error message',
+                  stackTrace: StackTrace.current,
+                );
+              },
+              child: const Text('Send custom error with StackTrace'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Raygun.sendCustom(
+                  className: 'MyApp',
+                  reason: 'test error message',
+                  tags: ['myTag1', 'myTag2'],
+                  customData: {
+                    'custom1': 'value',
+                    'custom2': 42,
+                  },
+                );
+              },
+              child: const Text('Send custom error with tags and customData'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Raygun.recordBreadcrumb('test breadcrumb');
               },
               child: const Text('Breadcrumb'),
             ),
@@ -91,6 +117,19 @@ class _MyAppState extends State<MyApp> {
                 Raygun.setUserId('1234');
               },
               child: const Text('User Id'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Raygun.setUser(
+                  RaygunUserInfo(
+                    identifier: '1234',
+                    firstName: 'FIRST',
+                    fullName: 'FIRST LAST',
+                    email: 'test@example.com',
+                  ),
+                );
+              },
+              child: const Text('Set RaygunUserInfo'),
             ),
           ],
         ),

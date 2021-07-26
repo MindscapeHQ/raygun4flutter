@@ -27,7 +27,10 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "com.raygun.raygun4flutter/raygun4flutter")
+        channel = MethodChannel(
+            flutterPluginBinding.getFlutterEngine().getDartExecutor(),
+            "com.raygun.raygun4flutter/raygun4flutter"
+        )
         channel.setMethodCallHandler(this);
     }
 
@@ -35,16 +38,45 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
         when (methodCall.method) {
             "init" -> onInit(methodCall)
             "send" -> onSend(methodCall)
-            "breadcrumb" -> onBreadcrumb(methodCall)
-            "userId" -> onUserId(methodCall)
+            "recordBreadcrumb" -> onBreadcrumb(methodCall)
+            "setUserId" -> onUserId(methodCall)
+            "setUser" -> onUser(methodCall)
+            "setTags" -> onSetTags(methodCall)
+            "setCustomData" -> onSetCustomData(methodCall)
+            "setVersion" -> onVersion(methodCall)
             else -> result.notImplemented()
         }
         result.success(null)
     }
 
+    private fun onVersion(methodCall: MethodCall) {
+        val version = methodCall.argument<String?>("version")
+        RaygunClient.setVersion(version)
+    }
+
+    private fun onUser(methodCall: MethodCall) {
+        val identifier = methodCall.argument<String?>("identifier")
+        val email = methodCall.argument<String?>("email")
+        val firstName = methodCall.argument<String?>("firstName")
+        val fullName = methodCall.argument<String?>("fullName")
+        val info = RaygunUserInfo(identifier, firstName, fullName, email);
+        RaygunClient.setUser(info)
+    }
+
+    private fun onSetCustomData(methodCall: MethodCall) {
+        val customData = methodCall.arguments as Map<*, *>?
+        RaygunClient.setCustomData(customData)
+    }
+
+    private fun onSetTags(methodCall: MethodCall) {
+        val tags = methodCall.arguments as List<*>?
+        RaygunClient.setTags(tags)
+    }
+
     private fun onInit(methodCall: MethodCall) {
         val apiKey = methodCall.argument<String>("apiKey")
-        RaygunClient.init(context as Application, apiKey)
+        val version = methodCall.argument<String?>("version")
+        RaygunClient.init(context as Application, apiKey, version)
         RaygunClient.enableCrashReporting()
     }
 
@@ -57,21 +89,16 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
         val className = methodCall.argument<String>("className")
         val reason = methodCall.argument<String>("reason")
         val flutterStackTrace = methodCall.argument<String>("stackTrace")
+        val tags = methodCall.argument<List<*>>("tags")
+        val customData = methodCall.argument<Map<*, *>>("customData")
         RaygunClient.send(
-                FlutterException(
-                        message = reason,
-                        flutterStackTrace = flutterStackTrace,
-                        className = className
-                ),
-                listOf(
-                        "Android",
-                        "Flutter"
-                ),
-                mapOf(
-                        "className" to className,
-                        "reason" to reason,
-                        "stackTrace" to flutterStackTrace
-                )
+            FlutterException(
+                message = reason,
+                flutterStackTrace = flutterStackTrace,
+                className = className
+            ),
+            tags,
+            customData
         )
     }
 
@@ -90,9 +117,9 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 }
 
 class FlutterException(
-        val className: String?,
-        override val message: String?,
-        flutterStackTrace: String?
+    val className: String?,
+    override val message: String?,
+    flutterStackTrace: String?
 ) : Throwable(message = message) {
 
     init {
@@ -102,17 +129,17 @@ class FlutterException(
                 val parts = it.split("#")
                 if (parts.size == 2) {
                     StackTraceElement(
-                            parts[0],
-                            "",
-                            parts[1], // Already contains fileName and line:column
-                            0
+                        parts[0],
+                        "",
+                        parts[1], // Already contains fileName and line:column
+                        0
                     )
                 } else {
                     StackTraceElement(
-                            "",
-                            "",
-                            it, // Already contains fileName and line:column
-                            0
+                        "",
+                        "",
+                        it, // Already contains fileName and line:column
+                        0
                     )
                 }
             }.toTypedArray()
