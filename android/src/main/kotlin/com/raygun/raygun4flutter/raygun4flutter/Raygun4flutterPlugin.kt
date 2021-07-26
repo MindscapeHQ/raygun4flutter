@@ -38,14 +38,15 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onMethodCall(@NonNull methodCall: MethodCall, @NonNull result: Result) {
         when (methodCall.method) {
+            "clearBreadcrumbs" -> onClearBreadcrumbs()
             "init" -> onInit(methodCall)
-            "send" -> onSend(methodCall)
             "recordBreadcrumb" -> onBreadcrumb(methodCall)
             "recordBreadcrumbObject" -> onBreadcrumbObject(methodCall)
-            "setUserId" -> onUserId(methodCall)
-            "setUser" -> onUser(methodCall)
-            "setTags" -> onSetTags(methodCall)
+            "send" -> onSend(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
+            "setTags" -> onSetTags(methodCall)
+            "setUser" -> onUser(methodCall)
+            "setUserId" -> onUserId(methodCall)
             "setVersion" -> onVersion(methodCall)
             else -> result.notImplemented()
         }
@@ -134,6 +135,10 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
             builder.lineNumber(methodCall.argument("lineNumber"))
         }
         RaygunClient.recordBreadcrumb(builder.build())
+    }
+
+    private fun onClearBreadcrumbs() {
+        RaygunClient.clearBreadcrumbs();
     }
 
     private fun onUserId(methodCall: MethodCall) {

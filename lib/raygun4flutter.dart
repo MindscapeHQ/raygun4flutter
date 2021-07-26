@@ -141,6 +141,11 @@ class Raygun {
     await channel.invokeMethod('recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
   }
 
+  /// Clears breadcrumbs
+  static Future<void> clearBreadcrumbs() async {
+    await channel.invokeMethod('clearBreadcrumbs');
+  }
+
   /// Sets the current user of your application.
   ///
   /// This is a convenience method wrapping [setUser].
