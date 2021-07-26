@@ -1,4 +1,4 @@
-## xxx
+## 1.0.0
 
 * Change `init()` signature to named parameters and added optional `version`.
 * Added `setTags()` and `setCustomData()` methods.
@@ -6,6 +6,10 @@
 * Error sending methods can generate a stacktrace automatically.
 * Added `setUser()` method with `RaygunUserInfo`.
 * Added `setVersion()` method.
+* Renamed breadcrumb method to `recordBreadcrumb()`.
+* Added `recordBreadcrumbObject()`.
+* Added `clearBreadcrumbs()`.
+* Added `setCustomCrashReportingEndpoint()`.
 
 ## 0.1.0
 

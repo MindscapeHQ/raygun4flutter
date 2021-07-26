@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.annotation.NonNull;
 import com.raygun.raygun4android.RaygunClient
+import com.raygun.raygun4android.messages.crashreporting.RaygunBreadcrumbLevel
+import com.raygun.raygun4android.messages.crashreporting.RaygunBreadcrumbMessage
 import com.raygun.raygun4android.messages.shared.RaygunUserInfo
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -36,13 +38,16 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onMethodCall(@NonNull methodCall: MethodCall, @NonNull result: Result) {
         when (methodCall.method) {
+            "clearBreadcrumbs" -> onClearBreadcrumbs()
             "init" -> onInit(methodCall)
-            "send" -> onSend(methodCall)
             "recordBreadcrumb" -> onBreadcrumb(methodCall)
-            "setUserId" -> onUserId(methodCall)
-            "setUser" -> onUser(methodCall)
-            "setTags" -> onSetTags(methodCall)
+            "recordBreadcrumbObject" -> onBreadcrumbObject(methodCall)
+            "send" -> onSend(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
+            "setCustomCrashReportingEndpoint" -> setCustomCrashReportingEndpoint(methodCall)
+            "setTags" -> onSetTags(methodCall)
+            "setUser" -> onUser(methodCall)
+            "setUserId" -> onUserId(methodCall)
             "setVersion" -> onVersion(methodCall)
             else -> result.notImplemented()
         }
@@ -105,6 +110,41 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
     private fun onBreadcrumb(methodCall: MethodCall) {
         val message = methodCall.argument<String>("message") ?: ""
         RaygunClient.recordBreadcrumb(message)
+    }
+
+    private fun onBreadcrumbObject(methodCall: MethodCall) {
+        val message = methodCall.argument<String>("message") ?: ""
+        val builder = RaygunBreadcrumbMessage.Builder(message)
+        if (methodCall.hasArgument("category")) {
+            builder.category(methodCall.argument("category"))
+        }
+        if (methodCall.hasArgument("level")) {
+            val raygunBreadcrumbLevel =
+                RaygunBreadcrumbLevel.values()[methodCall.argument("level")!!]
+            builder.level(raygunBreadcrumbLevel)
+        }
+        if (methodCall.hasArgument("customData")) {
+            builder.customData(methodCall.argument("customData"))
+        }
+        if (methodCall.hasArgument("className")) {
+            builder.className(methodCall.argument("className"))
+        }
+        if (methodCall.hasArgument("methodName")) {
+            builder.methodName(methodCall.argument("methodName"))
+        }
+        if (methodCall.hasArgument("lineNumber")) {
+            builder.lineNumber(methodCall.argument("lineNumber"))
+        }
+        RaygunClient.recordBreadcrumb(builder.build())
+    }
+
+    private fun onClearBreadcrumbs() {
+        RaygunClient.clearBreadcrumbs();
+    }
+
+    private fun setCustomCrashReportingEndpoint(methodCall: MethodCall) {
+        val url = methodCall.argument<String>("url")
+        RaygunClient.setCustomCrashReportingEndpoint(url)
     }
 
     private fun onUserId(methodCall: MethodCall) {

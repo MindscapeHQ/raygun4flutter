@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'src/raygun_user_info.dart';
+import 'src/raygun_breadcrumb_message.dart';
 
 export 'src/raygun_user_info.dart';
+export 'src/raygun_breadcrumb_message.dart';
 
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for
@@ -127,11 +129,23 @@ class Raygun {
     await channel.invokeMethod('setCustomData', tags);
   }
 
-  /// Sends a breadcrumb to Raygun
+  /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
     await channel.invokeMethod('recordBreadcrumb', <String, String>{
       'message': message,
     });
+  }
+
+  /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
+  static Future<void> recordBreadcrumbObject(
+      RaygunBreadcrumbMessage raygunBreadcrumbMessage) async {
+    await channel.invokeMethod(
+        'recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
+  }
+
+  /// Clears breadcrumbs
+  static Future<void> clearBreadcrumbs() async {
+    await channel.invokeMethod('clearBreadcrumbs');
   }
 
   /// Sets the current user of your application.
@@ -161,10 +175,19 @@ class Raygun {
   /// If the user context changes in your application (i.e log in/out), be sure
   /// to call this again with the updated user name/email address.
   ///
-  /// [userInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
+  /// [raygunUserInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
   ///
   /// Set to null to clear
   static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
     await channel.invokeMethod('setUser', raygunUserInfo?.toMap());
+  }
+
+  /// Allows the user to set a custom endpoint for Crash Reporting
+  ///
+  /// [url] String with the URL to be used
+  static Future<void> setCustomCrashReportingEndpoint(String? url) async {
+    await channel.invokeMethod('setCustomCrashReportingEndpoint', {
+      'url': url,
+    });
   }
 }
