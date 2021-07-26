@@ -44,6 +44,7 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
             "recordBreadcrumbObject" -> onBreadcrumbObject(methodCall)
             "send" -> onSend(methodCall)
             "setCustomData" -> onSetCustomData(methodCall)
+            "setCustomCrashReportingEndpoint" -> setCustomCrashReportingEndpoint(methodCall)
             "setTags" -> onSetTags(methodCall)
             "setUser" -> onUser(methodCall)
             "setUserId" -> onUserId(methodCall)
@@ -139,6 +140,11 @@ class Raygun4flutterPlugin : FlutterPlugin, MethodCallHandler {
 
     private fun onClearBreadcrumbs() {
         RaygunClient.clearBreadcrumbs();
+    }
+
+    private fun setCustomCrashReportingEndpoint(methodCall: MethodCall) {
+        val url = methodCall.argument<String>("url")
+        RaygunClient.setCustomCrashReportingEndpoint(url)
     }
 
     private fun onUserId(methodCall: MethodCall) {

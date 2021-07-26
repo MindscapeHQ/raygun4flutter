@@ -137,8 +137,10 @@ class Raygun {
   }
 
   /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
-  static Future<void> recordBreadcrumbObject(RaygunBreadcrumbMessage raygunBreadcrumbMessage) async {
-    await channel.invokeMethod('recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
+  static Future<void> recordBreadcrumbObject(
+      RaygunBreadcrumbMessage raygunBreadcrumbMessage) async {
+    await channel.invokeMethod(
+        'recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
   }
 
   /// Clears breadcrumbs
@@ -173,10 +175,19 @@ class Raygun {
   /// If the user context changes in your application (i.e log in/out), be sure
   /// to call this again with the updated user name/email address.
   ///
-  /// [userInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
+  /// [raygunUserInfo] A [RaygunUserInfo] object containing the user data you want to send in its fields.
   ///
   /// Set to null to clear
   static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
     await channel.invokeMethod('setUser', raygunUserInfo?.toMap());
+  }
+
+  /// Allows the user to set a custom endpoint for Crash Reporting
+  ///
+  /// [url] String with the URL to be used
+  static Future<void> setCustomCrashReportingEndpoint(String? url) async {
+    await channel.invokeMethod('setCustomCrashReportingEndpoint', {
+      'url': url,
+    });
   }
 }
