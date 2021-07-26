@@ -86,7 +86,7 @@ void main() {
   });
 
   test('Breadcrumb', () {
-    Raygun.breadcrumb('BREADCRUMB');
+    Raygun.recordBreadcrumb('BREADCRUMB');
     expect(fakeChannel.invocation, {
       'breadcrumb': {
         'message': 'BREADCRUMB',

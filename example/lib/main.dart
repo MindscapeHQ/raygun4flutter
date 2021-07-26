@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
             ),
             ElevatedButton(
               onPressed: () {
-                Raygun.breadcrumb('test breadcrumb');
+                Raygun.recordBreadcrumb('test breadcrumb');
               },
               child: const Text('Breadcrumb'),
             ),

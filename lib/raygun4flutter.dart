@@ -128,7 +128,7 @@ class Raygun {
   }
 
   /// Sends a breadcrumb to Raygun
-  static Future<void> breadcrumb(String message) async {
+  static Future<void> recordBreadcrumb(String message) async {
     await channel.invokeMethod('breadcrumb', <String, String>{
       'message': message,
     });
