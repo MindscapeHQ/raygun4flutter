@@ -3,11 +3,9 @@
 ![Pub Version](https://img.shields.io/pub/v/raygun4flutter)
 [![CI](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml/badge.svg)](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml)
 
+The world's best Flutter Crash Reporting solution.
 
-The world's best Flutter Crash Reporting and Real User Monitoring solution.
-
-This plugin uses the Android and iOS plugins internally to report crashes and custom
-error messages to Raygun.
+This plugin internally uses the Android and iOS plugins to report crashes and custom error messages to Raygun.
 
 ## Requirements
 
@@ -19,9 +17,9 @@ error messages to Raygun.
 
 Check the "Installing" tab in pub.dev for more info.
 
-## Usage
+## Comprehensive sample usage
 
-For a working sample, check the Flutter project in `example`.
+For a working sample app, check the Flutter project in `example`.
 
 ### Capturing errors
 
