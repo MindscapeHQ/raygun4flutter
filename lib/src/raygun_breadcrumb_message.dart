@@ -17,10 +17,13 @@ class RaygunBreadcrumbMessage {
 
   final Map<String, dynamic>? customData;
 
+  /// Note: Not used in iOS
   final String? className;
 
+  /// Note: Not used in iOS
   final String? methodName;
 
+  /// Note: Not used in iOS
   final String? lineNumber;
 
   Map<String, dynamic> toMap() {
