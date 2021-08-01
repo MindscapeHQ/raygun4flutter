@@ -3,31 +3,95 @@
 ![Pub Version](https://img.shields.io/pub/v/raygun4flutter)
 [![CI](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml/badge.svg)](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml)
 
+The world's best Flutter Crash Reporting solution.
 
-The world's best Flutter Crash Reporting and Real User Monitoring solution.
+## Introduction
 
-This plugin uses the Android and iOS plugins internally to report crashes and custom
-error messages to Raygun.
+### Library organisation
 
-## Requirements
+This Flutter plugin internally uses the Android and iOS providers to report crashes and custom errors to Raygun.
+
+In addition to this documentation, depending on your project's requirements we recommend to go through the platform-specific documentation for [Raygun4Android](https://github.com/MindscapeHQ/raygun4android/blob/master/README.md) and Raygun4Apple as well.
+
+The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter users. In there, the plugin sets up a `MethodChannel` to pass through the API calls to native Kotlin and Swift code in `android/src` and `ios/Classes` respectively. 
+
+These bridges to native code provide additional information if you want to understand what exactly will be called in the native layers of the plugin.
+
+### Requirements
 
 - Android API 16
 - iOS 10.0
 - Web and desktop not supported.
 
+TODO: Mention which versions of native this is pegged against
+
 ## Installation
 
-Check the "Installing" tab in pub.dev for more info.
+### Depend on it
 
-## Usage
+Run this command:
 
-For a working sample, check the Flutter project in `example`.
+`$ flutter pub add raygun4flutter`
 
-### Capturing errors
+This will add a line like this to your package's pubspec.yaml (and run an implicit dart pub get):
 
-To be able to capture errors inside Flutter, you need to add the following changes in your main method:
+```
+dependencies:
+  raygun4flutter: ^1.0.0
+```
+Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
 
-Provide a custom `FlutterError.onError` that redirects Flutter errors to Raygun.
+### Import it
+
+Now in your Dart code, you can use:
+
+`import 'package:raygun4flutter/raygun4flutter.dart';`
+
+Check the "Installing" tab on https://pub.dev/packages/raygun4flutter/install for more info.
+
+### Platform-Specific
+
+#### Android
+
+In your app's **AndroidManifest.xml** (usually located in your Flutter project's `/android/src/main` directory), make sure you have granted Internet permissions. Beneath the ```<manifest>``` element add:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
+
+#### iOS
+
+TODO
+
+## Setup and usage
+### Initialisation and version tracking
+
+Call `Raygun.init()` with an API key to initialise RaygunClient on application start, for example, from your `initState` method.
+
+```dart
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    Raygun.init('12345');
+  }
+
+}
+```
+
+The `.init()` method can also accept an optional `appVersion` argument. If this is supplied, the version of your app will be tracked across Raygun crash reports:
+
+```dart
+Raygun.init('12345','1.4.5');
+```
+
+As an additional convenience way to set the version, a method `.setVersion()` is available. Typical use cases would most likely fall back to setting the app version in the .init() method call when you setup the library.
+
+## Capturing and sending errors
+
+To be able to capture errors inside Flutter, you need to add a custom `FlutterError.onError` handler to your main method. That redirects Flutter errors to Raygun.
 
 Note: This only works when the app is running in "Release" mode.
 
@@ -44,13 +108,12 @@ Note: This only works when the app is running in "Release" mode.
   };
 ```
 
-Catch errors outside of the Flutter framework by calling to `runApp` from a `runZonedGuarded` and redirecting
-captured errors to Raygun. For example, errors happening in asynchronous code.
+You can also catch Dart errors outside of the code controlled by the Flutter framework by calling to `runApp` from a `runZonedGuarded` and redirecting
+captured errors to Raygun. For example: errors that happen in asynchronous code.
 
 Note: This works both in "Release" and "Debug" modes.
 
 ```dart
-  // To catch any 'Dart' errors 'outside' of the Flutter framework.
   runZonedGuarded<Future<void>>(() async {
     runApp(MyApp());
   }, (Object error, StackTrace stackTrace) {
@@ -58,65 +121,134 @@ Note: This works both in "Release" and "Debug" modes.
   });
 ```
 
-### Initialisation
-
-Call `Raygun.init(API_KEY)` to initialise RaygunClient on app start, for example, from your `initState` method.
-
-```dart
-class _MyAppState extends State<MyApp> {
-
-  @override
-  void initState() {
-    super.initState();
-    Raygun.init('12345');
-  }
-
-}
-```
-
 ### Sending errors manually
 
-Call `Raygun.sendException(error, stacktrace)` to send errors to Raygun.
+Call `Raygun.sendException(error, tags, customData, stackTrace)` to send errors to Raygun.
 
 For example:
 
 ```dart
 try {
   // code that crashes
-} catch (error, stackTrace) {
-  Raygun.sendException(error, stacktrace);
+} catch (error) {
+  Raygun.sendException(error);
 }
 ```
 
+All arguments but `error` are optional. This method is mainly a convenience wrapper around the more customisable `.sendCustom()` method that obtains the class name and the message from the `error` object.
+
 ### Sending custom errors manually
 
-Call `Raygun.sendCustom(className, message, stacktrace)` to send custom errors to Raygun.
+Call `Raygun.sendCustom(className, message, tags, customData, stackTrace)` to send custom errors to Raygun with your own customised `className` and `message`. As with `.sendException()`, `tags`, `customData` and `stackTrace` are optional.
 
 For example:
 
 ```dart
 Raygun.sendCustom(
-  'MyApp',
-  'test error message',
-  StackTrace.current,
+  className: 'MyApp',
+  message: 'test error message',
+  tags: ['API','Tag2'],
+  stackTrace: StackTrace.current,
 );
+```
+
+## Other functionality
+### Setting tags
+
+`Raygun.setTags()` sets a list of global tags that will be logged with every exception. This will be merged with other tags passed into manually created crash reports via `sendException()` and `sendCustom()`.
+
+```dart
+Raygun.setTags(['Tag1','Tag2']);
+```
+### Setting custom data
+
+`Raygun.setCustomData()` sets a global map of key-value pairs that, similar to tags, that will be logged with every exception. This will be merged with other custom data passed into manually created crash reports via `sendException()` and `sendCustom()`.
+
+```dart
+Raygun.setCustomData({
+  'custom1': 'value',
+  'custom2': 42,
+});
 ```
 
 ### Sending breadcrumbs
 
-Call `Raygun.breadcrumb(message)` to send breadcrumbs to Raygun.
+Breadcrumbs can be sent to Raygun to provide additional information to look into and debug issues stemming from crash reports. Breadcrumbs can be created in two ways.
+
+#### Simple string:
+
+Call `Raygun.recordBreadcrumb(message)`, where `message` is just a string:
 
 ```dart
-Raygun.breadcrumb('test breadcrumb');
+Raygun.recordBreadcrumb('test breadcrumb');
 ```
 
-### Set User Id
+#### Using RaygunBreadcrumbMessage:
 
-Call `Raygun.setUserId(id)` to set the User Id on Raygun.
+Create your own `RaygunBreadcrumbMessage` object and send more than just a message with `Raygun.recordBreadcrumb(RaygunBreadcrumbMessage)`.
+
+The structure of the type `RaygunBreadcrumbMessage` is as shown here:
+
+```dart
+ RaygunBreadcrumbMessage({
+    required this.message,
+    this.category,
+    this.level = RaygunBreadcrumbLevel.info,
+    this.customData,
+    this.className,
+    this.methodName,
+    this.lineNumber,
+  });
+```
+
+### Affected Customers
+
+Raygun supports tracking the unique customers who encounter bugs in your apps.
+
+By default a device-derived UUID is transmitted. You can also add the currently logged in customer's data like this using an object of type `RaygunUserInfo`:
+
+```dart
+Raygun.setUser(
+  RaygunUserInfo(
+    identifier: '1234',
+    firstName: 'FIRST',
+    fullName: 'FIRST LAST',
+    email: 'test@example.com',
+  ),
+);
+```
+
+To clear the currently logged in customer, call `setUser(null)`.
+
+There is an additional convenience method that offers a shortcut to just track your customer by an indentifier only. If you use an email address to identify the user, please consider using `setUser` instead of `setUserId` as it would allow you to set the email address into both the identifier and email fields of the crash data to be sent.
 
 ```dart
 Raygun.setUserId('1234');
 ```
 
-Call with id `null` to clear it.
+Call with id `null` to clear the user identifier.
+
+### Custom endpoints
+
+Raygun supports sending data from Crash Reporting to your own endpoints. If you want to set custom endpoints, could can do so by setting them after you've initialised Raygun:
+
+```dart
+Raygun.setCustomCrashReportingEndpoint(url)
+```
+
+Please note that setting a custom endpoint will stop Crash Report or Real User Monitoring data from being sent to the Raygun backend.
+
+## Comprehensive sample usage
+
+For a working sample app, check the Flutter project in the `example` directory.
+
+## Known issues
+
+## FAQ
+## Documentation TODOs Kai
+
+- pegged versions
+- iOS native requirements above (if any)
+- Document that onBeforeSend is not supported in Flutter but can be hooked into natively if required
+- Document that setMaxReportsStoredOnDevice is not exposed. Should it?
 
