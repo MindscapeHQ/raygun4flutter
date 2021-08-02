@@ -25,6 +25,8 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
             setCustomData(customData: flutterArguments as? [String:Any])
         case "recordBreadcrumb":
             breadcrumb(data: flutterArguments as? NSDictionary)
+        case "clearBreadcrumbs":
+            RaygunClient.sharedInstance().clearBreadcrumbs()
         case "recordBreadcrumbObject":
             breadcrumbObject(data: flutterArguments as? NSDictionary)
         case "setUserId":
