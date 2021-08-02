@@ -1,8 +1,9 @@
 class RaygunUserInfo {
-  /// Set the current user's info to be transmitted - any parameter can be null
-  /// if the data is not available or you do not wish to send it.
+  /// Set the current user's info to be transmitted
+  /// some parameters can be null if the data is not available or you do not
+  /// wish to send it.
   RaygunUserInfo({
-    this.identifier,
+    required this.identifier,
     this.firstName,
     this.fullName,
     this.email,
@@ -24,9 +25,7 @@ class RaygunUserInfo {
   /// It doesn't have to be unique, but we will treat any duplicated values as
   /// the same user. If you use their email address here, pass it in as the
   /// 'emailAddress' parameter too.
-  ///
-  /// If identifier is not set and/or null, a uuid will be assigned to this field.
-  final String? identifier;
+  final String identifier;
 
   Map<String, String?> toMap() {
     return {
