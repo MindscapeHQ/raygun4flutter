@@ -33,6 +33,8 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
             setUserId(data: flutterArguments as? NSDictionary)
         case "setUser":
             setUser(data: flutterArguments as? NSDictionary)
+        case "setCustomCrashReportingEndpoint":
+            setCustomCrashReportingEndpoint(data: flutterArguments as? NSDictionary)
         default:
             result(FlutterMethodNotImplemented)
             return
@@ -138,5 +140,9 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
         } else {
             RaygunClient.sharedInstance().userInformation = RaygunUserInformation.anonymousUser
         }
+    }
+    
+    func setCustomCrashReportingEndpoint(data: NSDictionary?) {
+        RaygunClient.sharedInstance().crashReportingApiEndpoint = data?.value(forKey: "url") as? String
     }
 }

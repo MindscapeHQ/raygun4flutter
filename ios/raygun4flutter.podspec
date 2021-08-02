@@ -4,8 +4,8 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'raygun4flutter'
-  s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '0.1.0'
+  s.summary          = 'iOS plugin of raygun4flutter'
   s.description      = <<-DESC
 A new flutter plugin project.
                        DESC
@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'raygun4apple'
+  s.dependency 'raygun4apple', '~> 1.5'
   s.platform = :ios, '10.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
