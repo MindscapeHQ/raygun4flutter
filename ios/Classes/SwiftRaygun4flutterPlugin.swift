@@ -24,11 +24,11 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
         case "setCustomData":
             setCustomData(customData: flutterArguments as? [String:Any])
         case "recordBreadcrumb":
-            breadcrumb(data: flutterArguments as? NSDictionary)
+            recordBreadcrumb(data: flutterArguments as? NSDictionary)
         case "clearBreadcrumbs":
             RaygunClient.sharedInstance().clearBreadcrumbs()
         case "recordBreadcrumbObject":
-            breadcrumbObject(data: flutterArguments as? NSDictionary)
+            recordBreadcrumbObject(data: flutterArguments as? NSDictionary)
         case "setUserId":
             setUserId(data: flutterArguments as? NSDictionary)
         case "setUser":
@@ -85,12 +85,12 @@ public class SwiftRaygun4flutterPlugin: NSObject, FlutterPlugin {
         RaygunClient.sharedInstance().customData = customData
     }
     
-    func breadcrumb(data: NSDictionary?) {
+    func recordBreadcrumb(data: NSDictionary?) {
         let message = data?.value(forKey: "message") as! String
         RaygunClient.sharedInstance().recordBreadcrumb(message: message, category: nil, level: RaygunBreadcrumbLevel.info, customData: nil)
     }
     
-    func breadcrumbObject(data: NSDictionary?) {
+    func recordBreadcrumbObject(data: NSDictionary?) {
         let message = data?.value(forKey: "message") as! String
         let category = data?.value(forKey: "category") as? String
         let levelIndex = data?.value(forKey: "level") as? Int
