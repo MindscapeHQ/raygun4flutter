@@ -11,7 +11,7 @@ The world's best Flutter Crash Reporting solution.
 
 This Flutter plugin internally uses the Android and iOS providers to report crashes and custom errors to Raygun.
 
-In addition to this documentation, depending on your project's requirements we recommend to go through the platform-specific documentation for [Raygun4Android](https://github.com/MindscapeHQ/raygun4android/blob/master/README.md) and Raygun4Apple as well.
+In addition to this documentation, depending on your project's requirements we recommend to go through the platform-specific documentation for [Raygun4Android](https://github.com/MindscapeHQ/raygun4android/blob/master/README.md) and [Raygun4Apple](https://github.com/MindscapeHQ/raygun4apple) as well.
 
 The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter users. In there, the plugin sets up a `MethodChannel` to pass through the API calls to native Kotlin and Swift code in `android/src` and `ios/Classes` respectively. 
 
@@ -19,29 +19,32 @@ These bridges to native code provide additional information if you want to under
 
 ### Requirements
 
-- Android API 16
-- iOS 10.0
-- Web and desktop not supported.
+- Android API 16+
+- iOS 10.0+
+- Flutter for Web and Desktop are currently not supported.
 
-TODO: Mention which versions of native this is pegged against
+Raygun4Flutter currently uses the following versions of the native providers behind the scenes:
+
+Android: Raygun4Android 4.0.1
+iOS: 1.5.3
 
 ## Installation
 
-### Depend on it
+### 1. Depend on it
 
 Run this command:
 
 `$ flutter pub add raygun4flutter`
 
-This will add a line like this to your package's pubspec.yaml (and run an implicit dart pub get):
+This will add a line like this to your package's pubspec.yaml (and run an implicit `dart pub get`):
 
 ```
 dependencies:
-  raygun4flutter: ^1.0.0
+  raygun4flutter: ^0.5.0
 ```
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
 
-### Import it
+### 2. Import it
 
 Now in your Dart code, you can use:
 
@@ -49,7 +52,7 @@ Now in your Dart code, you can use:
 
 Check the "Installing" tab on https://pub.dev/packages/raygun4flutter/install for more info.
 
-### Platform-Specific
+### 3. Platform-Specific notes
 
 #### Android
 
@@ -60,9 +63,20 @@ In your app's **AndroidManifest.xml** (usually located in your Flutter project's
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
+Inside the `<application>` element, add:
+
+```xml
+<service android:name="com.raygun.raygun4android.services.CrashReportingPostService"
+         android:exported="false"
+         android:permission="android.permission.BIND_JOB_SERVICE"
+         android:process=":crashreportingpostservice"/>
+```
+
+Also please be aware that depending on the complexity of your Android project setup and if you use R8 or Proguard with additional Android code, you might need to add some custom rules for Proguard-support. This is outlined in the [Raygun4Android documentation](https://github.com/MindscapeHQ/raygun4android#raygun-and-proguard).
+
 #### iOS
 
-TODO
+TODO @miquelbeltran
 
 ## Setup and usage
 ### Initialisation and version tracking
@@ -108,8 +122,7 @@ Note: This only works when the app is running in "Release" mode.
   };
 ```
 
-You can also catch Dart errors outside of the code controlled by the Flutter framework by calling to `runApp` from a `runZonedGuarded` and redirecting
-captured errors to Raygun. For example: errors that happen in asynchronous code.
+You can also catch Dart errors outside of the code controlled by the Flutter framework by calling to `runApp` from a `runZonedGuarded` and redirecting captured errors to Raygun. For example: errors that happen in asynchronous code.
 
 Note: This works both in "Release" and "Debug" modes.
 
@@ -212,7 +225,7 @@ Raygun.setUser(
   RaygunUserInfo(
     identifier: '1234',
     firstName: 'FIRST',
-    fullName: 'FIRST LAST',
+    fullName: 'LAST',
     email: 'test@example.com',
   ),
 );
@@ -238,17 +251,16 @@ Raygun.setCustomCrashReportingEndpoint(url)
 
 Please note that setting a custom endpoint will stop Crash Report or Real User Monitoring data from being sent to the Raygun backend.
 
-## Comprehensive sample usage
+## Comprehensive sample app
 
 For a working sample app, check the Flutter project in the `example` directory.
 
 ## Known issues
 
-## FAQ
-## Documentation TODOs Kai
+1. `onBeforeSend` handlers that would allow you to modify the payload right before sending to the Raygun backend. If this functionality is required for you, you can use the respective feature as provided in the lower-level native providers.
 
-- pegged versions
-- iOS native requirements above (if any)
-- Document that onBeforeSend is not supported in Flutter but can be hooked into natively if required
-- Document that setMaxReportsStoredOnDevice is not exposed. Should it?
+2. `setMaxReportsStoredOnDevice` is not exposed to the Flutter layer. The respective platform details will apply.
 
+3. Due to limitations to how the lower-level libraries manage stacktraces, the Flutter-specific stacktrace from iOS devices will currently be sent and shown in the custom data field. The easiest way to make this information more visible, is to favourite the field in the Raygun backend so that it show up on the first tab of your crash report.
+
+We envisage to improve the issues listed above for a future 1.0.0 relese.
