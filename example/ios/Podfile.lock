@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - raygun4apple (1.4.2)
-  - raygun4flutter (0.0.1):
+  - raygun4apple (1.5.1)
+  - raygun4flutter (0.1.0):
     - Flutter
-    - raygun4apple
+    - raygun4apple (~> 1.5)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/raygun4flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  raygun4apple: f06505ac1830cbb88afa7f6f530a138459413d86
-  raygun4flutter: da99c40db5028d03c1d381e1cb4035c1b4e7507d
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  raygun4apple: 300b0669afaaddee0d86d26976508f0ff3f2181b
+  raygun4flutter: 6897b8a688bfd42b92bc3a13ac122efc84940dfc
 
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

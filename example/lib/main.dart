@@ -41,7 +41,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Raygun.init('12345');
+    Raygun.init(apiKey: 'KEY', version: '1.2.3');
+    Raygun.setTags(['tag1', 'tag2']);
+    Raygun.setCustomData({'custom': 'data'});
   }
 
   @override
@@ -109,6 +111,14 @@ class _MyAppState extends State<MyApp> {
             ElevatedButton(
               onPressed: () {
                 Raygun.recordBreadcrumb('test breadcrumb');
+                Raygun.recordBreadcrumbObject(
+                  RaygunBreadcrumbMessage(
+                    message: 'message',
+                    category: 'category',
+                    level: RaygunBreadcrumbLevel.warning,
+                    customData: {'custom': 'data'},
+                  ),
+                );
               },
               child: const Text('Breadcrumb'),
             ),

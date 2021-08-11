@@ -125,8 +125,8 @@ class Raygun {
   /// This will be merged with any other custom data passed in [sendException] and [sendCustom].
   ///
   /// Set to null to clear the value.
-  static Future<void> setCustomData(Map<String, dynamic>? tags) async {
-    await channel.invokeMethod('setCustomData', tags);
+  static Future<void> setCustomData(Map<String, dynamic>? customData) async {
+    await channel.invokeMethod('setCustomData', customData);
   }
 
   /// Sends a breadcrumb to Raygun as String
