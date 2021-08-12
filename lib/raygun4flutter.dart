@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import 'src/raygun_user_info.dart';
 import 'src/raygun_breadcrumb_message.dart';
+import 'src/raygun_user_info.dart';
 
-export 'src/raygun_user_info.dart';
 export 'src/raygun_breadcrumb_message.dart';
+export 'src/raygun_user_info.dart';
 
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for
