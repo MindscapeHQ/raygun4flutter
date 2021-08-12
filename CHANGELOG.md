@@ -1,4 +1,4 @@
-## 1.0.0
+## 0.5.0
 
 * Change `init()` signature to named parameters and added optional `version`.
 * Added `setTags()` and `setCustomData()` methods.
