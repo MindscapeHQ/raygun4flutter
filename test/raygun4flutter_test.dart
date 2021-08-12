@@ -77,7 +77,7 @@ void main() {
         'className': '_Exception',
         'reason': 'Exception: MESSAGE',
         'stackTrace':
-            'main.<fn>#test/raygun4flutter_test.dart 73:30;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
+            'main.<fn>#test/raygun4flutter_test.dart 73:32;Declarer.test.<fn>.<fn>#package:test_api/src/backend/declarer.dart 200:19;StackZoneSpecification._registerUnaryCallback.<fn>#package:stack_trace/src/stack_zone_specification.dart',
         'tags': ['tag1', 'tag2'],
         'customData': null,
       },
