@@ -74,10 +74,6 @@ Inside the `<application>` element, add:
 
 Also please be aware that depending on the complexity of your Android project setup and if you use R8 or Proguard with additional Android code, you might need to add some custom rules for Proguard-support. This is outlined in the [Raygun4Android documentation](https://github.com/MindscapeHQ/raygun4android#raygun-and-proguard).
 
-#### iOS
-
-TODO @miquelbeltran
-
 ## Setup and usage
 ### Initialisation and version tracking
 
