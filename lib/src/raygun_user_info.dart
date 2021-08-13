@@ -44,12 +44,12 @@ class RaygunUserInfo {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is RaygunUserInfo &&
-              runtimeType == other.runtimeType &&
-              email == other.email &&
-              fullName == other.fullName &&
-              firstName == other.firstName &&
-              identifier == other.identifier;
+      other is RaygunUserInfo &&
+          runtimeType == other.runtimeType &&
+          email == other.email &&
+          fullName == other.fullName &&
+          firstName == other.firstName &&
+          identifier == other.identifier;
 
   @override
   int get hashCode =>
