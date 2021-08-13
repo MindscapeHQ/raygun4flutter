@@ -25,8 +25,8 @@ These bridges to native code provide additional information if you want to under
 
 Raygun4Flutter currently uses the following versions of the native providers behind the scenes:
 
-Android: Raygun4Android 4.0.1
-iOS: 1.5.3
+- Android: Raygun4Android 4.0.1
+- iOS: 1.5.3
 
 ## Installation
 
@@ -52,7 +52,7 @@ Now in your Dart code, you can use:
 
 Check the "Installing" tab on https://pub.dev/packages/raygun4flutter/install for more info.
 
-### 3. Platform-Specific notes
+### 3. Platform-specific notes
 
 #### Android
 
@@ -235,7 +235,9 @@ There is an additional convenience method that offers a shortcut to just track y
 Raygun.setUserId('1234');
 ```
 
-Call with id `null` to clear the user identifier.
+Call with `null` to clear the user identifier: `setUserId(null)`
+
+
 
 ### Custom endpoints
 
