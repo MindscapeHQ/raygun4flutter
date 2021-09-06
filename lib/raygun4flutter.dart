@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'src/raygun_breadcrumb_message.dart';
@@ -15,10 +13,6 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  @visibleForTesting
-  static const channel =
-      MethodChannel('com.raygun.raygun4flutter/raygun4flutter');
-
   /// Initalizes the Raygun client with your Raygun API [apiKey].
   ///
   /// [version] is optional, if not provided it will be obtained from your
@@ -27,10 +21,7 @@ class Raygun {
     required String apiKey,
     String? version,
   }) async {
-    await channel.invokeMethod('init', <String, dynamic>{
-      'apiKey': apiKey,
-      'version': version,
-    });
+    throw UnimplementedError('Implement init method');
   }
 
   /// Manually stores the version of your application to be transmitted with
@@ -42,9 +33,7 @@ class Raygun {
   static Future<void> setVersion(
     String? version,
   ) async {
-    await channel.invokeMethod('setVersion', <String, dynamic>{
-      'version': version,
-    });
+    throw UnimplementedError('Implement setVersion method');
   }
 
   /// Sends an exception to Raygun.
@@ -104,13 +93,7 @@ class Raygun {
           .join(';');
     }
 
-    await channel.invokeMethod('send', <String, dynamic>{
-      'className': className,
-      'reason': reason,
-      'stackTrace': traceLocations,
-      'tags': tags,
-      'customData': customData,
-    });
+    throw UnimplementedError('Implement sendCustom method');
   }
 
   /// Sets a List of tags which will be sent along with every exception.
@@ -118,7 +101,7 @@ class Raygun {
   ///
   /// Set to null to clear the value.
   static Future<void> setTags(List<String>? tags) async {
-    await channel.invokeMethod('setTags', tags);
+    throw UnimplementedError('Implement setTags method');
   }
 
   /// Sets a key-value Map which, like the tags, will be sent along with every exception.
@@ -126,26 +109,24 @@ class Raygun {
   ///
   /// Set to null to clear the value.
   static Future<void> setCustomData(Map<String, dynamic>? customData) async {
-    await channel.invokeMethod('setCustomData', customData);
+    throw UnimplementedError('Implement setCustomData method');
   }
 
   /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
-    await channel.invokeMethod('recordBreadcrumb', <String, String>{
-      'message': message,
-    });
+    throw UnimplementedError('Implement recordBreadcrumb method');
   }
 
   /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
   static Future<void> recordBreadcrumbObject(
-      RaygunBreadcrumbMessage raygunBreadcrumbMessage) async {
-    await channel.invokeMethod(
-        'recordBreadcrumbObject', raygunBreadcrumbMessage.toMap());
+    RaygunBreadcrumbMessage raygunBreadcrumbMessage,
+  ) async {
+    throw UnimplementedError('Implement recordBreadcrumbObject method');
   }
 
   /// Clears breadcrumbs
   static Future<void> clearBreadcrumbs() async {
-    await channel.invokeMethod('clearBreadcrumbs');
+    throw UnimplementedError('Implement clearBreadcrumbs method');
   }
 
   /// Sets the current user of your application.
@@ -160,9 +141,7 @@ class Raygun {
   ///
   /// Set to null to clear User Id
   static Future<void> setUserId(String? userId) async {
-    await channel.invokeMethod('setUserId', <String, String?>{
-      'userId': userId,
-    });
+    throw UnimplementedError('Implement setUserId method');
   }
 
   /// Sets the current user of your application.
@@ -179,15 +158,13 @@ class Raygun {
   ///
   /// Set to null to clear
   static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
-    await channel.invokeMethod('setUser', raygunUserInfo?.toMap());
+    throw UnimplementedError('Implement setUser method');
   }
 
   /// Allows the user to set a custom endpoint for Crash Reporting
   ///
   /// [url] String with the URL to be used
   static Future<void> setCustomCrashReportingEndpoint(String? url) async {
-    await channel.invokeMethod('setCustomCrashReportingEndpoint', {
-      'url': url,
-    });
+    throw UnimplementedError('Implement setCustomCrashReportingEndpoint method');
   }
 }
