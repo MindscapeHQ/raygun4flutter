@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:raygun4flutter/src/logging/raygun_logger.dart';
 import 'package:raygun4flutter/src/services/settings.dart';
 import 'package:raygun4flutter/src/utils/response.dart';
 
@@ -16,6 +17,7 @@ class CrashReportingPostService {
     dynamic jsonPayload,
   ) async {
     try {
+      RaygunLogger.d('Sending crash reports');
       if (_validateApiKey(apiKey)) {
         final response = await http.post(
           Uri.parse(Settings.crashReportingEndpoint),
@@ -25,13 +27,18 @@ class CrashReportingPostService {
             'Content-Type': 'application/json; charset=utf-8',
           },
         );
+        RaygunLogger.d(
+          'Sent crash reports. Response code: ${response.statusCode}',
+        );
         return Response.success(response.statusCode);
       } else {
+        RaygunLogger.e('API key is empty, nothing will be logged or reported');
         return Response.error(
           'API key is empty, nothing will be logged or reported',
         );
       }
     } catch (e) {
+      RaygunLogger.e('Error while posting crash reports: $e');
       return Response.error(e);
     }
   }
