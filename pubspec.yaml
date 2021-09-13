@@ -21,10 +21,3 @@ dev_dependencies:
   lint: ^1.5.3
 
 flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.raygun.raygun4flutter.raygun4flutter
-        pluginClass: Raygun4flutterPlugin
-      ios:
-        pluginClass: Raygun4flutterPlugin
