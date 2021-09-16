@@ -13,12 +13,16 @@ dependencies:
     sdk: flutter
 
   http: ^0.13.3
+  json_annotation: ^4.1.0
   stack_trace: ^1.10.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_serializable: ^5.0.1
+
   lint: ^1.5.3
 
+  build_runner: ^2.1.2
 flutter:

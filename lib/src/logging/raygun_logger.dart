@@ -13,6 +13,10 @@ class RaygunLogger {
     }
   }
 
+  static void i(String message) {
+    print('[RAYGUN][I] $message');
+  }
+
   static void w(String message) {
     print('[RAYGUN][WARNING] $message');
   }
