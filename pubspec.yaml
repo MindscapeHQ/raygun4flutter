@@ -12,8 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  device_info_plus: ^2.1.0
   http: ^0.13.3
   json_annotation: ^4.1.0
+  package_info_plus: ^1.0.6
   stack_trace: ^1.10.0
 
 dev_dependencies:

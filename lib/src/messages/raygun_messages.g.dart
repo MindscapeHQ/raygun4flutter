@@ -79,22 +79,97 @@ Map<String, dynamic> _$RaygunAppContextToJson(RaygunAppContext instance) =>
     <String, dynamic>{};
 
 RaygunClientMessage _$RaygunClientMessageFromJson(Map<String, dynamic> json) =>
-    RaygunClientMessage();
+    RaygunClientMessage()..version = json['version'] as String?;
 
 Map<String, dynamic> _$RaygunClientMessageToJson(
         RaygunClientMessage instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'version': instance.version,
+    };
 
 RaygunEnvironmentMessage _$RaygunEnvironmentMessageFromJson(
         Map<String, dynamic> json) =>
-    RaygunEnvironmentMessage();
+    RaygunEnvironmentMessage()
+      ..cpu = json['cpu'] as String?
+      ..architecture = json['architecture'] as String?
+      ..processorCount = json['processorCount'] as int?
+      ..oSVersion = json['oSVersion'] as String?
+      ..osSDKVersion = json['osSDKVersion'] as String?
+      ..windowsBoundWidth = json['windowsBoundWidth'] as int?
+      ..windowsBoundHeight = json['windowsBoundHeight'] as int?
+      ..currentOrientation = json['currentOrientation'] as String?
+      ..locale = json['locale'] as String?
+      ..totalPhysicalMemory = json['totalPhysicalMemory'] as int?
+      ..availablePhysicalMemory = json['availablePhysicalMemory'] as int?
+      ..totalVirtualMemory = json['totalVirtualMemory'] as int?
+      ..availableVirtualMemory = json['availableVirtualMemory'] as int?
+      ..diskSpaceFree = json['diskSpaceFree'] as int?
+      ..utcOffset = (json['utcOffset'] as num?)?.toDouble()
+      ..deviceName = json['deviceName'] as String?
+      ..brand = json['brand'] as String?
+      ..board = json['board'] as String?
+      ..deviceCode = json['deviceCode'] as String?;
 
 Map<String, dynamic> _$RaygunEnvironmentMessageToJson(
         RaygunEnvironmentMessage instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'cpu': instance.cpu,
+      'architecture': instance.architecture,
+      'processorCount': instance.processorCount,
+      'oSVersion': instance.oSVersion,
+      'osSDKVersion': instance.osSDKVersion,
+      'windowsBoundWidth': instance.windowsBoundWidth,
+      'windowsBoundHeight': instance.windowsBoundHeight,
+      'currentOrientation': instance.currentOrientation,
+      'locale': instance.locale,
+      'totalPhysicalMemory': instance.totalPhysicalMemory,
+      'availablePhysicalMemory': instance.availablePhysicalMemory,
+      'totalVirtualMemory': instance.totalVirtualMemory,
+      'availableVirtualMemory': instance.availableVirtualMemory,
+      'diskSpaceFree': instance.diskSpaceFree,
+      'utcOffset': instance.utcOffset,
+      'deviceName': instance.deviceName,
+      'brand': instance.brand,
+      'board': instance.board,
+      'deviceCode': instance.deviceCode,
+    };
 
 RaygunErrorMessage _$RaygunErrorMessageFromJson(Map<String, dynamic> json) =>
-    RaygunErrorMessage();
+    RaygunErrorMessage(
+      json['className'] as String,
+      json['message'] as String,
+    )
+      ..innerError = json['innerError'] == null
+          ? null
+          : RaygunErrorMessage.fromJson(
+              json['innerError'] as Map<String, dynamic>)
+      ..stackTrace = (json['stackTrace'] as List<dynamic>)
+          .map((e) => RaygunErrorStackTraceLineMessage.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
 
 Map<String, dynamic> _$RaygunErrorMessageToJson(RaygunErrorMessage instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'message': instance.message,
+      'className': instance.className,
+      'innerError': instance.innerError,
+      'stackTrace': instance.stackTrace,
+    };
+
+RaygunErrorStackTraceLineMessage _$RaygunErrorStackTraceLineMessageFromJson(
+        Map<String, dynamic> json) =>
+    RaygunErrorStackTraceLineMessage(
+      json['lineNumber'] as int?,
+      json['className'] as String?,
+      json['fileName'] as String?,
+      json['methodName'] as String?,
+    );
+
+Map<String, dynamic> _$RaygunErrorStackTraceLineMessageToJson(
+        RaygunErrorStackTraceLineMessage instance) =>
+    <String, dynamic>{
+      'lineNumber': instance.lineNumber,
+      'className': instance.className,
+      'fileName': instance.fileName,
+      'methodName': instance.methodName,
+    };

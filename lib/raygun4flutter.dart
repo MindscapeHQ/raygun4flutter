@@ -1,3 +1,4 @@
+import 'package:raygun4flutter/src/raygun_crash_reporting.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'src/raygun_breadcrumb_message.dart';
@@ -76,24 +77,15 @@ class Raygun {
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
   }) async {
-    var traceLocations = '';
+    Trace trace;
     if (stackTrace == null) {
       // if no stackTrace provided, create one
-      traceLocations = Trace.current()
-          .frames
-          // skip all frames that reference to this file
-          .skipWhile(
-              (element) => element.location.contains('raygun4flutter.dart'))
-          .map((frame) => '${frame.member}#${frame.location}')
-          .join(';');
+      trace = Trace.current();
     } else {
-      traceLocations = Trace.from(stackTrace)
-          .frames
-          .map((frame) => '${frame.member}#${frame.location}')
-          .join(';');
+      trace = Trace.from(stackTrace);
     }
 
-    throw UnimplementedError('Implement sendCustom method');
+    CrashReporting.send(className, reason, tags, customData, trace);
   }
 
   /// Sets a List of tags which will be sent along with every exception.
@@ -165,6 +157,7 @@ class Raygun {
   ///
   /// [url] String with the URL to be used
   static Future<void> setCustomCrashReportingEndpoint(String? url) async {
-    throw UnimplementedError('Implement setCustomCrashReportingEndpoint method');
+    throw UnimplementedError(
+        'Implement setCustomCrashReportingEndpoint method');
   }
 }
