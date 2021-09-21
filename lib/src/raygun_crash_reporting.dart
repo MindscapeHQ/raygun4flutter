@@ -10,6 +10,8 @@ import 'messages/raygun_client_message.dart';
 import 'messages/raygun_environment_message.dart';
 import 'messages/raygun_error_message.dart';
 import 'messages/raygun_message.dart';
+import 'services/crash_reporting_post_service.dart';
+import 'services/settings.dart';
 
 class CrashReporting {
   static Future<void> send(
@@ -22,7 +24,28 @@ class CrashReporting {
     final RaygunMessage msg = await _buildMessage(className, reason, trace);
 
     msg.details.tags = tags ?? [];
+    final globalTags = Settings.tags;
+    if (globalTags != null) {
+      msg.details.tags.addAll(globalTags);
+    }
+
     msg.details.customData = customData ?? {};
+    final globalCustomData = Settings.customData;
+    if (globalCustomData != null) {
+      msg.details.customData.addAll(globalCustomData);
+    }
+
+    final response = await CrashReportingPostService().postCrashReporting(
+      Settings.apiKey ?? '',
+      msg.toJson(),
+    );
+
+    if (response.isSuccess) {
+      Settings.breadcrumbs.clear();
+    } else {
+
+    }
+
 
     // if (onBeforeSend != null) {
     //   msg = onBeforeSend.onBeforeSend(msg);
@@ -47,8 +70,6 @@ Future<RaygunMessage> _buildMessage(
   }
 
   raygunMessage.details.client = RaygunClientMessage();
-  await raygunMessage.details.client!.loadVersionFromPackage();
-
   raygunMessage.details.machineName = await _machineName();
   raygunMessage.details.environment =
       await RaygunEnvironmentMessage.fromDeviceInfo();
@@ -67,7 +88,7 @@ Future<String?> _machineName() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       final info = await deviceInfo.iosInfo;
-      return info.model;
+      return info.name;
     }
     if (Platform.isAndroid) {
       final info = await deviceInfo.androidInfo;
@@ -79,7 +100,7 @@ Future<String?> _machineName() async {
     }
     if (Platform.isMacOS) {
       final info = await deviceInfo.macOsInfo;
-      return info.model;
+      return info.computerName;
     }
     if (Platform.isWindows) {
       final info = await deviceInfo.windowsInfo;

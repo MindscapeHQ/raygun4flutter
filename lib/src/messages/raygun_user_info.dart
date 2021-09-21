@@ -24,6 +24,7 @@ class RaygunUserInfo {
     } else {
       _identifier = identifier;
       isAnonymous = false;
+      RaygunLogger.i("Created user with id: $identifier");
     }
   }
 
