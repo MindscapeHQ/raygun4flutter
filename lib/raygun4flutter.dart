@@ -1,11 +1,11 @@
 import 'package:raygun4flutter/src/raygun_crash_reporting.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import 'src/raygun_breadcrumb_message.dart';
-import 'src/raygun_user_info.dart';
+import 'src/messages/raygun_breadcrumb_message.dart';
+import 'src/messages/raygun_user_info.dart';
 
-export 'src/raygun_breadcrumb_message.dart';
-export 'src/raygun_user_info.dart';
+export 'src/messages/raygun_breadcrumb_message.dart';
+export 'src/messages/raygun_user_info.dart';
 
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'logging/raygun_logger.dart';
+import '../logging/raygun_logger.dart';
 
 part 'raygun_user_info.g.dart';
 
