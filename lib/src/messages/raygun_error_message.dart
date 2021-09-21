@@ -31,4 +31,9 @@ class RaygunErrorMessage {
         )
         .toList();
   }
+
+  factory RaygunErrorMessage.fromJson(
+      Map<String, dynamic> json,
+      ) =>
+      _$RaygunErrorMessageFromJson(json);
 }

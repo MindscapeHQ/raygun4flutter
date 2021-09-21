@@ -32,6 +32,11 @@ class RaygunBreadcrumbMessage {
   final String? lineNumber;
 
   Map<String, dynamic> toJson() => _$RaygunBreadcrumbMessageToJson(this);
+
+  factory RaygunBreadcrumbMessage.fromJson(
+      Map<String, dynamic> json,
+      ) =>
+      _$RaygunBreadcrumbMessageFromJson(json);
 }
 
 enum RaygunBreadcrumbLevel {

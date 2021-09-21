@@ -29,6 +29,8 @@ class RaygunEnvironmentMessage {
   String? board;
   String? deviceCode;
 
+  RaygunEnvironmentMessage();
+
   static Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
     final environment = RaygunEnvironmentMessage();
 
@@ -76,4 +78,9 @@ class RaygunEnvironmentMessage {
   }
 
   Map<String, dynamic> toJson() => _$RaygunEnvironmentMessageToJson(this);
+
+  factory RaygunEnvironmentMessage.fromJson(
+      Map<String, dynamic> json,
+      ) =>
+      _$RaygunEnvironmentMessageFromJson(json);
 }

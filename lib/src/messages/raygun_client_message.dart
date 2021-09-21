@@ -10,6 +10,13 @@ class RaygunClientMessage {
   final String clientUrl = 'https://github.com/MindscapeHQ/raygun4flutter';
   final String name = 'Raygun4Flutter';
 
+  RaygunClientMessage();
+
   Map<String, dynamic> toJson() => _$RaygunClientMessageToJson(this);
+
+  factory RaygunClientMessage.fromJson(
+      Map<String, dynamic> json,
+      ) =>
+      _$RaygunClientMessageFromJson(json);
 }
 

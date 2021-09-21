@@ -26,5 +26,12 @@ class RaygunMessageDetails {
   NetworkInfo? request;
   List<RaygunBreadcrumbMessage> breadcrumbs = [];
 
+  RaygunMessageDetails();
+
   Map<String, dynamic> toJson() => _$RaygunMessageDetailsToJson(this);
+
+  factory RaygunMessageDetails.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$RaygunMessageDetailsFromJson(json);
 }

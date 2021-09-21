@@ -53,4 +53,9 @@ class RaygunUserInfo {
   String? get identifier => _identifier;
 
   Map<String, dynamic> toJson() => _$RaygunUserInfoToJson(this);
+
+  factory RaygunUserInfo.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$RaygunUserInfoFromJson(json);
 }

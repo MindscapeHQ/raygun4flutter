@@ -15,4 +15,9 @@ class RaygunMessage {
   }
 
   Map<String, dynamic> toJson() => _$RaygunMessageToJson(this);
+
+  factory RaygunMessage.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$RaygunMessageFromJson(json);
 }

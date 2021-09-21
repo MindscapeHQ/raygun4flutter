@@ -18,4 +18,8 @@ class RaygunErrorStackTraceLineMessage {
 
   Map<String, dynamic> toJson() =>
       _$RaygunErrorStackTraceLineMessageToJson(this);
+
+  factory RaygunErrorStackTraceLineMessage.fromJson(
+          Map<String, dynamic> json) =>
+      _$RaygunErrorStackTraceLineMessageFromJson(json);
 }
