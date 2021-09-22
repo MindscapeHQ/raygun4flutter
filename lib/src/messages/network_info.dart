@@ -4,7 +4,6 @@ part 'network_info.g.dart';
 
 @JsonSerializable()
 class NetworkInfo {
-
   NetworkInfo();
 
   Map<String, dynamic> toJson() => _$NetworkInfoToJson(this);

@@ -42,10 +42,7 @@ class CrashReporting {
 
     if (response.isSuccess) {
       Settings.breadcrumbs.clear();
-    } else {
-
-    }
-
+    } else {}
 
     // if (onBeforeSend != null) {
     //   msg = onBeforeSend.onBeforeSend(msg);

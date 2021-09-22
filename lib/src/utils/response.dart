@@ -29,9 +29,9 @@ class _ErrorResponse<T> extends Response<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is _ErrorResponse &&
-              runtimeType == other.runtimeType &&
-              error == other.error;
+      other is _ErrorResponse &&
+          runtimeType == other.runtimeType &&
+          error == other.error;
 
   @override
   int get hashCode => error.hashCode;
@@ -50,9 +50,9 @@ class _SuccessResponse<T> extends Response<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is _SuccessResponse &&
-              runtimeType == other.runtimeType &&
-              value == other.value;
+      other is _SuccessResponse &&
+          runtimeType == other.runtimeType &&
+          value == other.value;
 
   @override
   int get hashCode => value.hashCode;
