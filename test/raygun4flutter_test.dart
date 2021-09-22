@@ -1,3 +1,5 @@
+// ignore_for_file: require_trailing_commas
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:raygun4flutter/raygun4flutter.dart';
 

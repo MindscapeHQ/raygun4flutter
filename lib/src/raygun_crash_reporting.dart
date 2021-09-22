@@ -58,7 +58,10 @@ class CrashReporting {
 }
 
 Future<RaygunMessage> _buildMessage(
-    String className, String reason, Trace? trace) async {
+  String className,
+  String reason,
+  Trace? trace,
+) async {
   final raygunMessage = RaygunMessage();
 
   raygunMessage.details.error = RaygunErrorMessage(className, reason);

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 part 'raygun_client_message.g.dart';
 
