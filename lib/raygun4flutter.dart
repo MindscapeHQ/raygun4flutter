@@ -1,10 +1,13 @@
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:raygun4flutter/src/raygun_crash_reporting.dart';
+import 'package:raygun4flutter/src/services/settings.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import 'src/raygun_breadcrumb_message.dart';
-import 'src/raygun_user_info.dart';
+import 'src/messages/raygun_breadcrumb_message.dart';
+import 'src/messages/raygun_user_info.dart';
 
-export 'src/raygun_breadcrumb_message.dart';
-export 'src/raygun_user_info.dart';
+export 'src/messages/raygun_breadcrumb_message.dart';
+export 'src/messages/raygun_user_info.dart';
 
 /// The official Raygun provider for Flutter.
 /// This is the main class that provides functionality for
@@ -21,7 +24,8 @@ class Raygun {
     required String apiKey,
     String? version,
   }) async {
-    throw UnimplementedError('Implement init method');
+    Settings.apiKey = apiKey;
+    setVersion(version);
   }
 
   /// Manually stores the version of your application to be transmitted with
@@ -33,7 +37,12 @@ class Raygun {
   static Future<void> setVersion(
     String? version,
   ) async {
-    throw UnimplementedError('Implement setVersion method');
+    if (version != null) {
+      Settings.version = version;
+    } else {
+      final info = await PackageInfo.fromPlatform();
+      Settings.version = info.version;
+    }
   }
 
   /// Sends an exception to Raygun.
@@ -76,24 +85,15 @@ class Raygun {
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
   }) async {
-    var traceLocations = '';
+    Trace trace;
     if (stackTrace == null) {
       // if no stackTrace provided, create one
-      traceLocations = Trace.current()
-          .frames
-          // skip all frames that reference to this file
-          .skipWhile(
-              (element) => element.location.contains('raygun4flutter.dart'))
-          .map((frame) => '${frame.member}#${frame.location}')
-          .join(';');
+      trace = Trace.current();
     } else {
-      traceLocations = Trace.from(stackTrace)
-          .frames
-          .map((frame) => '${frame.member}#${frame.location}')
-          .join(';');
+      trace = Trace.from(stackTrace);
     }
 
-    throw UnimplementedError('Implement sendCustom method');
+    CrashReporting.send(className, reason, tags, customData, trace);
   }
 
   /// Sets a List of tags which will be sent along with every exception.
@@ -101,7 +101,7 @@ class Raygun {
   ///
   /// Set to null to clear the value.
   static Future<void> setTags(List<String>? tags) async {
-    throw UnimplementedError('Implement setTags method');
+    Settings.tags = tags;
   }
 
   /// Sets a key-value Map which, like the tags, will be sent along with every exception.
@@ -109,24 +109,24 @@ class Raygun {
   ///
   /// Set to null to clear the value.
   static Future<void> setCustomData(Map<String, dynamic>? customData) async {
-    throw UnimplementedError('Implement setCustomData method');
+    Settings.customData = customData;
   }
 
   /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
-    throw UnimplementedError('Implement recordBreadcrumb method');
+    Settings.breadcrumbs.add(RaygunBreadcrumbMessage(message: message));
   }
 
   /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
   static Future<void> recordBreadcrumbObject(
     RaygunBreadcrumbMessage raygunBreadcrumbMessage,
   ) async {
-    throw UnimplementedError('Implement recordBreadcrumbObject method');
+    Settings.breadcrumbs.add(raygunBreadcrumbMessage);
   }
 
   /// Clears breadcrumbs
   static Future<void> clearBreadcrumbs() async {
-    throw UnimplementedError('Implement clearBreadcrumbs method');
+    Settings.breadcrumbs.clear();
   }
 
   /// Sets the current user of your application.
@@ -141,7 +141,7 @@ class Raygun {
   ///
   /// Set to null to clear User Id
   static Future<void> setUserId(String? userId) async {
-    throw UnimplementedError('Implement setUserId method');
+    Settings.userInfo = RaygunUserInfo(identifier: userId);
   }
 
   /// Sets the current user of your application.
@@ -158,13 +158,16 @@ class Raygun {
   ///
   /// Set to null to clear
   static Future<void> setUser(RaygunUserInfo? raygunUserInfo) async {
-    throw UnimplementedError('Implement setUser method');
+    Settings.userInfo = raygunUserInfo ?? RaygunUserInfo();
   }
 
   /// Allows the user to set a custom endpoint for Crash Reporting
   ///
   /// [url] String with the URL to be used
+  ///
+  /// Set to null to use default.
   static Future<void> setCustomCrashReportingEndpoint(String? url) async {
-    throw UnimplementedError('Implement setCustomCrashReportingEndpoint method');
+    Settings.crashReportingEndpoint =
+        url ?? Settings.kDefaultCrashReportingEndpoint;
   }
 }

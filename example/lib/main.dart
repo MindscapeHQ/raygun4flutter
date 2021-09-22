@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -41,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Raygun.init(apiKey: 'KEY', version: '1.2.3');
+    Raygun.init(apiKey: 'YuxdtTQU4bVH3Nw9s6Fjqw', version: '1.2.3');
     Raygun.setTags(['tag1', 'tag2']);
     Raygun.setCustomData({'custom': 'data'});
   }
@@ -104,6 +106,7 @@ class _MyAppState extends State<MyApp> {
                     'custom1': 'value',
                     'custom2': 42,
                   },
+                  stackTrace: StackTrace.current,
                 );
               },
               child: const Text('Send custom error with tags and customData'),

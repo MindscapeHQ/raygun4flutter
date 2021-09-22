@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'raygun_breadcrumb_message.g.dart';
+
+@JsonSerializable()
 class RaygunBreadcrumbMessage {
   RaygunBreadcrumbMessage({
     required this.message,
@@ -26,22 +31,21 @@ class RaygunBreadcrumbMessage {
   /// Note: Not used in iOS
   final String? lineNumber;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'message': message,
-      'category': category,
-      'level': level.index,
-      'customData': customData,
-      'className': className,
-      'methodName': methodName,
-      'lineNumber': lineNumber,
-    };
-  }
+  Map<String, dynamic> toJson() => _$RaygunBreadcrumbMessageToJson(this);
+
+  factory RaygunBreadcrumbMessage.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$RaygunBreadcrumbMessageFromJson(json);
 }
 
 enum RaygunBreadcrumbLevel {
+  @JsonValue(0)
   debug,
+  @JsonValue(1)
   info,
+  @JsonValue(2)
   warning,
+  @JsonValue(3)
   error,
 }
