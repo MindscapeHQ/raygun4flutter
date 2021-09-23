@@ -42,7 +42,11 @@ class CrashReporting {
 
     if (response.isSuccess) {
       Settings.breadcrumbs.clear();
-    } else {}
+    } else {
+      RaygunLogger.e(
+        'Failed to send Crash Report. Reason: ${response.asError.error}',
+      );
+    }
 
     // if (onBeforeSend != null) {
     //   msg = onBeforeSend.onBeforeSend(msg);
@@ -73,12 +77,12 @@ Future<RaygunMessage> _buildMessage(
   raygunMessage.details.machineName = await _machineName();
   raygunMessage.details.environment =
       await RaygunEnvironmentMessage.fromDeviceInfo();
+  raygunMessage.details.breadcrumbs.addAll(Settings.breadcrumbs);
 
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
   //     .setAppContext(RaygunClient.getAppContextIdentifier())
   //     .setVersion(RaygunClient.getVersion())
   //     .setNetworkInfo(RaygunClient.getApplicationContext())
-  //     .setBreadcrumbs(breadcrumbs)
 
   return raygunMessage;
 }
