@@ -48,7 +48,7 @@ class RaygunUserInfo {
   /// It doesn't have to be unique, but we will treat any duplicated values as
   /// the same user. If you use their email address here, pass it in as the
   /// 'emailAddress' parameter too.
-  late String? _identifier;
+  String? _identifier;
 
   String? get identifier => _identifier;
 

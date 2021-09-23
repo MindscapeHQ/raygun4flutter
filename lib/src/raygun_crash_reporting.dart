@@ -35,7 +35,9 @@ class CrashReporting {
       msg.details.customData.addAll(globalCustomData);
     }
 
-    final response = await CrashReportingPostService().postCrashReporting(
+    final response = await CrashReportingPostService(
+      client: Settings.customHttpClient,
+    ).postCrashReporting(
       Settings.apiKey ?? '',
       msg.toJson(),
     );
@@ -74,10 +76,15 @@ Future<RaygunMessage> _buildMessage(
   }
 
   raygunMessage.details.client = RaygunClientMessage();
-  raygunMessage.details.machineName = await _machineName();
-  raygunMessage.details.environment =
-      await RaygunEnvironmentMessage.fromDeviceInfo();
   raygunMessage.details.breadcrumbs.addAll(Settings.breadcrumbs);
+  raygunMessage.details.user = Settings.userInfo;
+
+  // Cannot load device info in tests
+  if (!Settings.skipIfTest) {
+    raygunMessage.details.machineName = await _machineName();
+    raygunMessage.details.environment =
+        await RaygunEnvironmentMessage.fromDeviceInfo();
+  }
 
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
   //     .setAppContext(RaygunClient.getAppContextIdentifier())

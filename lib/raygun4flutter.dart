@@ -54,7 +54,7 @@ class Raygun {
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
   }) async {
-    await sendCustom(
+    return sendCustom(
       className: error.runtimeType.toString(),
       reason: error.toString(),
       tags: tags,
@@ -93,7 +93,7 @@ class Raygun {
       trace = Trace.from(stackTrace);
     }
 
-    CrashReporting.send(className, reason, tags, customData, trace);
+    return CrashReporting.send(className, reason, tags, customData, trace);
   }
 
   /// Sets a List of tags which will be sent along with every exception.

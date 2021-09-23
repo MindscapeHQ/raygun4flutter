@@ -6,6 +6,14 @@ import 'package:raygun4flutter/src/services/settings.dart';
 import 'package:raygun4flutter/src/utils/response.dart';
 
 class CrashReportingPostService {
+  late http.Client _client;
+
+  CrashReportingPostService({
+    http.Client? client,
+  }) {
+    _client = client ?? http.Client();
+  }
+
   /// Raw post method that delivers a pre-built Crash Reporting payload to the Raygun API.
   ///
   /// @param apiKey      The API key of the app to deliver to
@@ -18,7 +26,7 @@ class CrashReportingPostService {
     try {
       RaygunLogger.d('Sending crash reports');
       if (_validateApiKey(apiKey)) {
-        final response = await http.post(
+        final response = await _client.post(
           Uri.parse(Settings.crashReportingEndpoint),
           body: jsonEncode(jsonPayload),
           headers: {
