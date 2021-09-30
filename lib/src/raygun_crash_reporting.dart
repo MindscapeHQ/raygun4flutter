@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'logging/raygun_logger.dart';
+import 'messages/network_info.dart';
 import 'messages/raygun_client_message.dart';
 import 'messages/raygun_environment_message.dart';
 import 'messages/raygun_error_message.dart';
@@ -81,6 +82,7 @@ Future<RaygunMessage> _buildMessage(
 
   // Cannot load device info in tests
   if (!Settings.skipIfTest) {
+    raygunMessage.details.request = await NetworkInfo.create();
     raygunMessage.details.machineName = await _machineName();
     raygunMessage.details.environment =
         await RaygunEnvironmentMessage.fromDeviceInfo();
