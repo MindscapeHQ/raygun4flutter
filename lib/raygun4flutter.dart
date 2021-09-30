@@ -28,6 +28,9 @@ class Raygun {
   }) async {
     Settings.apiKey = apiKey;
     setVersion(version);
+    // Send stored crash reports
+    await CrashReporting.sendStored();
+    // Listen to connectivity changed and send stored reports when online
     Connectivity().onConnectivityChanged.listen((event) async {
       if (event != ConnectivityResult.none) {
         RaygunLogger.d('Connectivity recovered, sending stored payloads');
