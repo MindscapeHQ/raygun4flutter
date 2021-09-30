@@ -27,9 +27,6 @@ class CrashReportingPostService {
     String apiKey,
     dynamic jsonPayload,
   ) async {
-    // // todo for testing
-    // await _store(jsonPayload);
-    //
     final connectivity = await Connectivity().checkConnectivity();
     if (connectivity == ConnectivityResult.none) {
       // No connection, store crash in cache
@@ -42,6 +39,8 @@ class CrashReportingPostService {
           (result.isSuccess && result.asSuccess.value == 429)) {
         // Failed to send payload, storing in cache
         await _store(jsonPayload);
+      } else {
+        return result;
       }
     }
     return Response.error('Could not send report now.');
@@ -108,6 +107,35 @@ class CrashReportingPostService {
       }
     } catch (e) {
       RaygunLogger.e('Failed to store payload: $e');
+    }
+  }
+
+  Future<void> sendAllStored(String apiKey) async {
+    RaygunLogger.d('Sending all stored crash reports');
+    final connectivity = await Connectivity().checkConnectivity();
+    if (connectivity == ConnectivityResult.none) {
+      RaygunLogger.w('No connectivity, cannot send stored payloads');
+      return;
+    }
+    try {
+      final cacheDir = await getTemporaryDirectory();
+      RaygunLogger.d('Cache dir: $cacheDir');
+      final cachedFiles = cacheDir
+          .listSync()
+          .where((element) => element.path.endsWith('.raygun4'));
+      RaygunLogger.d('Currently ${cachedFiles.length} stored');
+      for (final file in cachedFiles) {
+        final content = await File(file.path).readAsString();
+        final result = await _send(apiKey, jsonDecode(content));
+        if (result.isSuccess && result.asSuccess.value != 429) {
+          RaygunLogger.d('Stored payload sent, deleting file: ${file.path}');
+          await file.delete();
+        } else {
+          RaygunLogger.w('Failed to send ${file.path}');
+        }
+      }
+    } catch (e) {
+      RaygunLogger.e('Error while sending stored payloads: $e');
     }
   }
 }

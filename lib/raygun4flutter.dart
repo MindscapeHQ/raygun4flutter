@@ -1,4 +1,6 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:raygun4flutter/src/logging/raygun_logger.dart';
 import 'package:raygun4flutter/src/raygun_crash_reporting.dart';
 import 'package:raygun4flutter/src/services/settings.dart';
 import 'package:stack_trace/stack_trace.dart';
@@ -26,6 +28,12 @@ class Raygun {
   }) async {
     Settings.apiKey = apiKey;
     setVersion(version);
+    Connectivity().onConnectivityChanged.listen((event) async {
+      if (event != ConnectivityResult.none) {
+        RaygunLogger.d('Connectivity recovered, sending stored payloads');
+        await CrashReporting.sendStored();
+      }
+    });
   }
 
   /// Manually stores the version of your application to be transmitted with

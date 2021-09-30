@@ -62,6 +62,11 @@ class CrashReporting {
     //     RaygunClient.getApiKey(), new Gson().toJson(msg));
     // postCachedMessages();
   }
+
+  static Future<void> sendStored() async {
+    await CrashReportingPostService(client: Settings.customHttpClient)
+        .sendAllStored(Settings.apiKey ?? '');
+  }
 }
 
 Future<RaygunMessage> _buildMessage(
