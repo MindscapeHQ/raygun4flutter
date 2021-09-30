@@ -15,9 +15,11 @@ dependencies:
     sdk: flutter
 
   http: ^0.13.3
+  intl: ^0.17.0
   json_annotation: ^4.1.0
   network_info_plus: ^1.1.0
   package_info_plus: ^1.0.6
+  path_provider: ^2.0.5
   stack_trace: ^1.10.0
 
 dev_dependencies:

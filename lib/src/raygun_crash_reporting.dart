@@ -91,7 +91,6 @@ Future<RaygunMessage> _buildMessage(
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
   //     .setAppContext(RaygunClient.getAppContextIdentifier())
   //     .setVersion(RaygunClient.getVersion())
-  //     .setNetworkInfo(RaygunClient.getApplicationContext())
 
   return raygunMessage;
 }
