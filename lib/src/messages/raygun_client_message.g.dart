@@ -7,10 +7,13 @@ part of 'raygun_client_message.dart';
 // **************************************************************************
 
 RaygunClientMessage _$RaygunClientMessageFromJson(Map<String, dynamic> json) =>
-    RaygunClientMessage()..version = json['version'] as String?;
+    RaygunClientMessage()
+      ..clientUrl = json['clientUrl'] as String?
+      ..name = json['name'] as String?;
 
 Map<String, dynamic> _$RaygunClientMessageToJson(
         RaygunClientMessage instance) =>
     <String, dynamic>{
-      'version': instance.version,
+      'clientUrl': instance.clientUrl,
+      'name': instance.name,
     };
