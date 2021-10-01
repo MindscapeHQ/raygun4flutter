@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:raygun4flutter/src/messages/raygun_app_context.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import 'logging/raygun_logger.dart';
@@ -13,6 +14,7 @@ import 'messages/raygun_error_message.dart';
 import 'messages/raygun_message.dart';
 import 'services/crash_reporting_post_service.dart';
 import 'services/settings.dart';
+import 'package:uuid/uuid.dart';
 
 class CrashReporting {
   static Future<void> send(
@@ -79,6 +81,11 @@ Future<RaygunMessage> _buildMessage(
   raygunMessage.details.client = RaygunClientMessage();
   raygunMessage.details.breadcrumbs.addAll(Settings.breadcrumbs);
   raygunMessage.details.user = Settings.userInfo;
+
+  // Set App context
+  final raygunAppContext = RaygunAppContext();
+  raygunAppContext.identifier = const Uuid().v4();
+  raygunMessage.details.context = raygunAppContext;
 
   // Cannot load device info in tests
   if (!Settings.skipIfTest) {

@@ -7,7 +7,9 @@ part of 'raygun_app_context.dart';
 // **************************************************************************
 
 RaygunAppContext _$RaygunAppContextFromJson(Map<String, dynamic> json) =>
-    RaygunAppContext();
+    RaygunAppContext()..identifier = json['identifier'] as String?;
 
 Map<String, dynamic> _$RaygunAppContextToJson(RaygunAppContext instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'identifier': instance.identifier,
+    };
