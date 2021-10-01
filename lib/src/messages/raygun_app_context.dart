@@ -6,6 +6,8 @@ part 'raygun_app_context.g.dart';
 class RaygunAppContext {
   RaygunAppContext();
 
+  String? identifier;
+
   Map<String, dynamic> toJson() => _$RaygunAppContextToJson(this);
 
   factory RaygunAppContext.fromJson(

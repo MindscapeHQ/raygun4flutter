@@ -3,7 +3,9 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:raygun4flutter/src/messages/raygun_app_context.dart';
 import 'package:stack_trace/stack_trace.dart';
+import 'package:uuid/uuid.dart';
 
 import 'logging/raygun_logger.dart';
 import 'messages/network_info.dart';
@@ -84,6 +86,11 @@ Future<RaygunMessage> _buildMessage(
   raygunMessage.details.client = RaygunClientMessage();
   raygunMessage.details.breadcrumbs.addAll(Settings.breadcrumbs);
   raygunMessage.details.user = Settings.userInfo;
+
+  // Set App context
+  final raygunAppContext = RaygunAppContext();
+  raygunAppContext.identifier = const Uuid().v4();
+  raygunMessage.details.context = raygunAppContext;
 
   // Cannot load device info in tests
   if (!Settings.skipIfTest) {
