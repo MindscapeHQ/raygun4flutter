@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Raygun.init(apiKey: 'YuxdtTQU4bVH3Nw9s6Fjqw', version: '1.2.3');
+    Raygun.init(apiKey: '', version: '1.2.3');
     Raygun.setTags(['tag1', 'tag2']);
     Raygun.setCustomData({'custom': 'data'});
   }

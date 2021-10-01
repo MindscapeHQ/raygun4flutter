@@ -1,3 +1,11 @@
+## 1.0.0-dev.1
+
+* Upcoming version 1.0.0
+* Complete rework of the package implementation.
+* Pure Dart implementation, no longer depends on Android and iOS plugins.
+* Same API as version 0.5.1
+* Native Dart stack traces
+
 ## 0.5.1
 
 * Formatting fixes
