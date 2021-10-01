@@ -144,6 +144,12 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Set RaygunUserInfo'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Raygun.setUser(null);
+              },
+              child: const Text('Set Anonymous user'),
+            ),
           ],
         ),
       ),

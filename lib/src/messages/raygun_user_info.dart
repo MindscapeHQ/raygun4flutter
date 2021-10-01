@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:raygun4flutter/src/services/settings.dart';
 
 import '../logging/raygun_logger.dart';
 
@@ -16,9 +17,10 @@ class RaygunUserInfo {
     this.email,
   }) {
     if (identifier == null || identifier.isEmpty) {
-      // todo: generate a unique id?
-      // identifier = RaygunNetworkUtils.getDeviceUuid(
-      //     RaygunClient.getApplicationContext());
+      Settings.deviceUuid().then((value) {
+        _identifier = value;
+        RaygunLogger.i("Assigned ID to anonymous user: $_identifier");
+      });
       isAnonymous = true;
       RaygunLogger.i("Created anonymous user");
     } else {

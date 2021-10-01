@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:raygun4flutter/src/services/settings.dart';
 
 import 'network_info.dart';
 import 'raygun_app_context.dart';
@@ -14,7 +15,7 @@ part 'raygun_message_details.g.dart';
 class RaygunMessageDetails {
   String? groupingKey;
   String? machineName;
-  String version = 'Not supplied';
+  String version = Settings.version ?? '';
   RaygunErrorMessage? error;
   RaygunEnvironmentMessage? environment;
   RaygunClientMessage? client;

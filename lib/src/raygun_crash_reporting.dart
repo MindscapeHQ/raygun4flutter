@@ -52,17 +52,6 @@ class CrashReporting {
         'Failed to send Crash Report. Reason: ${response.asError.error}',
       );
     }
-
-    // if (onBeforeSend != null) {
-    //   msg = onBeforeSend.onBeforeSend(msg);
-    //   if (msg == null) {
-    //     return;
-    //   }
-    // }
-
-    // enqueueWorkForCrashReportingService(
-    //     RaygunClient.getApiKey(), new Gson().toJson(msg));
-    // postCachedMessages();
   }
 
   static Future<void> sendStored() async {

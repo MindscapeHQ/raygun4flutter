@@ -10,7 +10,7 @@ class RaygunMessage {
   late RaygunMessageDetails details;
 
   RaygunMessage() {
-    occurredOn = 'TODO DATE';
+    occurredOn = DateTime.now().toIso8601String();
     details = RaygunMessageDetails();
   }
 

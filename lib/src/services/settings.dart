@@ -2,6 +2,8 @@
 
 import 'package:http/http.dart' as http;
 import 'package:raygun4flutter/raygun4flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 class Settings {
   static const kDefaultCrashReportingEndpoint = "https://api.raygun.io/entries";
@@ -31,4 +33,17 @@ class Settings {
   static const kDefaultMaxReportsStoredOnDevice = 64;
 
   static int maxReportsStoredOnDevice = kDefaultMaxReportsStoredOnDevice;
+
+  static String kRaygunDeviceIdKey = 'RAYGUN_DEVICE_ID';
+
+  static Future<String> deviceUuid() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey(kRaygunDeviceIdKey)) {
+      return prefs.getString(kRaygunDeviceIdKey)!;
+    } else {
+      final uuid = const Uuid().v4();
+      await prefs.setString(kRaygunDeviceIdKey, uuid);
+      return uuid;
+    }
+  }
 }
