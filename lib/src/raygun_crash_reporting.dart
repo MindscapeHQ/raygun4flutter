@@ -62,6 +62,11 @@ class CrashReporting {
     //     RaygunClient.getApiKey(), new Gson().toJson(msg));
     // postCachedMessages();
   }
+
+  static Future<void> sendStored() async {
+    await CrashReportingPostService(client: Settings.customHttpClient)
+        .sendAllStored(Settings.apiKey ?? '');
+  }
 }
 
 Future<RaygunMessage> _buildMessage(
@@ -91,7 +96,6 @@ Future<RaygunMessage> _buildMessage(
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
   //     .setAppContext(RaygunClient.getAppContextIdentifier())
   //     .setVersion(RaygunClient.getVersion())
-  //     .setNetworkInfo(RaygunClient.getApplicationContext())
 
   return raygunMessage;
 }

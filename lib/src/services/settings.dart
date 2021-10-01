@@ -27,4 +27,8 @@ class Settings {
 
   /// Set to true during unit tests
   static bool skipIfTest = false;
+
+  static const kDefaultMaxReportsStoredOnDevice = 64;
+
+  static int maxReportsStoredOnDevice = kDefaultMaxReportsStoredOnDevice;
 }
