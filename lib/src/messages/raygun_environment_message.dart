@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:io';
 import 'dart:ui';
 
@@ -37,6 +38,7 @@ class RaygunEnvironmentMessage {
     environment.windowsBoundHeight = window.physicalSize.height.toInt();
     environment.windowsBoundWidth = window.physicalSize.width.toInt();
     environment.locale = window.locale.toLanguageTag();
+    environment.utcOffset = DateTime.now().timeZoneOffset.inHours.toDouble();
 
     try {
       final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
