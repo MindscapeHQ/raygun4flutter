@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:network_info_plus/network_info_plus.dart' as plus;
 
@@ -19,6 +20,10 @@ class NetworkInfo {
   }
 
   static Future<List<String>> getIps() async {
+    if (kIsWeb) {
+      // Cannot use getWifiIp on Web
+      return [];
+    }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
     final ip6 = await info.getWifiIPv6();
