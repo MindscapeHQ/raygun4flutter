@@ -6,6 +6,10 @@
 * Same API as version 0.5.1
 * Native Dart stack traces
 
+Potentially breaking API change:
+
+* `Raygun.sendCustom()`: changed argument `message` to `reason`
+
 ## 0.5.1
 
 * Formatting fixes
