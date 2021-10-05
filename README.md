@@ -8,6 +8,7 @@
 The world's best Flutter Crash Reporting solution.
 
 Current version: 1.0.0-dev.1
+
 ## Introduction
 
 ### Library organisation
@@ -18,11 +19,9 @@ The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter
 
 ### Requirements
 
-- Android API 16+
-- iOS 10.0+
 - Dart SDK 2.12+
 
-Flutter for Web and Linux are currently not *officially* supported yet. However, as of release 1.0.0-dev.1, the package seems to be working fine on Linux.
+Flutter for Web and Desktop are currently not *officially* supported yet. However, as of release 1.0.0-dev.1, the package seems to be working fine on them.
 
 ## Installation
 
@@ -38,6 +37,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 dependencies:
   raygun4flutter: ^1.0.0-dev.1
 ```
+
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
 
 ### 2. Import it
@@ -259,4 +259,4 @@ For a working sample app across multiple platforms, check the Flutter project in
 
 1. `onBeforeSend` handlers that would allow you to modify the payload right before sending to the Raygun backend are currently unsupported.
 
-2. `setMaxReportsStoredOnDevice` is not exposed to the Flutter layer. The respective platform details will apply.
+2. `setMaxReportsStoredOnDevice` is not exposed and is currently set to 64.
