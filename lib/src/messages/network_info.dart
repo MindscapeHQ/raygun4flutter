@@ -28,11 +28,7 @@ class NetworkInfo {
     }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
-    String? ip6;
-    if (!Platform.isMacOS) {
-      // implementation missing on MacOS
-      ip6 = await info.getWifiIPv6();
-    }
+    final ip6 = await info.getWifiIPv6();
     return [
       if (ip4 != null) ip4,
       if (ip6 != null) ip6,
