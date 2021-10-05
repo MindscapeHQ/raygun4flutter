@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:raygun4flutter/src/messages/raygun_app_context.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:uuid/uuid.dart';
@@ -99,29 +100,31 @@ Future<RaygunMessage> _buildMessage(
 Future<String?> _machineName() async {
   try {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isIOS) {
-      final info = await deviceInfo.iosInfo;
-      return info.name;
+    if (kIsWeb) {
+      final info = await deviceInfo.webBrowserInfo;
+      return info.browserName.toString();
+    } else {
+      if (Platform.isIOS) {
+        final info = await deviceInfo.iosInfo;
+        return info.name;
+      }
+      if (Platform.isAndroid) {
+        final info = await deviceInfo.androidInfo;
+        return info.model;
+      }
+      if (Platform.isLinux) {
+        final info = await deviceInfo.linuxInfo;
+        return info.name;
+      }
+      if (Platform.isMacOS) {
+        final info = await deviceInfo.macOsInfo;
+        return info.computerName;
+      }
+      if (Platform.isWindows) {
+        final info = await deviceInfo.windowsInfo;
+        return info.computerName;
+      }
     }
-    if (Platform.isAndroid) {
-      final info = await deviceInfo.androidInfo;
-      return info.model;
-    }
-    if (Platform.isLinux) {
-      final info = await deviceInfo.linuxInfo;
-      return info.name;
-    }
-    if (Platform.isMacOS) {
-      final info = await deviceInfo.macOsInfo;
-      return info.computerName;
-    }
-    if (Platform.isWindows) {
-      final info = await deviceInfo.windowsInfo;
-      return info.computerName;
-    }
-    // otherwise, it may be web
-    final info = await deviceInfo.webBrowserInfo;
-    return info.browserName.toString();
   } catch (e) {
     RaygunLogger.e('Could not load device info: $e');
     return null;

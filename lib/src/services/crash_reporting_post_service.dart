@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -87,6 +88,10 @@ class CrashReportingPostService {
   }
 
   Future<void> _store(jsonPayload) async {
+    if (kIsWeb) {
+      // Cannot store crashes for later in web
+      return;
+    }
     RaygunLogger.d('Storing crash for later');
     try {
       final cacheDir = await getTemporaryDirectory();
@@ -111,6 +116,10 @@ class CrashReportingPostService {
   }
 
   Future<void> sendAllStored(String apiKey) async {
+    if (kIsWeb) {
+      // Cannot store crashes for later in web
+      return;
+    }
     RaygunLogger.d('Sending all stored crash reports');
     final connectivity = await Connectivity().checkConnectivity();
     if (connectivity == ConnectivityResult.none) {
