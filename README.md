@@ -7,7 +7,7 @@
 
 The world's best Flutter Crash Reporting solution.
 
-Current version: 1.0.0-dev.2
+Current version: 1.0.0-dev.3
 
 ## Introduction
 
@@ -35,7 +35,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  raygun4flutter: ^1.0.0-dev.2
+  raygun4flutter: ^1.0.0-dev.3
 ```
 
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
@@ -52,7 +52,7 @@ Check the "Installing" tab on https://pub.dev/packages/raygun4flutter/install fo
 
 #### General
 
-If your application comprises hybrid code both using Flutter and native Android or iOS elements, please be aware that the Raygun4Flutter package will only track and report crashes from Flutter and Dart. 
+If your application comprises hybrid code both using Flutter and native Android or iOS elements, please be aware that the Raygun4Flutter package will only track and report crashes from Flutter and Dart.
 
 If you have a requirement to track crash reports across various layers and parts of your application written in different technologies you might need to implement the respective native providers for Android, iOS or other platforms of choice as well.
 
@@ -260,3 +260,4 @@ For a working sample app across multiple platforms, check the Flutter project in
 1. `onBeforeSend` handlers that would allow you to modify the payload right before sending to the Raygun backend are currently unsupported.
 
 2. `setMaxReportsStoredOnDevice` is not exposed and is currently set to 64.
+

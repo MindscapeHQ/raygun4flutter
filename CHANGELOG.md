@@ -1,3 +1,7 @@
+## 1.0.0-dev.3
+
+* Better MacOS support
+
 ## 1.0.0-dev.2
 
 * Better Flutter for Web support
