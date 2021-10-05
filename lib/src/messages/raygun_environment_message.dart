@@ -43,7 +43,7 @@ class RaygunEnvironmentMessage {
 
     try {
       final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      if(kIsWeb) {
+      if (kIsWeb) {
         final info = await deviceInfo.webBrowserInfo;
         environment.deviceName = info.userAgent;
         environment.brand = info.browserName.toString();
