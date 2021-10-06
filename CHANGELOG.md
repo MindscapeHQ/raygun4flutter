@@ -1,3 +1,8 @@
+## 1.0.0-dev.4
+
+* Better Windows support
+* use developer.log instead of print for internal logs
+
 ## 1.0.0-dev.3
 
 * Better MacOS support
