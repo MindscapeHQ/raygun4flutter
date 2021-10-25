@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Stable release (no changes)
+
 ## 1.0.0-dev.4
 
 * Better Windows support
