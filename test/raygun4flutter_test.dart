@@ -74,8 +74,8 @@ void main() {
       message: 'BREADCRUMB',
     );
     expect(
-      Settings.breadcrumbs.single.toJson(),
-      breadcrumbMessage.toJson(),
+      Settings.breadcrumbs.single.toJson()['message'],
+      breadcrumbMessage.toJson()['message'],
     );
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(
