@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:network_info_plus/network_info_plus.dart' as plus;
+import 'package:raygun4flutter/src/services/settings.dart';
 
 part 'network_info.g.dart';
 
@@ -16,8 +17,8 @@ class NetworkInfo {
 
   static Future<NetworkInfo> create() async {
     final info = NetworkInfo();
-    info.iPAddress.addAll(await getIps());
-    info.networkConnectivityState = await getConnectivityState();
+    info.iPAddress.addAll(await Settings.getIps());
+    info.networkConnectivityState = await Settings.getConnectivityState();
     return info;
   }
 

@@ -31,12 +31,14 @@ class Raygun {
     // Send stored crash reports
     await CrashReporting.sendStored();
     // Listen to connectivity changed and send stored reports when online
-    Connectivity().onConnectivityChanged.listen((event) async {
-      if (event != ConnectivityResult.none) {
-        RaygunLogger.d('Connectivity recovered, sending stored payloads');
-        await CrashReporting.sendStored();
-      }
-    });
+    if (Settings.listenToConnectivityChanges) {
+      Connectivity().onConnectivityChanged.listen((event) async {
+        if (event != ConnectivityResult.none) {
+          RaygunLogger.d('Connectivity recovered, sending stored payloads');
+          await CrashReporting.sendStored();
+        }
+      });
+    }
   }
 
   /// Manually stores the version of your application to be transmitted with
