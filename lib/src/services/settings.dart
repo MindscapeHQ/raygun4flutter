@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class Settings {
-  static const kDefaultCrashReportingEndpoint = "https://api.raygun.io/entries";
+  static const kDefaultCrashReportingEndpoint = "https://api.raygun.com/entries";
 
   static String crashReportingEndpoint = kDefaultCrashReportingEndpoint;
 
