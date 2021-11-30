@@ -68,7 +68,7 @@ if it doesn't exist yet.
 ## Setup and usage
 ### Initialisation and version tracking
 
-Call `Raygun.init()` with an API key to initialise RaygunClient on application start, for example, from your `initState` method.
+Call `Raygun.init()` with an apiKey argument to initialise RaygunClient on application start, for example, from your `initState` method.
 
 ```dart
 class _MyAppState extends State<MyApp> {
@@ -76,16 +76,16 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Raygun.init('12345');
+    Raygun.init(apiKey:'12345');
   }
 
 }
 ```
 
-The `.init()` method can also accept an optional `appVersion` argument. If this is supplied, the version of your app will be tracked across Raygun crash reports:
+The `.init()` method can also accept an optional `version` argument. If this is supplied, the version of your app will be tracked across Raygun crash reports:
 
 ```dart
-Raygun.init('12345','1.4.5');
+Raygun.init(apiKey:'12345', version:'1.4.5');
 ```
 
 As an additional convenience way to set the version, a method `.setVersion()` is available. Typical use cases would most likely fall back to setting the app version in the .init() method call when you setup the library.
@@ -134,7 +134,7 @@ For example:
 try {
   // code that crashes
 } catch (error) {
-  Raygun.sendException(error);
+  Raygun.sendException(error: error);
 }
 ```
 
