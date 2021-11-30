@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -20,7 +21,7 @@ void main() {
       return http.Response('', 204);
     });
     Settings.getConnectivityState = () async {
-      return 'WiFi';
+      return ConnectivityResult.wifi;
     };
     Settings.getIps = () async {
       return [];
@@ -55,7 +56,7 @@ void main() {
     expect(capturedBody['details']['error']['message'], 'Exception: MESSAGE');
     expect(capturedBody['details']['tags'], ['tag1', 'tag2']);
     expect(capturedBody['details']['userCustomData'], {});
-  }, skip: true);
+  });
 
   test('sendException with custom data', () async {
     await Raygun.sendException(
@@ -65,7 +66,7 @@ void main() {
     expect(capturedBody['details']['error']['message'], 'Exception: MESSAGE');
     expect(capturedBody['details']['tags'], []);
     expect(capturedBody['details']['userCustomData'], {'custom': 42});
-  }, skip: true);
+  });
 
   test('Breadcrumb', () async {
     Raygun.recordBreadcrumb('BREADCRUMB');
@@ -83,7 +84,7 @@ void main() {
     );
     // should clear after send
     expect(Settings.breadcrumbs, isEmpty);
-  }, skip: true);
+  });
 
   test('UserId with ID', () async {
     Raygun.setUserId('ID');
@@ -94,7 +95,7 @@ void main() {
     );
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody['details']['user'], raygunUserInfo.toJson());
-  }, skip: true);
+  });
 
   test('UserId to null', () async {
     Raygun.setUserId(null);
@@ -105,5 +106,5 @@ void main() {
     );
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody['details']['user'], raygunUserInfo.toJson());
-  }, skip: true);
+  });
 }
