@@ -18,6 +18,7 @@ RaygunBreadcrumbMessage _$RaygunBreadcrumbMessageFromJson(
       className: json['className'] as String?,
       methodName: json['methodName'] as String?,
       lineNumber: json['lineNumber'] as String?,
+      timestamp: json['timestamp'] as int?,
     );
 
 Map<String, dynamic> _$RaygunBreadcrumbMessageToJson(
@@ -30,6 +31,7 @@ Map<String, dynamic> _$RaygunBreadcrumbMessageToJson(
       'className': instance.className,
       'methodName': instance.methodName,
       'lineNumber': instance.lineNumber,
+      'timestamp': instance.timestamp,
     };
 
 K _$enumDecode<K, V>(

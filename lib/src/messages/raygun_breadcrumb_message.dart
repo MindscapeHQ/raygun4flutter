@@ -12,7 +12,9 @@ class RaygunBreadcrumbMessage {
     this.className,
     this.methodName,
     this.lineNumber,
-  });
+    // optional, users can provide custom timestamp
+    int? timestamp,
+  }) : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
 
   final String message;
 
@@ -30,6 +32,9 @@ class RaygunBreadcrumbMessage {
 
   /// Note: Not used in iOS
   final String? lineNumber;
+
+  // Milliseconds since the Unix Epoch (required)
+  int timestamp;
 
   Map<String, dynamic> toJson() => _$RaygunBreadcrumbMessageToJson(this);
 
