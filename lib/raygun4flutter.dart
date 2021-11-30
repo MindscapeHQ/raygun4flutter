@@ -125,14 +125,14 @@ class Raygun {
 
   /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
-    Settings.breadcrumbs.add(RaygunBreadcrumbMessage(message: message));
+    Settings.breadcrumbs.insert(0, RaygunBreadcrumbMessage(message: message));
   }
 
   /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
   static Future<void> recordBreadcrumbObject(
     RaygunBreadcrumbMessage raygunBreadcrumbMessage,
   ) async {
-    Settings.breadcrumbs.add(raygunBreadcrumbMessage);
+    Settings.breadcrumbs.insert(0, raygunBreadcrumbMessage);
   }
 
   /// Clears breadcrumbs
