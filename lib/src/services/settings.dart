@@ -2,6 +2,7 @@
 
 import 'package:http/http.dart' as http;
 import 'package:raygun4flutter/raygun4flutter.dart';
+import 'package:raygun4flutter/src/messages/network_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -47,4 +48,19 @@ class Settings {
       return uuid;
     }
   }
+
+  /// Visible for testing.
+  /// set to false to disable connectivity changes
+  static bool listenToConnectivityChanges = true;
+
+  /// Visible for testing.
+  /// Allow mocking of connectivity state
+  static ConnectivityStateFunction getConnectivityState =
+      NetworkInfo.getConnectivityState;
+
+  static GetIpsFunction getIps = NetworkInfo.getIps;
 }
+
+typedef ConnectivityStateFunction = Future<String> Function();
+
+typedef GetIpsFunction = Future<List<String>> Function();
