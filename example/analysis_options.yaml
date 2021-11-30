@@ -7,3 +7,4 @@ linter:
     sort_constructors_first: true
     prefer_single_quotes: true
     public_member_api_docs: true
+    depend_on_referenced_packages: false
