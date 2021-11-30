@@ -1,13 +1,11 @@
 # raygun4flutter
 
-<!-- ![Pub Version](https://img.shields.io/pub/v/raygun4flutter) -->
-
-
+![Pub Version](https://img.shields.io/pub/v/raygun4flutter)
 [![CI](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml/badge.svg)](https://github.com/MindscapeHQ/raygun4flutter/actions/workflows/main.yml)
 
 The world's best Flutter Crash Reporting solution.
 
-Current version: 1.0.0
+Current version: 1.1.1
 
 ## Introduction
 
@@ -35,7 +33,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  raygun4flutter: ^1.0.0
+  raygun4flutter: ^1.1.1
 ```
 
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
