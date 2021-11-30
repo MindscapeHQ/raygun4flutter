@@ -28,7 +28,7 @@ class CrashReportingPostService {
     String apiKey,
     dynamic jsonPayload,
   ) async {
-    final connectivity = await Connectivity().checkConnectivity();
+    final connectivity = await Settings.getConnectivityState();
     if (connectivity == ConnectivityResult.none) {
       // No connection, store crash in cache
       RaygunLogger.w('No connection, caching payload');
@@ -121,7 +121,7 @@ class CrashReportingPostService {
       return;
     }
     RaygunLogger.d('Sending all stored crash reports');
-    final connectivity = await Connectivity().checkConnectivity();
+    final connectivity = await Settings.getConnectivityState();
     if (connectivity == ConnectivityResult.none) {
       RaygunLogger.w('No connectivity, cannot send stored payloads');
       return;

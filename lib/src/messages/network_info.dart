@@ -18,7 +18,7 @@ class NetworkInfo {
   static Future<NetworkInfo> create() async {
     final info = NetworkInfo();
     info.iPAddress.addAll(await Settings.getIps());
-    info.networkConnectivityState = await Settings.getConnectivityState();
+    info.networkConnectivityState = await getConnectivityState();
     return info;
   }
 
@@ -40,7 +40,7 @@ class NetworkInfo {
   }
 
   static Future<String> getConnectivityState() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
+    final connectivityResult = await Settings.getConnectivityState();
     switch (connectivityResult) {
       case ConnectivityResult.wifi:
         return 'WiFi';

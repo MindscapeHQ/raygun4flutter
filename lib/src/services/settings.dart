@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:raygun4flutter/raygun4flutter.dart';
 import 'package:raygun4flutter/src/messages/network_info.dart';
@@ -56,11 +57,11 @@ class Settings {
   /// Visible for testing.
   /// Allow mocking of connectivity state
   static ConnectivityStateFunction getConnectivityState =
-      NetworkInfo.getConnectivityState;
+      Connectivity().checkConnectivity;
 
   static GetIpsFunction getIps = NetworkInfo.getIps;
 }
 
-typedef ConnectivityStateFunction = Future<String> Function();
+typedef ConnectivityStateFunction = Future<ConnectivityResult> Function();
 
 typedef GetIpsFunction = Future<List<String>> Function();
