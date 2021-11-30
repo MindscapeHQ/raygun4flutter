@@ -1,3 +1,8 @@
+## 1.1.0
+
+* Breadcrumb improvements: timestamps and order
+* Change to api.raygun.com
+
 ## 1.0.0
 
 * Stable release (no changes)
