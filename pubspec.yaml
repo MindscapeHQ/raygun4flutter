@@ -1,6 +1,6 @@
 name: raygun4flutter
 description: Raygun4flutter package is the official Raygun crash reporting provider for Flutter.
-version: 1.1.1
+version: 1.1.2
 homepage: https://raygun.com
 repository: https://github.com/MindscapeHQ/Raygun4Flutter
 
@@ -9,15 +9,15 @@ environment:
   flutter: ">=1.12.0"
 
 dependencies:
-  connectivity_plus: ^1.4.0
-  device_info_plus: ^2.1.0
+  connectivity_plus: ^2.1.0
+  device_info_plus: ^3.1.1
   flutter:
     sdk: flutter
 
   http: ^0.13.3
   intl: ^0.17.0
   json_annotation: ^4.1.0
-  network_info_plus: ^1.1.0
+  network_info_plus: ^2.1.1
   package_info_plus: ^1.0.6
   path_provider: ^2.0.5
   shared_preferences: ^2.0.8
@@ -29,8 +29,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  json_serializable: ^5.0.1
+  json_serializable: ^6.1.1
 
-  lint: ^1.5.3
+  lint: ^1.7.2
 
 flutter:
