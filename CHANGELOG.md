@@ -1,7 +1,6 @@
 ## 1.1.2
 
 * Upgrade dependencies
-* 
 
 ## 1.1.1
 
