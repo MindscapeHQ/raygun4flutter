@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -29,13 +27,8 @@ class NetworkInfo {
     }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
-    String? ip6;
-    if (!Platform.isWindows) {
-      ip6 = await info.getWifiIPv6();
-    }
     return [
       if (ip4 != null) ip4,
-      if (ip6 != null) ip6,
     ];
   }
 

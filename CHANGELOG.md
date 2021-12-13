@@ -1,3 +1,7 @@
+## 1.1.3
+
+* Use stubs to enable web support
+
 ## 1.1.2
 
 * Upgrade dependencies
