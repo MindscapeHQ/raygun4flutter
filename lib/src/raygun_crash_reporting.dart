@@ -5,16 +5,18 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:raygun4flutter/src/messages/raygun_app_context.dart';
+import 'package:raygun4flutter/src/services/device_info_util.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:uuid/uuid.dart';
 
 import 'logging/raygun_logger.dart';
 import 'messages/network_info.dart';
 import 'messages/raygun_client_message.dart';
-import 'messages/raygun_environment_message.dart';
 import 'messages/raygun_error_message.dart';
 import 'messages/raygun_message.dart';
-import 'services/crash_reporting_post_service.dart';
+import 'services/crash_reporting_stub.dart'
+    if (dart.library.js) 'services/crash_reporting_web.dart'
+    if (dart.library.io) 'services/crash_reporting_device.dart';
 import 'services/settings.dart';
 
 class CrashReporting {
@@ -86,8 +88,7 @@ Future<RaygunMessage> _buildMessage(
   if (!Settings.skipIfTest) {
     raygunMessage.details.request = await NetworkInfo.create();
     raygunMessage.details.machineName = await _machineName();
-    raygunMessage.details.environment =
-        await RaygunEnvironmentMessage.fromDeviceInfo();
+    raygunMessage.details.environment = await fromDeviceInfo();
   }
 
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
