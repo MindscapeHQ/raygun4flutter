@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 
 class Settings {
   static const kDefaultCrashReportingEndpoint =
-      "https://api.raygun.com/entries";
+      'https://api.raygun.com/entries';
 
   static String crashReportingEndpoint = kDefaultCrashReportingEndpoint;
 

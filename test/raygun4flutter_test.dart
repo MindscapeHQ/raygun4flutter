@@ -1,4 +1,4 @@
-// ignore_for_file: require_trailing_commas, avoid_print
+// ignore_for_file: require_trailing_commas, avoid_print, avoid_dynamic_calls
 
 import 'dart:convert';
 
