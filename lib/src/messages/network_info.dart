@@ -43,6 +43,10 @@ class NetworkInfo {
         return 'Mobile';
       case ConnectivityResult.none:
         return 'Not Connected';
+      case ConnectivityResult.bluetooth:
+        return 'Bluetooth';
+      default:
+        return 'Unknown';
     }
   }
 

@@ -19,14 +19,14 @@ class RaygunUserInfo {
     if (identifier == null || identifier.isEmpty) {
       Settings.deviceUuid().then((value) {
         _identifier = value;
-        RaygunLogger.i("Assigned ID to anonymous user: $_identifier");
+        RaygunLogger.i('Assigned ID to anonymous user: $_identifier');
       });
       isAnonymous = true;
-      RaygunLogger.i("Created anonymous user");
+      RaygunLogger.i('Created anonymous user');
     } else {
       _identifier = identifier;
       isAnonymous = false;
-      RaygunLogger.i("Created user with id: $identifier");
+      RaygunLogger.i('Created user with id: $identifier');
     }
   }
 
