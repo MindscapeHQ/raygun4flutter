@@ -30,18 +30,17 @@ class RaygunUserInfo {
     }
   }
 
-  /// due to limitations on the Json library we need to expose this field
-  /// but users should not be modifying it
-  late bool isAnonymous;
+  /// Users should not be modifying this member manually
+  bool isAnonymous = false;
 
   /// The user's first name
-  final String? firstName;
+  String? firstName;
 
   /// The user's full name - if setting the first name you should set this too
-  final String? fullName;
+  String? fullName;
 
   /// User's email address
-  final String? email;
+  String? email;
 
   /// Unique identifier for this user.
   ///

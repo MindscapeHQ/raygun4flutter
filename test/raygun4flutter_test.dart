@@ -107,4 +107,25 @@ void main() {
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody['details']['user'], raygunUserInfo.toJson());
   });
+
+  test('call to onBeforeSend before sending', () async {
+    bool called = false;
+    Raygun.onBeforeSend = (payload) {
+      called = true;
+      payload.details.error!.message = 'NEW MESSAGE';
+      return payload;
+    };
+    await Raygun.sendException(error: Exception('MESSAGE'));
+    expect(called, isTrue);
+    expect(capturedBody['details']['error']['message'], 'NEW MESSAGE');
+    Raygun.onBeforeSend = null;
+  });
+
+  test('cancel sending message with onBeforeSend', () async {
+    Raygun.onBeforeSend = (payload) {
+      return null;
+    };
+    await Raygun.sendException(error: Exception('MESSAGE'));
+    expect(capturedBody, isNull);
+  });
 }

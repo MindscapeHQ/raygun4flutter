@@ -212,11 +212,45 @@ The structure of the type `RaygunBreadcrumbMessage` is as shown here:
 
 Breadcrumbs can be cleared with `Raygun.clearBreadcrumbs()`.
 
+### Getting/setting/cancelling the error before it is sent
+
+This provider has an `onBeforeSend` API to support accessing or mutating the candidate 
+error payload immediately before it is sent, or cancelling the sending action. 
+
+This is provided as the public callback `Raygun.onBeforeSend`, 
+which takes an `OnBeforeSendCallback`.
+
+Example:
+
+```dart
+Raygun.onBeforeSend = (payload) {
+  // e.g. override the payload error message with a new message
+  payload.details.error!.message = 'New Error Message';
+  
+  // important: return the payload to continue the sending action
+  return payload;
+};
+```
+
+To cancel the sending action, return `null`:
+
+```dart
+Raygun.onBeforeSend = (payload) {
+  return null;
+};
+```
+
+Set the `Raygun.onBeforeSend` to `null` to remove your custom callback:
+
+```dart
+Raygun.onBeforeSend = null;
+```
+
 ### Affected Customers
 
 Raygun supports tracking the unique customers who encounter bugs in your apps.
 
-By default a device-derived UUID is transmitted. You can also add the currently logged in customer's data like this using an object of type `RaygunUserInfo`:
+By default, a device-derived UUID is transmitted. You can also add the currently logged in customer's data like this using an object of type `RaygunUserInfo`:
 
 ```dart
 Raygun.setUser(
