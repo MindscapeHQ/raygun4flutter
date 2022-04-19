@@ -18,7 +18,6 @@ typedef OnBeforeSendCallback = RaygunMessage? Function(RaygunMessage payload);
 /// This is the main class that provides functionality for
 /// sending exceptions to the Raygun service.
 class Raygun {
-
   // Don't allow instances
   Raygun._();
 
@@ -196,4 +195,3 @@ class Raygun {
   /// Return null from the callback to cancel sending the report.
   static OnBeforeSendCallback? onBeforeSend;
 }
-
