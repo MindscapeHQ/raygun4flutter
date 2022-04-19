@@ -127,5 +127,6 @@ void main() {
     };
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody, isNull);
+    Raygun.onBeforeSend = null;
   });
 }
