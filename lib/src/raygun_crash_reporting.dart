@@ -5,6 +5,7 @@ import 'package:raygun4flutter/src/utils/machine_name_util.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:uuid/uuid.dart';
 
+import '../raygun4flutter.dart';
 import 'logging/raygun_logger.dart';
 import 'messages/network_info.dart';
 import 'messages/raygun_client_message.dart';
@@ -36,11 +37,18 @@ class CrashReporting {
       msg.details.customData.addAll(globalCustomData);
     }
 
+    final onBeforeSend = Raygun.onBeforeSend;
+    final msgToSend = onBeforeSend != null ? onBeforeSend(msg) : msg;
+    if (msgToSend == null) {
+      RaygunLogger.d('Cancelled sending message.');
+      return;
+    }
+
     final response = await CrashReportingPostService(
       client: Settings.customHttpClient,
     ).postCrashReporting(
       Settings.apiKey ?? '',
-      msg.toJson(),
+      msgToSend.toJson(),
     );
 
     if (response.isSuccess) {

@@ -16,22 +16,22 @@ class RaygunBreadcrumbMessage {
     int? timestamp,
   }) : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
 
-  final String message;
+  String message;
 
-  final String? category;
+  String? category;
 
-  final RaygunBreadcrumbLevel level;
+  RaygunBreadcrumbLevel level;
 
-  final Map<String, dynamic>? customData;
-
-  /// Note: Not used in iOS
-  final String? className;
+  Map<String, dynamic>? customData;
 
   /// Note: Not used in iOS
-  final String? methodName;
+  String? className;
 
   /// Note: Not used in iOS
-  final String? lineNumber;
+  String? methodName;
+
+  /// Note: Not used in iOS
+  String? lineNumber;
 
   // Milliseconds since the Unix Epoch (required)
   int timestamp;

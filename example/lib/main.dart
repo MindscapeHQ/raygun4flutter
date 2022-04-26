@@ -43,9 +43,35 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    // example: init with app version
     Raygun.init(apiKey: '', version: '1.2.3');
+
+    // example: set custom tags to all error messages
     Raygun.setTags(['tag1', 'tag2']);
+
+    // example: set custom data to all error messages
     Raygun.setCustomData({'custom': 'data'});
+
+    // example: custom onBeforeSend to process payload
+    Raygun.onBeforeSend = (payload) {
+      // example: print error message before sending
+      final message = payload.details.error.message;
+      debugPrint('Sending: $message');
+
+      // example: remove breadcrumbs with confidential data
+      payload.details.breadcrumbs.removeWhere(
+        (breadcrumb) => breadcrumb.message.contains('some-confidential-data'),
+      );
+
+      // example: cancel sending if condition is met
+      if (message.contains('some-pattern')) {
+        return null;
+      }
+
+      // important! return payload to continue with the payload send
+      return payload;
+    };
   }
 
   @override
@@ -57,12 +83,15 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
+            // example: button tap causes sync Dart exception
             ElevatedButton(
               onPressed: () {
                 throw StateError('This is a Dart exception.');
               },
               child: const Text('Cause Dart Exception'),
             ),
+
+            // example: Button tap causes async Dart exception
             ElevatedButton(
               onPressed: () async {
                 Future<void> foo() async {
@@ -77,6 +106,8 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Cause Async Dart Exception'),
             ),
+
+            // example: Button tap sends custom error
             ElevatedButton(
               onPressed: () {
                 Raygun.sendCustom(
@@ -86,6 +117,8 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Send custom error'),
             ),
+
+            // example: Button tap sends custom error with StackTrace
             ElevatedButton(
               onPressed: () {
                 Raygun.sendCustom(
@@ -96,6 +129,8 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Send custom error with StackTrace'),
             ),
+
+            // example: Button tap sends custom error with tags
             ElevatedButton(
               onPressed: () {
                 Raygun.sendCustom(
@@ -111,6 +146,8 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Send custom error with tags and customData'),
             ),
+
+            // example: Button tap adds breadcrumb to future error message
             ElevatedButton(
               onPressed: () {
                 Raygun.recordBreadcrumb('test breadcrumb');
@@ -125,12 +162,16 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Breadcrumb'),
             ),
+
+            // example: Button tap sets User Id
             ElevatedButton(
               onPressed: () {
                 Raygun.setUserId('1234');
               },
               child: const Text('User Id'),
             ),
+
+            // example: Button tap sets full User info
             ElevatedButton(
               onPressed: () {
                 Raygun.setUser(
@@ -144,6 +185,8 @@ class _MyAppState extends State<MyApp> {
               },
               child: const Text('Set RaygunUserInfo'),
             ),
+
+            // example: Button tap clears user data and makes user anonymous
             ElevatedButton(
               onPressed: () {
                 Raygun.setUser(null);

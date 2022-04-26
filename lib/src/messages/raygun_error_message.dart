@@ -7,8 +7,8 @@ part 'raygun_error_message.g.dart';
 
 @JsonSerializable()
 class RaygunErrorMessage {
-  final String message;
-  final String className;
+  String message;
+  String className;
 
   // todo: innerError is null at the moment
   RaygunErrorMessage? innerError;
