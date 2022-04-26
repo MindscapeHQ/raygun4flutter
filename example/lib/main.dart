@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
       );
 
       // example: cancel sending if condition is met
-      if (message.contains('some-pattern')){
+      if (message.contains('some-pattern')) {
         return null;
       }
 
