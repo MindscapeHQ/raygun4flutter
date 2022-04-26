@@ -1,7 +1,8 @@
-// ignore_for_file: require_trailing_commas, avoid_print
+// ignore_for_file: require_trailing_commas, avoid_print, avoid_dynamic_calls
 
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -19,6 +20,13 @@ void main() {
       print(capturedBody);
       return http.Response('', 204);
     });
+    Settings.getConnectivityState = () async {
+      return ConnectivityResult.wifi;
+    };
+    Settings.getIps = () async {
+      return [];
+    };
+    Settings.listenToConnectivityChanges = false;
 
     Raygun.init(apiKey: 'KEY');
   });
@@ -62,15 +70,17 @@ void main() {
 
   test('Breadcrumb', () async {
     Raygun.recordBreadcrumb('BREADCRUMB');
-    final breadcrumbMessage = RaygunBreadcrumbMessage(message: 'BREADCRUMB');
+    final breadcrumbMessage = RaygunBreadcrumbMessage(
+      message: 'BREADCRUMB',
+    );
     expect(
-      Settings.breadcrumbs.single.toJson(),
-      breadcrumbMessage.toJson(),
+      Settings.breadcrumbs.single.toJson()['message'],
+      breadcrumbMessage.toJson()['message'],
     );
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(
-      capturedBody['details']['breadcrumbs'].single,
-      breadcrumbMessage.toJson(),
+      capturedBody['details']['breadcrumbs'].single['message'],
+      breadcrumbMessage.toJson()['message'],
     );
     // should clear after send
     expect(Settings.breadcrumbs, isEmpty);

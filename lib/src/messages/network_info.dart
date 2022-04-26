@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:network_info_plus/network_info_plus.dart' as plus;
+import 'package:raygun4flutter/src/services/settings.dart';
 
 part 'network_info.g.dart';
 
@@ -16,7 +15,7 @@ class NetworkInfo {
 
   static Future<NetworkInfo> create() async {
     final info = NetworkInfo();
-    info.iPAddress.addAll(await getIps());
+    info.iPAddress.addAll(await Settings.getIps());
     info.networkConnectivityState = await getConnectivityState();
     return info;
   }
@@ -28,18 +27,13 @@ class NetworkInfo {
     }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
-    String? ip6;
-    if (!Platform.isWindows) {
-      ip6 = await info.getWifiIPv6();
-    }
     return [
       if (ip4 != null) ip4,
-      if (ip6 != null) ip6,
     ];
   }
 
   static Future<String> getConnectivityState() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
+    final connectivityResult = await Settings.getConnectivityState();
     switch (connectivityResult) {
       case ConnectivityResult.wifi:
         return 'WiFi';
@@ -49,6 +43,10 @@ class NetworkInfo {
         return 'Mobile';
       case ConnectivityResult.none:
         return 'Not Connected';
+      case ConnectivityResult.bluetooth:
+        return 'Bluetooth';
+      default:
+        return 'Unknown';
     }
   }
 

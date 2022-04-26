@@ -1,20 +1,17 @@
 // ignore_for_file: avoid_classes_with_only_static_members
-
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:raygun4flutter/src/messages/raygun_app_context.dart';
+import 'package:raygun4flutter/src/utils/device_info_util.dart';
+import 'package:raygun4flutter/src/utils/machine_name_util.dart';
 import 'package:stack_trace/stack_trace.dart';
 import 'package:uuid/uuid.dart';
 
 import 'logging/raygun_logger.dart';
 import 'messages/network_info.dart';
 import 'messages/raygun_client_message.dart';
-import 'messages/raygun_environment_message.dart';
 import 'messages/raygun_error_message.dart';
 import 'messages/raygun_message.dart';
-import 'services/crash_reporting_post_service.dart';
+import 'services/crash_reporting_device.dart'
+    if (dart.library.js) 'services/crash_reporting_web.dart';
 import 'services/settings.dart';
 
 class CrashReporting {
@@ -85,9 +82,8 @@ Future<RaygunMessage> _buildMessage(
   // Cannot load device info in tests
   if (!Settings.skipIfTest) {
     raygunMessage.details.request = await NetworkInfo.create();
-    raygunMessage.details.machineName = await _machineName();
-    raygunMessage.details.environment =
-        await RaygunEnvironmentMessage.fromDeviceInfo();
+    raygunMessage.details.machineName = await machineName();
+    raygunMessage.details.environment = await fromDeviceInfo();
   }
 
   // .setEnvironmentDetails(RaygunClient.getApplicationContext())
@@ -95,38 +91,4 @@ Future<RaygunMessage> _buildMessage(
   //     .setVersion(RaygunClient.getVersion())
 
   return raygunMessage;
-}
-
-Future<String?> _machineName() async {
-  try {
-    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (kIsWeb) {
-      final info = await deviceInfo.webBrowserInfo;
-      return info.browserName.toString();
-    } else {
-      if (Platform.isIOS) {
-        final info = await deviceInfo.iosInfo;
-        return info.name;
-      }
-      if (Platform.isAndroid) {
-        final info = await deviceInfo.androidInfo;
-        return info.model;
-      }
-      if (Platform.isLinux) {
-        final info = await deviceInfo.linuxInfo;
-        return info.name;
-      }
-      if (Platform.isMacOS) {
-        final info = await deviceInfo.macOsInfo;
-        return info.computerName;
-      }
-      if (Platform.isWindows) {
-        final info = await deviceInfo.windowsInfo;
-        return info.computerName;
-      }
-    }
-  } catch (e) {
-    RaygunLogger.e('Could not load device info: $e');
-    return null;
-  }
 }

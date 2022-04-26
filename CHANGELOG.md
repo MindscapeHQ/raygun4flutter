@@ -1,3 +1,24 @@
+## 1.1.4
+
+* Upgrade dependencies
+
+## 1.1.3
+
+* Use stubs to enable web support
+
+## 1.1.2
+
+* Upgrade dependencies
+
+## 1.1.1
+
+* Update README
+
+## 1.1.0
+
+* Breadcrumb improvements: timestamps and order
+* Change to api.raygun.com
+
 ## 1.0.0
 
 * Stable release (no changes)

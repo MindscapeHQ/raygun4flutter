@@ -31,12 +31,14 @@ class Raygun {
     // Send stored crash reports
     await CrashReporting.sendStored();
     // Listen to connectivity changed and send stored reports when online
-    Connectivity().onConnectivityChanged.listen((event) async {
-      if (event != ConnectivityResult.none) {
-        RaygunLogger.d('Connectivity recovered, sending stored payloads');
-        await CrashReporting.sendStored();
-      }
-    });
+    if (Settings.listenToConnectivityChanges) {
+      Connectivity().onConnectivityChanged.listen((event) async {
+        if (event != ConnectivityResult.none) {
+          RaygunLogger.d('Connectivity recovered, sending stored payloads');
+          await CrashReporting.sendStored();
+        }
+      });
+    }
   }
 
   /// Manually stores the version of your application to be transmitted with
@@ -125,14 +127,14 @@ class Raygun {
 
   /// Sends a breadcrumb to Raygun as String
   static Future<void> recordBreadcrumb(String message) async {
-    Settings.breadcrumbs.add(RaygunBreadcrumbMessage(message: message));
+    Settings.breadcrumbs.insert(0, RaygunBreadcrumbMessage(message: message));
   }
 
   /// Sends a breadcrumb to Raygun as [RaygunBreadcrumbMessage]
   static Future<void> recordBreadcrumbObject(
     RaygunBreadcrumbMessage raygunBreadcrumbMessage,
   ) async {
-    Settings.breadcrumbs.add(raygunBreadcrumbMessage);
+    Settings.breadcrumbs.insert(0, raygunBreadcrumbMessage);
   }
 
   /// Clears breadcrumbs
