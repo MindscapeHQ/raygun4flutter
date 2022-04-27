@@ -30,4 +30,6 @@ Future<String?> machineName() async {
     RaygunLogger.e('Could not load device info: $e');
     return null;
   }
+
+  return null;
 }
