@@ -5,7 +5,7 @@
 
 The world's best Flutter Crash Reporting solution.
 
-Current version: 1.1.5-beta
+Current version: 1.1.5
 Latest stable version: 1.1.4
 
 ## Introduction
@@ -34,7 +34,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  raygun4flutter: ^1.1.5-beta
+  raygun4flutter: ^1.1.5
 ```
 
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
