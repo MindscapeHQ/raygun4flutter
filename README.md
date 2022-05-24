@@ -5,9 +5,6 @@
 
 The world's best Flutter Crash Reporting solution.
 
-Current version: 1.1.5
-Latest stable version: 1.1.4
-
 ## Introduction
 
 ### Library organisation
