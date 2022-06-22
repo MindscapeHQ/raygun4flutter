@@ -27,3 +27,7 @@ doc/api/
 build/
 
 .idea/
+
+.flutter-plugins
+.flutter-plugins-dependencies
+
