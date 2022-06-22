@@ -31,7 +31,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  raygun4flutter: ^1.1.5
+  raygun4flutter: ^1.2.0
 ```
 
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.

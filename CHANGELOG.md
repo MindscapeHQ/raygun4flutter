@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Upgrade dependencies
+
 ## 1.1.5
 
 * Add `onBeforeSend` to process error payloads before sending them
