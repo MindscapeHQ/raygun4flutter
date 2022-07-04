@@ -10,6 +10,8 @@ import 'package:flutter/foundation.dart';
 /// Warnings and Errors are always displayed.
 /// Levels are based on https://github.com/dart-lang/logging/blob/master/lib/src/level.dart
 class RaygunLogger {
+  static bool testMode = false;
+
   static void d(String message) {
     if (kDebugMode) {
       developer.log(
@@ -17,6 +19,9 @@ class RaygunLogger {
         level: 500,
         name: 'raygun4flutter',
       );
+    }
+    if (testMode) {
+      print(message);
     }
   }
 
@@ -26,6 +31,9 @@ class RaygunLogger {
       level: 800,
       name: 'raygun4flutter',
     );
+    if (testMode) {
+      print(message);
+    }
   }
 
   static void w(String message) {
@@ -34,6 +42,9 @@ class RaygunLogger {
       level: 900,
       name: 'raygun4flutter',
     );
+    if (testMode) {
+      print(message);
+    }
   }
 
   static void e(String message) {
@@ -42,5 +53,8 @@ class RaygunLogger {
       level: 1000,
       name: 'raygun4flutter',
     );
+    if (testMode) {
+      print(message);
+    }
   }
 }

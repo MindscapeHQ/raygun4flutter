@@ -1,18 +1,24 @@
 // ignore_for_file: require_trailing_commas, avoid_print, avoid_dynamic_calls
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/raygun4flutter.dart';
+import 'package:raygun4flutter/src/logging/raygun_logger.dart';
+import 'package:raygun4flutter/src/messages/raygun_message.dart';
+import 'package:raygun4flutter/src/services/crash_reporting_device.dart';
 import 'package:raygun4flutter/src/services/settings.dart';
 
 void main() {
   dynamic capturedBody;
 
-  setUp(() {
+  setUp(() async {
+    RaygunLogger.testMode = true;
     capturedBody = null;
     Settings.skipIfTest = true;
     Settings.customHttpClient = MockClient((request) async {
@@ -28,7 +34,7 @@ void main() {
     };
     Settings.listenToConnectivityChanges = false;
 
-    Raygun.init(apiKey: 'KEY');
+    await Raygun.init(apiKey: 'KEY');
   });
 
   test('init', () {
@@ -129,4 +135,69 @@ void main() {
     expect(capturedBody, isNull);
     Raygun.onBeforeSend = null;
   });
+
+  test('store crash reports', () async {
+    await _deleteOldFiles();
+
+    final service = CrashReportingPostService();
+    final raygunMessage = RaygunMessage();
+
+    // create three files, same timestamp but different uuid
+    await service.store(raygunMessage.toJson());
+    await service.store(raygunMessage.toJson());
+    await service.store(raygunMessage.toJson());
+    final files = await _getCachedFiles();
+    for (final file in files) {
+      print('Found file: ${file.path}');
+    }
+
+    // three files should have been created
+    expect(files.length, 3);
+
+    // check files are read correctly
+    for (final file in files) {
+      final content = await File(file.path).readAsString();
+      expect(content, jsonEncode(raygunMessage.toJson()));
+    }
+
+    // delete test files
+    for (final file in files) {
+      print('Deleting test file: ${file.path}');
+      await file.delete();
+    }
+  });
+
+  test('delete stored files on error', () async {
+    await _deleteOldFiles();
+
+    final cacheDir = await getTemporaryDirectory();
+    final file = File('${cacheDir.path}/error.raygun4');
+    await file.writeAsString('asdasdasf{}{}{');
+
+    var files = await _getCachedFiles();
+    expect(files.length, 1);
+
+    // should fail with an error
+    final service = CrashReportingPostService();
+    await service.sendAllStored('KEY');
+
+    // should delete all cached files
+    files = await _getCachedFiles();
+    expect(files.length, 0);
+  });
+}
+
+Future<void> _deleteOldFiles() async {
+  final oldFiles = await _getCachedFiles();
+  for (final file in oldFiles) {
+    print('Deleting old file: ${file.path}');
+    await file.delete();
+  }
+}
+
+Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
+  final cacheDir = await getTemporaryDirectory();
+  return cacheDir
+      .listSync()
+      .where((element) => element.path.endsWith('.raygun4'));
 }
