@@ -62,7 +62,8 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
             RaygunLogger.w('Failed to send ${file.path}');
           }
         } on FormatException catch (e) {
-          RaygunLogger.e('Format exception in stored payload: ${file.path} error: $e');
+          RaygunLogger.e(
+              'Format exception in stored payload: ${file.path} error: $e');
           RaygunLogger.w('Deleting file');
           await file.delete();
         }
