@@ -7,25 +7,26 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/src/logging/raygun_logger.dart';
 import 'package:raygun4flutter/src/services/crash_reporting_post_service.dart';
+import 'package:uuid/uuid.dart';
 
 import 'settings.dart';
 
 class CrashReportingPostService extends CrashReportingPostServiceBase {
   CrashReportingPostService({http.Client? client}) : super(client: client);
 
+  static const _uuid = Uuid();
+
   @override
   Future<void> store(dynamic jsonPayload) async {
     RaygunLogger.d('Storing crash for later');
     try {
       final cacheDir = await getTemporaryDirectory();
-      RaygunLogger.d('Cache dir: $cacheDir');
-      final cachedFiles = cacheDir
-          .listSync()
-          .where((element) => element.path.endsWith('.raygun4'));
+      final cachedFiles = await _getCachedFiles();
       RaygunLogger.d('Currently ${cachedFiles.length} stored');
       if (cachedFiles.length < Settings.maxReportsStoredOnDevice) {
         final timestamp = DateFormat('yyyyMMddHHmmss').format(DateTime.now());
-        final file = File('${cacheDir.path}/$timestamp.raygun4');
+        final uuid = _uuid.v4();
+        final file = File('${cacheDir.path}/$timestamp-$uuid.raygun4');
         await file.writeAsString(jsonEncode(jsonPayload));
         RaygunLogger.d('Saved payload in: ${file.path}');
       } else {
@@ -47,24 +48,42 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
       return;
     }
     try {
-      final cacheDir = await getTemporaryDirectory();
-      RaygunLogger.d('Cache dir: $cacheDir');
-      final cachedFiles = cacheDir
-          .listSync()
-          .where((element) => element.path.endsWith('.raygun4'));
+      final cachedFiles = await _getCachedFiles();
       RaygunLogger.d('Currently ${cachedFiles.length} stored');
       for (final file in cachedFiles) {
-        final content = await File(file.path).readAsString();
-        final result = await send(apiKey, jsonDecode(content));
-        if (result.isSuccess && result.asSuccess.value != 429) {
-          RaygunLogger.d('Stored payload sent, deleting file: ${file.path}');
+        try {
+          final content = await File(file.path).readAsString();
+          final json = jsonDecode(content);
+          final result = await send(apiKey, json);
+          if (result.isSuccess && result.asSuccess.value != 429) {
+            RaygunLogger.d('Stored payload sent, deleting file: ${file.path}');
+            await file.delete();
+          } else {
+            RaygunLogger.w('Failed to send ${file.path}');
+          }
+        } on FormatException catch (e) {
+          RaygunLogger.e(
+            'Format exception in stored payload: ${file.path} error: $e',
+          );
+          RaygunLogger.w('Deleting file');
           await file.delete();
-        } else {
-          RaygunLogger.w('Failed to send ${file.path}');
         }
       }
     } catch (e) {
       RaygunLogger.e('Error while sending stored payloads: $e');
+      RaygunLogger.w('Deleting all cached files');
+      final cachedFiles = await _getCachedFiles();
+      for (final file in cachedFiles) {
+        await file.delete();
+      }
     }
+  }
+
+  Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
+    final cacheDir = await getTemporaryDirectory();
+    RaygunLogger.d('Cache dir: $cacheDir');
+    return cacheDir
+        .listSync()
+        .where((element) => element.path.endsWith('.raygun4'));
   }
 }

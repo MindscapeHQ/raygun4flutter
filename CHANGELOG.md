@@ -1,3 +1,9 @@
+## 1.2.1
+
+* Fix issue with malformed cached files.
+  * UUID added to cached files to ensure unique filename.
+  * Delete old stored files in case of format exception.
+
 ## 1.2.0
 
 * Upgrade dependencies
