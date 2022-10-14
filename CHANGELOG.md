@@ -1,3 +1,21 @@
+## 1.2.2
+
+* chore(deps): upgrade example (#76) (2022-10-14)
+* chore(deps): bump network_info_plus from 2.1.3 to 2.3.2 (#73) (2022-10-14)
+* chore(deps): bump build_runner from 2.1.11 to 2.3.0 (#72) (2022-10-14)
+* chore(deps): upgrade dependencies (#75) (2022-10-14)
+* chore(deps): bump connectivity_plus from 2.3.5 to 2.3.9 (#70) (2022-10-14)
+* chore(deps): bump http from 0.13.4 to 0.13.5 (#68) (2022-10-14)
+* chore(deps): bump json_annotation from 4.5.0 to 4.7.0 (#67) (2022-10-14)
+* chore(deps): bump lint from 1.8.2 to 1.10.0 (#71) (2022-10-14)
+* chore(deps): bump lint from 1.7.2 to 1.10.0 in /example (#66) (2022-10-14)
+* chore(deps): bump json_serializable from 6.2.0 to 6.5.1 (#69) (2022-10-14)
+* chore(deps): bump device_info_plus from 4.0.0 to 6.0.0 (#65) (2022-10-14)
+* chore(deps): bump raygun4flutter from 1.1.4 to 1.2.1 in /example (#64) (2022-10-14)
+* chore(deps): bump subosito/flutter-action from 1 to 2 (#63) (2022-10-14)
+* chore(deps): bump actions/checkout from 2 to 3 (#62) (2022-10-14)
+* ci: add dependabot config (2022-10-14)
+
 ## 1.2.1
 
 * Fix issue with malformed cached files.
