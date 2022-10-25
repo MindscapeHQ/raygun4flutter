@@ -24,7 +24,7 @@ Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
     if (Platform.isAndroid) {
       final info = await deviceInfo.androidInfo;
       environment.brand = info.brand;
-      environment.oSVersion = info.version.sdkInt?.toString();
+      environment.oSVersion = info.version.sdkInt.toString();
       environment.deviceName = info.device;
     }
     if (Platform.isLinux) {
