@@ -1,3 +1,7 @@
+## 1.2.3
+* bump device_info_plus from 6.0.0 to 7.0.1  (2022-10-25)
+* bump package_info_plus from 2.0.0 to 3.0.1  (2022-10-25)
+
 ## 1.2.2
 
 * chore(deps): upgrade example (#76) (2022-10-14)
