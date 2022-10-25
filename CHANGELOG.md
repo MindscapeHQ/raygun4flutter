@@ -1,6 +1,12 @@
 ## 1.2.3
-* bump device_info_plus from 6.0.0 to 7.0.1  (2022-10-25)
-* bump package_info_plus from 2.0.0 to 3.0.1  (2022-10-25)
+
+* chore(deps): bump device_info_plus from 6.0.0 to 7.0.1  (2022-10-25)
+* chore(deps): bump package_info_plus from 2.0.0 to 3.0.1  (2022-10-25)
+* chore(deps): bump build_runner from 2.3.0 to 2.3.2 (#82) (2022-10-25)
+* chore(deps): bump json_serializable from 6.5.1 to 6.5.3 (#80) (2022-10-25)
+* chore(deps): bump connectivity_plus from 2.3.9 to 3.0.2 (#79) (2022-10-25)
+* chore(deps): bump raygun4flutter from 1.2.1 to 1.2.2 in /example (#78) (2022-10-25)
+* chore(deps): bump network_info_plus from 2.3.2 to 3.0.1 (#83) (2022-10-25)
 
 ## 1.2.2
 
