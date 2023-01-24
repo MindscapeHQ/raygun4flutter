@@ -1,3 +1,13 @@
+## 1.2.4
+
+*  (HEAD -> master, origin/master, origin/HEAD) chore(deps): bump json_serializable from 6.5.3 to 6.6.0 (#92)
+*  chore(deps): bump lint from 1.10.0 to 2.0.1 in /example (#91)
+*  chore(deps): bump lint from 1.10.0 to 2.0.1 (#90)
+*  chore(deps): bump package_info_plus from 3.0.1 to 3.0.2 (#89)
+*  chore(deps): bump uuid from 3.0.6 to 3.0.7 (#88)
+*  chore(deps): bump device_info_plus from 7.0.1 to 8.0.0 (#86)
+*  chore(deps): bump raygun4flutter from 1.2.2 to 1.2.3 in /example (#85)
+
 ## 1.2.3
 
 * chore(deps): bump device_info_plus from 6.0.0 to 7.0.1  (2022-10-25)
