@@ -7,7 +7,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/raygun4flutter.dart';
 import 'package:raygun4flutter/src/logging/raygun_logger.dart';
 import 'package:raygun4flutter/src/messages/raygun_message.dart';
