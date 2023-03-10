@@ -7,7 +7,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/raygun4flutter.dart';
 import 'package:raygun4flutter/src/logging/raygun_logger.dart';
 import 'package:raygun4flutter/src/messages/raygun_message.dart';
@@ -15,6 +14,7 @@ import 'package:raygun4flutter/src/services/crash_reporting_device.dart';
 import 'package:raygun4flutter/src/services/settings.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   dynamic capturedBody;
 
   setUp(() async {
@@ -33,15 +33,16 @@ void main() {
       return [];
     };
     Settings.listenToConnectivityChanges = false;
+    Settings.cacheDirectory = Directory('.');
 
-    await Raygun.init(apiKey: 'KEY');
+    await Raygun.init(apiKey: 'KEY', version: '1.0.0');
   });
 
-  test('init', () {
+  test('init', () async {
     expect(Settings.apiKey, 'KEY');
   });
 
-  test('init with version', () {
+  test('init with version', () async {
     Raygun.init(apiKey: 'KEY', version: 'x.y.z');
     expect(Settings.apiKey, 'KEY');
     expect(Settings.version, 'x.y.z');
@@ -170,7 +171,7 @@ void main() {
   test('delete stored files on error', () async {
     await _deleteOldFiles();
 
-    final cacheDir = await getTemporaryDirectory();
+    final cacheDir = Settings.cacheDirectory!;
     final file = File('${cacheDir.path}/error.raygun4');
     await file.writeAsString('asdasdasf{}{}{');
 
@@ -196,7 +197,7 @@ Future<void> _deleteOldFiles() async {
 }
 
 Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
-  final cacheDir = await getTemporaryDirectory();
+  final cacheDir = Settings.cacheDirectory!;
   return cacheDir
       .listSync()
       .where((element) => element.path.endsWith('.raygun4'));
