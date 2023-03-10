@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:raygun4flutter/raygun4flutter.dart';
@@ -39,7 +41,11 @@ class Settings {
 
   static String kRaygunDeviceIdKey = 'RAYGUN_DEVICE_ID';
 
+  /// Custom temporary directory for storing reports
+  static Directory? cacheDirectory;
+
   static Future<String> deviceUuid() async {
+    if (skipIfTest) return 'test-uuid';
     final prefs = await SharedPreferences.getInstance();
     if (prefs.containsKey(kRaygunDeviceIdKey)) {
       return prefs.getString(kRaygunDeviceIdKey)!;
