@@ -1,3 +1,9 @@
+## 1.3.0
+
+* fix: test with Flutter 3.7 compatibility (#101)
+* chore: upgrade dependencies (#102)
+* fix: revert to intl 0.17.0
+
 ## 1.2.4
 
 *  (HEAD -> master, origin/master, origin/HEAD) chore(deps): bump json_serializable from 6.5.3 to 6.6.0 (#92)
