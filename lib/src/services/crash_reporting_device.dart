@@ -20,7 +20,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
   Future<void> store(dynamic jsonPayload) async {
     RaygunLogger.d('Storing crash for later');
     try {
-      final cacheDir = await getTemporaryDirectory();
+      final cacheDir = Settings.cacheDirectory ?? await getTemporaryDirectory();
       final cachedFiles = await _getCachedFiles();
       RaygunLogger.d('Currently ${cachedFiles.length} stored');
       if (cachedFiles.length < Settings.maxReportsStoredOnDevice) {
@@ -80,7 +80,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
   }
 
   Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
-    final cacheDir = await getTemporaryDirectory();
+    final cacheDir = Settings.cacheDirectory ?? await getTemporaryDirectory();
     RaygunLogger.d('Cache dir: $cacheDir');
     return cacheDir
         .listSync()
