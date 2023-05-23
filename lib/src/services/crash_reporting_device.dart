@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/src/logging/raygun_logger.dart';
@@ -12,7 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'settings.dart';
 
 class CrashReportingPostService extends CrashReportingPostServiceBase {
-  CrashReportingPostService({http.Client? client}) : super(client: client);
+  CrashReportingPostService({super.client});
 
   static const _uuid = Uuid();
 
