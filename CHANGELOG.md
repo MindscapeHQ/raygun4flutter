@@ -1,3 +1,8 @@
+## 2.0.0
+
+* chore: upgrade dependencies
+* feat: support for Dart 3 and Flutter 3.10
+
 ## 1.3.0
 
 * fix: test with Flutter 3.7 compatibility (#101)
