@@ -7,9 +7,10 @@ import 'package:raygun4flutter/src/messages/raygun_environment_message.dart';
 Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
   final environment = RaygunEnvironmentMessage();
 
-  environment.windowsBoundHeight = window.physicalSize.height.toInt();
-  environment.windowsBoundWidth = window.physicalSize.width.toInt();
-  environment.locale = window.locale.toLanguageTag();
+  final window = PlatformDispatcher.instance.implicitView;
+  environment.windowsBoundHeight = window?.physicalSize.height.toInt();
+  environment.windowsBoundWidth = window?.physicalSize.width.toInt();
+  environment.locale = PlatformDispatcher.instance.locale.toLanguageTag();
   environment.utcOffset = DateTime.now().timeZoneOffset.inHours.toDouble();
 
   try {
