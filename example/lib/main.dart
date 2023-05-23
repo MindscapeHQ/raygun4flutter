@@ -33,7 +33,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
     // example: custom onBeforeSend to process payload
     Raygun.onBeforeSend = (payload) {
       // example: print error message before sending
-      final message = payload.details.error.message;
+      final message = payload.details.error?.message;
       debugPrint('Sending: $message');
 
       // example: remove breadcrumbs with confidential data
@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
       );
 
       // example: cancel sending if condition is met
-      if (message.contains('some-pattern')) {
+      if (message?.contains('some-pattern') ?? false) {
         return null;
       }
 
