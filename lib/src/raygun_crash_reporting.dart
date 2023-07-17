@@ -11,18 +11,12 @@ import 'messages/network_info.dart';
 import 'messages/raygun_client_message.dart';
 import 'messages/raygun_error_message.dart';
 import 'messages/raygun_message.dart';
-import 'services/crash_reporting_device.dart'
-    if (dart.library.js) 'services/crash_reporting_web.dart';
+import 'services/crash_reporting_device.dart' if (dart.library.js) 'services/crash_reporting_web.dart';
 import 'services/settings.dart';
 
 class CrashReporting {
-  static Future<void> send(
-    String className,
-    String reason,
-    List<String>? tags,
-    Map? customData,
-    Trace? trace,
-  ) async {
+  static Future<void> send(String className, String reason, List<String>? tags, Map? customData, Trace? trace,
+      {Map<String, String>? additionalHeaders}) async {
     final RaygunMessage msg = await _buildMessage(className, reason, trace);
 
     msg.details.tags = tags ?? [];
@@ -49,6 +43,7 @@ class CrashReporting {
     ).postCrashReporting(
       Settings.apiKey ?? '',
       msgToSend.toJson(),
+      additionalHeaders: additionalHeaders,
     );
 
     if (response.isSuccess) {
@@ -61,8 +56,7 @@ class CrashReporting {
   }
 
   static Future<void> sendStored() async {
-    await CrashReportingPostService(client: Settings.customHttpClient)
-        .sendAllStored(Settings.apiKey ?? '');
+    await CrashReportingPostService(client: Settings.customHttpClient).sendAllStored(Settings.apiKey ?? '');
   }
 }
 

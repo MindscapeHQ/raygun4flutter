@@ -24,20 +24,16 @@ abstract class CrashReportingPostServiceBase {
   /// @param apiKey      The API key of the app to deliver to
   /// @param jsonPayload The JSON representation of a RaygunMessage to be delivered over HTTPS.
   /// @return HTTP result code - 202 if successful, 403 if API key invalid, 400 if bad message (invalid properties), 429 if rate limited
-  Future<Response<int>> postCrashReporting(
-    String apiKey,
-    dynamic jsonPayload,
-  ) async {
+  Future<Response<int>> postCrashReporting(String apiKey, dynamic jsonPayload, {Map<String, String>? additionalHeaders}) async {
     final connectivity = await Settings.getConnectivityState();
     if (connectivity == ConnectivityResult.none) {
       // No connection, store crash in cache
       RaygunLogger.w('No connection, caching payload');
       await store(jsonPayload);
     } else {
-      final result = await send(apiKey, jsonPayload);
+      final result = await send(apiKey, jsonPayload, additionalHeaders: additionalHeaders);
       // If sending error or rate limited (429)
-      if (result.isError ||
-          (result.isSuccess && result.asSuccess.value == 429)) {
+      if (result.isError || (result.isSuccess && result.asSuccess.value == 429)) {
         // Failed to send payload, storing in cache
         await store(jsonPayload);
       } else {
@@ -47,18 +43,18 @@ abstract class CrashReportingPostServiceBase {
     return Response.error('Could not send report now.');
   }
 
-  Future<Response<int>> send(String apiKey, dynamic jsonPayload) async {
+  Future<Response<int>> send(String apiKey, dynamic jsonPayload, {Map<String, String>? additionalHeaders}) async {
     try {
       RaygunLogger.d('Sending crash reports');
       if (_validateApiKey(apiKey)) {
-        final response = await _client.post(
-          Uri.parse(Settings.crashReportingEndpoint),
-          body: jsonEncode(jsonPayload),
-          headers: {
-            'X-ApiKey': apiKey,
-            'Content-Type': 'application/json; charset=utf-8',
-          },
-        );
+        Map<String, String> headers = {
+          'X-ApiKey': apiKey,
+          'Content-Type': 'application/json; charset=utf-8',
+        };
+        if (additionalHeaders != null) {
+          headers.addAll(additionalHeaders);
+        }
+        final response = await _client.post(Uri.parse(Settings.crashReportingEndpoint), body: jsonEncode(jsonPayload), headers: headers);
         RaygunLogger.d(
           'Sent crash reports. Response code: ${response.statusCode}',
         );

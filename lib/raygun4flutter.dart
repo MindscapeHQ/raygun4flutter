@@ -64,19 +64,19 @@ class Raygun {
   /// Sends an exception to Raygun.
   /// Convenience method that wraps [sendCustom].
   /// The class name and the message are obtained from the [error] object.
-  static Future<void> sendException({
-    required Object error,
-    List<String>? tags,
-    Map<String, dynamic>? customData,
-    StackTrace? stackTrace,
-  }) async {
+  static Future<void> sendException(
+      {required Object error,
+      List<String>? tags,
+      Map<String, dynamic>? customData,
+      StackTrace? stackTrace,
+      Map<String, String>? additionalHeaders}) async {
     return sendCustom(
-      className: error.runtimeType.toString(),
-      reason: error.toString(),
-      tags: tags,
-      customData: customData,
-      stackTrace: stackTrace,
-    );
+        className: error.runtimeType.toString(),
+        reason: error.toString(),
+        tags: tags,
+        customData: customData,
+        stackTrace: stackTrace,
+        additionalHeaders: additionalHeaders);
   }
 
   /// Sends a custom error message to Raygun.
@@ -94,13 +94,13 @@ class Raygun {
   ///
   /// [stackTrace] optional parameter, if not provided this method will obtain
   /// the current stacktrace automatically.
-  static Future<void> sendCustom({
-    required String className,
-    required String reason,
-    List<String>? tags,
-    Map<String, dynamic>? customData,
-    StackTrace? stackTrace,
-  }) async {
+  static Future<void> sendCustom(
+      {required String className,
+      required String reason,
+      List<String>? tags,
+      Map<String, dynamic>? customData,
+      StackTrace? stackTrace,
+      Map<String, String>? additionalHeaders}) async {
     Trace trace;
     if (stackTrace == null) {
       // if no stackTrace provided, create one
@@ -109,7 +109,8 @@ class Raygun {
       trace = Trace.from(stackTrace);
     }
 
-    return CrashReporting.send(className, reason, tags, customData, trace);
+    return CrashReporting.send(className, reason, tags, customData, trace,
+        additionalHeaders: additionalHeaders);
   }
 
   /// Sets a List of tags which will be sent along with every exception.
