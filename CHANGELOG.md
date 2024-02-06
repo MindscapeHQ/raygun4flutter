@@ -1,3 +1,7 @@
+## 2.1.2
+
+* chore: upgrade dependencies
+
 ## 2.1.1
 
 * chore: upgrade dependencies
