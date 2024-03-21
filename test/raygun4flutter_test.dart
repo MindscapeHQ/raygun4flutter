@@ -27,7 +27,7 @@ void main() {
       return http.Response('', 204);
     });
     Settings.getConnectivityState = () async {
-      return ConnectivityResult.wifi;
+      return [ConnectivityResult.wifi];
     };
     Settings.getIps = () async {
       return [];
