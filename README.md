@@ -15,7 +15,7 @@ The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter
 
 ### Requirements
 
-- Dart SDK 2.12+
+- Dart SDK 3.3.0+
 
 As of release 1.0.0 we've started to improve support for Flutter Desktop and Web. The package seems to be working fine with these targets but we'd appreciate any additional feedback on Github.
 
@@ -31,7 +31,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```
 dependencies:
-  raygun4flutter: ^1.3.0
+  raygun4flutter: ^x.y.z
 ```
 
 Alternatively, your editor might support `flutter pub get`. Check the docs for your editor to learn more.
