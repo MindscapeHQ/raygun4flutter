@@ -29,7 +29,7 @@ abstract class CrashReportingPostServiceBase {
     dynamic jsonPayload,
   ) async {
     final connectivity = await Settings.getConnectivityState();
-    if (connectivity == ConnectivityResult.none) {
+    if (connectivity.contains(ConnectivityResult.none) || connectivity.isEmpty) {
       // No connection, store crash in cache
       RaygunLogger.w('No connection, caching payload');
       await store(jsonPayload);

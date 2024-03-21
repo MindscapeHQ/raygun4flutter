@@ -68,6 +68,6 @@ class Settings {
   static GetIpsFunction getIps = NetworkInfo.getIps;
 }
 
-typedef ConnectivityStateFunction = Future<ConnectivityResult> Function();
+typedef ConnectivityStateFunction = Future<List<ConnectivityResult>> Function();
 
 typedef GetIpsFunction = Future<List<String>> Function();
