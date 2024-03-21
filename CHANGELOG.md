@@ -1,3 +1,16 @@
+## 3.0.0
+
+* chore: Upgrade major dependencies.
+  * `connectivity_plus: ^6.0.1`
+  * `device_info_plus: ^10.0.1`
+  * `network_info_plus: ^5.0.2`
+  * `package_info_plus: ^6.0.0`
+* feat: Support multiple connectivity values in network report.
+  * e.g. VPN and WiFi.
+* chore: Increase minimum required SDK versions (as required by dependencies).
+  * Flutter `>=3.19.0`
+  * Dart `>=3.3.0`
+
 ## 2.1.2
 
 * chore: upgrade dependencies
