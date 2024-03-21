@@ -42,7 +42,8 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
   Future<void> sendAllStored(String apiKey) async {
     RaygunLogger.d('Sending all stored crash reports');
     final connectivity = await Settings.getConnectivityState();
-    if (connectivity.contains(ConnectivityResult.none) || connectivity.isEmpty) {
+    if (connectivity.contains(ConnectivityResult.none) ||
+        connectivity.isEmpty) {
       RaygunLogger.w('No connectivity, cannot send stored payloads');
       return;
     }
