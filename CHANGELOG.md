@@ -1,3 +1,11 @@
+## 3.0.1
+
+*  chore(deps): bump device_info_plus from 10.0.1 to 10.1.0 (#160)
+*  chore(deps): bump network_info_plus from 5.0.2 to 5.0.3 (#159)
+*  chore(deps): bump uuid from 4.3.3 to 4.4.0 (#158)
+*  chore(deps): bump build_runner from 2.4.8 to 2.4.9 (#157)
+*  chore(deps): bump package_info_plus from 6.0.0 to 7.0.0 (#161)
+
 ## 3.0.0
 
 * feat: Support multiple connectivity values in network report.
