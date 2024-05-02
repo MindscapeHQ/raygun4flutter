@@ -34,7 +34,20 @@ class NetworkInfo {
 
   static Future<String> getConnectivityState() async {
     final connectivityResult = await Settings.getConnectivityState();
-    switch (connectivityResult) {
+    return connectivityResult.map((e) => e._toName()).join(', ');
+  }
+
+  Map<String, dynamic> toJson() => _$NetworkInfoToJson(this);
+
+  factory NetworkInfo.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      _$NetworkInfoFromJson(json);
+}
+
+extension _ConnectivityResult on ConnectivityResult {
+  String _toName() {
+    switch (this) {
       case ConnectivityResult.wifi:
         return 'WiFi';
       case ConnectivityResult.ethernet:
@@ -45,15 +58,12 @@ class NetworkInfo {
         return 'Not Connected';
       case ConnectivityResult.bluetooth:
         return 'Bluetooth';
+      case ConnectivityResult.vpn:
+        return 'VPN';
+      case ConnectivityResult.other:
+        return 'Other';
       default:
         return 'Unknown';
     }
   }
-
-  Map<String, dynamic> toJson() => _$NetworkInfoToJson(this);
-
-  factory NetworkInfo.fromJson(
-    Map<String, dynamic> json,
-  ) =>
-      _$NetworkInfoFromJson(json);
 }

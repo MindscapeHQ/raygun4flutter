@@ -32,4 +32,8 @@ updates:
     commit-message:
       prefix: "chore"
       include: "scope"
+    ignore:
+      # Package in example is accessed by path, 
+      # do not update in pubspec.
+      - dependency-name: "raygun4flutter"
 

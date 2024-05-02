@@ -26,7 +26,8 @@ abstract class CrashReportingPostServiceBase {
   /// @return HTTP result code - 202 if successful, 403 if API key invalid, 400 if bad message (invalid properties), 429 if rate limited
   Future<Response<int>> postCrashReporting(String apiKey, dynamic jsonPayload, {Map<String, String>? additionalHeaders}) async {
     final connectivity = await Settings.getConnectivityState();
-    if (connectivity == ConnectivityResult.none) {
+    if (connectivity.contains(ConnectivityResult.none) ||
+        connectivity.isEmpty) {
       // No connection, store crash in cache
       RaygunLogger.w('No connection, caching payload');
       await store(jsonPayload);

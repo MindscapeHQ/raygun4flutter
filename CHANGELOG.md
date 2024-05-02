@@ -1,3 +1,36 @@
+## 3.0.1
+
+*  chore(deps): bump device_info_plus from 10.0.1 to 10.1.0 (#160)
+*  chore(deps): bump network_info_plus from 5.0.2 to 5.0.3 (#159)
+*  chore(deps): bump uuid from 4.3.3 to 4.4.0 (#158)
+*  chore(deps): bump build_runner from 2.4.8 to 2.4.9 (#157)
+*  chore(deps): bump package_info_plus from 6.0.0 to 7.0.0 (#161)
+
+## 3.0.0
+
+* feat: Support multiple connectivity values in network report.
+  * e.g. VPN and WiFi.
+* chore: Upgrade major dependencies.
+  * `connectivity_plus: ^6.0.1`
+  * `device_info_plus: ^10.0.1`
+  * `network_info_plus: ^5.0.2`
+  * `package_info_plus: ^6.0.0`
+* chore: Increase minimum required SDK versions (as required by dependencies).
+  * Flutter `>=3.19.0`
+  * Dart `>=3.3.0`
+
+## 2.1.2
+
+* chore: upgrade dependencies
+
+## 2.1.1
+
+* chore: upgrade dependencies
+
+## 2.1.0
+
+* chore: upgrade dependencies
+
 ## 2.0.0
 
 * chore: upgrade dependencies

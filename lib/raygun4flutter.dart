@@ -36,7 +36,7 @@ class Raygun {
     // Listen to connectivity changed and send stored reports when online
     if (Settings.listenToConnectivityChanges) {
       Connectivity().onConnectivityChanged.listen((event) async {
-        if (event != ConnectivityResult.none) {
+        if (event.isNotEmpty && !event.contains(ConnectivityResult.none)) {
           RaygunLogger.d('Connectivity recovered, sending stored payloads');
           await CrashReporting.sendStored();
         }
