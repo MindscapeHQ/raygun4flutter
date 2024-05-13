@@ -1,3 +1,12 @@
+## 3.0.2
+
+* chore(deps): bump json_serializable from 6.7.1 to 6.8.0 (#168)
+* chore(deps): bump connectivity_plus from 6.0.2 to 6.0.3 (#166)
+* chore(deps): bump package_info_plus from 7.0.0 to 8.0.0 (#165)
+* chore(deps): bump shared_preferences from 2.2.2 to 2.2.3 (#164)
+* chore(deps): bump path_provider from 2.1.2 to 2.1.3 (#163)
+* chore(deps): bump connectivity_plus from 6.0.1 to 6.0.2 (#162)
+
 ## 3.0.1
 
 *  chore(deps): bump device_info_plus from 10.0.1 to 10.1.0 (#160)
