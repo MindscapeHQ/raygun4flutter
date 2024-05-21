@@ -25,3 +25,53 @@ jobs:
       - run: flutter analyze
       - run: flutter test
 
+  # Build Android example
+  android_example_build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter build apk --debug
+        working-directory: ./example
+
+  # Build iOS example
+  ios_example_build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter build ios --no-codesign --debug
+        working-directory: ./example
+
+  # Build macOS example
+  macos_example_build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter build macos --debug
+        working-directory: ./example
+
+  # Build Linux example
+  linux_example_build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: |
+          sudo apt-get update
+          sudo apt-get install ninja-build libgtk-3-dev
+          flutter build linux --debug
+        working-directory: ./example
