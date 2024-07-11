@@ -18,7 +18,7 @@ RaygunBreadcrumbMessage _$RaygunBreadcrumbMessageFromJson(
       className: json['className'] as String?,
       methodName: json['methodName'] as String?,
       lineNumber: json['lineNumber'] as String?,
-      timestamp: json['timestamp'] as int?,
+      timestamp: (json['timestamp'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$RaygunBreadcrumbMessageToJson(

@@ -11,18 +11,20 @@ RaygunEnvironmentMessage _$RaygunEnvironmentMessageFromJson(
     RaygunEnvironmentMessage()
       ..cpu = json['cpu'] as String?
       ..architecture = json['architecture'] as String?
-      ..processorCount = json['processorCount'] as int?
+      ..processorCount = (json['processorCount'] as num?)?.toInt()
       ..oSVersion = json['oSVersion'] as String?
       ..osSDKVersion = json['osSDKVersion'] as String?
-      ..windowsBoundWidth = json['windowsBoundWidth'] as int?
-      ..windowsBoundHeight = json['windowsBoundHeight'] as int?
+      ..windowsBoundWidth = (json['windowsBoundWidth'] as num?)?.toInt()
+      ..windowsBoundHeight = (json['windowsBoundHeight'] as num?)?.toInt()
       ..currentOrientation = json['currentOrientation'] as String?
       ..locale = json['locale'] as String?
-      ..totalPhysicalMemory = json['totalPhysicalMemory'] as int?
-      ..availablePhysicalMemory = json['availablePhysicalMemory'] as int?
-      ..totalVirtualMemory = json['totalVirtualMemory'] as int?
-      ..availableVirtualMemory = json['availableVirtualMemory'] as int?
-      ..diskSpaceFree = json['diskSpaceFree'] as int?
+      ..totalPhysicalMemory = (json['totalPhysicalMemory'] as num?)?.toInt()
+      ..availablePhysicalMemory =
+          (json['availablePhysicalMemory'] as num?)?.toInt()
+      ..totalVirtualMemory = (json['totalVirtualMemory'] as num?)?.toInt()
+      ..availableVirtualMemory =
+          (json['availableVirtualMemory'] as num?)?.toInt()
+      ..diskSpaceFree = (json['diskSpaceFree'] as num?)?.toInt()
       ..utcOffset = (json['utcOffset'] as num?)?.toDouble()
       ..deviceName = json['deviceName'] as String?
       ..brand = json['brand'] as String?
