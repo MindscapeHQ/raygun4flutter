@@ -10,7 +10,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -19,7 +19,7 @@ updates:
   - package-ecosystem: "pub"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -28,7 +28,7 @@ updates:
   - package-ecosystem: "pub"
     directory: "/example"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "chore"
       include: "scope"
