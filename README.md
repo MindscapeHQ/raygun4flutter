@@ -288,7 +288,7 @@ Flutter web applications use `dart2js` to produce a single JavaScript file `main
 However, when reporting errors to Raygun, the reported stack traces correspond to the JavaScript generated code and not the original Dart code.
 
 Source maps help to convert generated JavaScript code back into Dart source code.
-Raygun uses them to take un-readable stack trace errors that point to generated JavaScript code and translate them to locations in Dart code.
+Raygun uses them to take obfuscated stack trace errors that point to generated JavaScript code and translate them to locations in Dart code.
 
 To generate the Flutter web source maps, compile your project with the `--source-maps` option.
 
