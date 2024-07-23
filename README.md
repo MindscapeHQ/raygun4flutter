@@ -300,7 +300,7 @@ flutter build web --source-maps
 
 This will generate the source map file, e.g. `main.dart.js.map` inside the `build/web` folder.
 
-Then, upload this file to the **Js Source Map Center** in your Raygun project's **Application Settings** and configure them appropietly.
+Then, upload this file to the **Js Source Map Center** in your Raygun project's **Application Settings** and configure them appropriately.
 
 You can find more information regarding source maps in the section [Source Maps for JavaScript](https://raygun.com/documentation/language-guides/javascript/crash-reporting/source-maps/).
 
