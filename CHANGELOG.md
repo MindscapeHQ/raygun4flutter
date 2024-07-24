@@ -1,3 +1,15 @@
+## 3.1.0
+
+- fix: Add columnNumber to stack trace (#178)
+- docs: #61 Add Source Map documentation to README.md (#181)
+- docs: fix typo in method doc (#179)
+- ci: Set dependabot interval to "monthly" (#182)
+- chore(deps): bump http from 1.2.1 to 1.2.2 (#183)
+- chore(deps): bump uuid from 4.4.0 to 4.4.2 (#180)
+- chore(deps): bump build_runner from 2.4.10 to 2.4.11 (#177)
+- chore(deps): bump build_runner from 2.4.9 to 2.4.10 (#176)
+- chore: Cleanup example and improve GitHub CI (#175)
+
 ## 3.0.2
 
 * chore(deps): bump json_serializable from 6.7.1 to 6.8.0 (#168)
