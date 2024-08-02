@@ -8,12 +8,14 @@ class RaygunErrorStackTraceLineMessage {
   String? className;
   String? fileName;
   String? methodName;
+  int? columnNumber;
 
   RaygunErrorStackTraceLineMessage(
     this.lineNumber,
     this.className,
     this.fileName,
     this.methodName,
+    this.columnNumber,
   );
 
   Map<String, dynamic> toJson() =>

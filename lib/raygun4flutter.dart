@@ -21,7 +21,7 @@ class Raygun {
   // Don't allow instances
   Raygun._();
 
-  /// Initalizes the Raygun client with your Raygun API [apiKey].
+  /// Initializes the Raygun client with your Raygun API [apiKey].
   ///
   /// [version] is optional, if not provided it will be obtained from your
   /// pubspec.yaml.

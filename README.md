@@ -281,6 +281,29 @@ Raygun.setCustomCrashReportingEndpoint(url)
 
 Please note that setting a custom endpoint will stop Crash Report or Real User Monitoring data from being sent to the Raygun backend.
 
+## Flutter web source maps
+
+Flutter web applications use `dart2js` to produce a single JavaScript file `main.dart.js`.
+
+However, when reporting errors to Raygun, the reported stack traces correspond to the JavaScript generated code and not the original Dart code.
+
+Source maps help to convert generated JavaScript code back into Dart source code.
+Raygun uses them to take obfuscated stack trace errors that point to generated JavaScript code and translate them to locations in Dart code.
+
+To generate the Flutter web source maps, compile your project with the `--source-maps` option.
+
+For example:
+
+```
+flutter build web --source-maps
+```
+
+This will generate the source map file, e.g. `main.dart.js.map` inside the `build/web` folder.
+
+Then, upload this file to the **Js Source Map Center** in your Raygun project's **Application Settings** and configure them appropriately.
+
+You can find more information regarding source maps within our documentation site - [Source Maps for JavaScript](https://raygun.com/documentation/language-guides/javascript/crash-reporting/source-maps/).
+
 ## Comprehensive sample app
 
 For a working sample app across multiple platforms, check the Flutter project in the `example` directory.

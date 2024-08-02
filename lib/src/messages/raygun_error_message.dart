@@ -27,6 +27,7 @@ class RaygunErrorMessage {
             '', // class is included in member
             frame.uri.toString(),
             frame.member, // includes both class and method
+            frame.column,
           ),
         )
         .toList();
