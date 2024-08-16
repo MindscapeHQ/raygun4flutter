@@ -281,6 +281,32 @@ Raygun.setCustomCrashReportingEndpoint(url)
 
 Please note that setting a custom endpoint will stop Crash Report or Real User Monitoring data from being sent to the Raygun backend.
 
+## Obfuscation
+
+Flutter supports code obfuscation with the `--obfuscate` parameter, this option generates symbol files that can be used to decode the obfuscated stack traces, as described in the section [Obfuscate Dart code](https://docs.flutter.dev/deployment/obfuscate) from the Flutter SDK.
+
+To decode obfuscated Flutter stacktraces with Raygun, you will have to copy the stacktrace into a file.
+
+For example, a file named `stack.txt`. It will look similar to this:
+
+```
+at *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** (file:///***:null)
+at pid: 29207, tid: 29228, name 1.ui (unparsed:null)
+at android arch: arm64 comp: yes sim: no (os::null)
+at build_id: '63956a45f09b3f8410d244053eebd180' (unparsed:null)
+at isolate_dso_base: 708882d000, vm_dso_base: 708882d000 (unparsed:null)
+at isolate_instructions: 7088903b40, vm_instructions: 70888ed000 (unparsed:null)
+at #00 abs 00000070889bcc93 virt 000000000018fc93 _kDartIsolateSnapshotInstructions+0xb9153 (unparsed:null)
+at #01 abs 00000070889464fb virt 00000000001194fb _kDartIsolateSnapshotInstructions+0x429bb (unparsed:null)
+... etc ...
+```
+
+Then, run the decode command passing in the copied stacktrace and the symbol file corresponding to the architecture. For example:
+
+```
+flutter symbolize -i stack.txt -d out/android/app.android-arm64.symbols
+```
+
 ## Flutter web source maps
 
 Flutter web applications use `dart2js` to produce a single JavaScript file `main.dart.js`.
