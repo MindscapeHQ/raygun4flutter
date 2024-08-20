@@ -21,7 +21,7 @@ Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
   environment.utcOffset = DateTime.now().timeZoneOffset.inHours.toDouble();
 
   try {
-    // abi returns a similar to 'android_arm64'
+    // abi returns String in the format 'os_arch' like 'android_arm64'
     final abi = Abi.current().toString();
     environment.architecture = abi.split('_').last;
   } catch (e) {
@@ -41,8 +41,11 @@ Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
       final info = await deviceInfo.androidInfo;
       environment.brand = info.brand;
       environment.deviceName = info.device;
-      // Base OS only available from API 23
-      environment.oSVersion = info.version.baseOS ?? environment.oSVersion;
+
+      final release = info.version.release;
+      if (release.isNotEmpty) {
+        environment.oSVersion = release;
+      }
       // Report Android API level as OS SDK Version
       environment.osSDKVersion = info.version.sdkInt.toString();
     }
