@@ -9,6 +9,11 @@ import 'package:raygun4flutter/src/messages/raygun_environment_message.dart';
 Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
   final environment = RaygunEnvironmentMessage();
 
+  // Basic device information from Flutter's Platform
+  environment.platform = Platform.operatingSystem;
+  environment.oSVersion = Platform.operatingSystemVersion;
+  environment.processorCount = Platform.numberOfProcessors;
+
   final window = PlatformDispatcher.instance.implicitView;
   environment.windowsBoundHeight = window?.physicalSize.height.toInt();
   environment.windowsBoundWidth = window?.physicalSize.width.toInt();
@@ -27,25 +32,27 @@ Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       final info = await deviceInfo.iosInfo;
-      environment.oSVersion = info.systemVersion;
+      // Report iOS version number as SDK Version
+      environment.osSDKVersion = info.systemVersion;
       environment.deviceName = info.name;
       environment.deviceCode = info.model;
     }
     if (Platform.isAndroid) {
       final info = await deviceInfo.androidInfo;
       environment.brand = info.brand;
-      environment.oSVersion = info.version.sdkInt.toString();
       environment.deviceName = info.device;
+      // Base OS only available from API 23
+      environment.oSVersion = info.version.baseOS ?? environment.oSVersion;
+      // Report Android API level as OS SDK Version
+      environment.osSDKVersion = info.version.sdkInt.toString();
     }
     if (Platform.isLinux) {
       final info = await deviceInfo.linuxInfo;
       environment.deviceName = info.name;
-      environment.oSVersion = info.version;
     }
     if (Platform.isMacOS) {
       final info = await deviceInfo.macOsInfo;
       environment.deviceName = info.computerName;
-      environment.oSVersion = info.osRelease;
     }
     if (Platform.isWindows) {
       final info = await deviceInfo.windowsInfo;
