@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 
@@ -13,6 +14,14 @@ Future<RaygunEnvironmentMessage> fromDeviceInfo() async {
   environment.windowsBoundWidth = window?.physicalSize.width.toInt();
   environment.locale = PlatformDispatcher.instance.locale.toLanguageTag();
   environment.utcOffset = DateTime.now().timeZoneOffset.inHours.toDouble();
+
+  try {
+    // abi returns a similar to 'android_arm64'
+    final abi = Abi.current().toString();
+    environment.architecture = abi.split('_').last;
+  } catch (e) {
+    RaygunLogger.e('Failed to parse architecture. $e');
+  }
 
   try {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

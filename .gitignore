@@ -27,6 +27,7 @@ doc/api/
 build/
 
 .idea/
+.vscode/
 
 .flutter-plugins
 .flutter-plugins-dependencies
