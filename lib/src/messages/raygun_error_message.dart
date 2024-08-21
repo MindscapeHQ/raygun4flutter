@@ -33,6 +33,13 @@ class RaygunErrorMessage {
         .toList();
   }
 
+  factory RaygunErrorMessage.fromException(Exception exception) {
+    return RaygunErrorMessage(
+      exception.runtimeType.toString(),
+      exception.toString(),
+    );
+  }
+
   factory RaygunErrorMessage.fromJson(
     Map<String, dynamic> json,
   ) =>

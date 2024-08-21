@@ -142,9 +142,10 @@ class _MyAppState extends State<MyApp> {
                     'custom2': 42,
                   },
                   stackTrace: StackTrace.current,
+                  innerError: const MyCustomException('Custom exception'),
                 );
               },
-              child: const Text('Send custom error with tags and customData'),
+              child: const Text('Send custom error with all options'),
             ),
 
             // example: Button tap adds breadcrumb to future error message
@@ -197,5 +198,16 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+}
+
+class MyCustomException implements Exception {
+  const MyCustomException(this.message);
+
+  final String message;
+
+  @override
+  String toString() {
+    return 'MyCustomException: $message';
   }
 }

@@ -22,8 +22,14 @@ class CrashReporting {
     List<String>? tags,
     Map? customData,
     Trace? trace,
+    Exception? innerError,
   ) async {
-    final RaygunMessage msg = await _buildMessage(className, reason, trace);
+    final RaygunMessage msg = await _buildMessage(
+      className,
+      reason,
+      trace,
+      innerError,
+    );
 
     msg.details.tags = tags ?? [];
     final globalTags = Settings.tags;
@@ -70,12 +76,17 @@ Future<RaygunMessage> _buildMessage(
   String className,
   String reason,
   Trace? trace,
+  Exception? innerError,
 ) async {
   final raygunMessage = RaygunMessage();
 
   raygunMessage.details.error = RaygunErrorMessage(className, reason);
   if (trace != null) {
     raygunMessage.details.error!.setStackTrace(trace);
+  }
+  if (innerError != null) {
+    raygunMessage.details.error!.innerError =
+        RaygunErrorMessage.fromException(innerError);
   }
 
   raygunMessage.details.client = RaygunClientMessage();
