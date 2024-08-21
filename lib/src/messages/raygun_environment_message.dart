@@ -25,6 +25,7 @@ class RaygunEnvironmentMessage {
   String? brand;
   String? board;
   String? deviceCode;
+  String? platform;
 
   RaygunEnvironmentMessage();
 
