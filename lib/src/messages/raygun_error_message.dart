@@ -10,7 +10,6 @@ class RaygunErrorMessage {
   String message;
   String className;
 
-  // todo: innerError is null at the moment
   RaygunErrorMessage? innerError;
 
   List<RaygunErrorStackTraceLineMessage> stackTrace = [];
