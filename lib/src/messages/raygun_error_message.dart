@@ -10,7 +10,6 @@ class RaygunErrorMessage {
   String message;
   String className;
 
-  // todo: innerError is null at the moment
   RaygunErrorMessage? innerError;
 
   List<RaygunErrorStackTraceLineMessage> stackTrace = [];
@@ -31,6 +30,13 @@ class RaygunErrorMessage {
           ),
         )
         .toList();
+  }
+
+  factory RaygunErrorMessage.fromException(Exception exception) {
+    return RaygunErrorMessage(
+      exception.runtimeType.toString(),
+      exception.toString(),
+    );
   }
 
   factory RaygunErrorMessage.fromJson(

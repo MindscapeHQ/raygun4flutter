@@ -75,6 +75,24 @@ void main() {
     expect(capturedBody['details']['userCustomData'], {'custom': 42});
   });
 
+  test('sendCustom with innerError', () async {
+    await Raygun.sendCustom(
+      className: 'CLASSNAME',
+      reason: 'REASON',
+      innerError: Exception('MESSAGE'),
+    );
+
+    // main error should be custom className and reason
+    expect(capturedBody['details']['error']['message'], 'REASON');
+    expect(capturedBody['details']['error']['className'], 'CLASSNAME');
+
+    // innerError should be exception message and type
+    expect(capturedBody['details']['error']['innerError']['message'],
+        'Exception: MESSAGE');
+    expect(capturedBody['details']['error']['innerError']['className'],
+        '_Exception');
+  });
+
   test('Breadcrumb', () async {
     Raygun.recordBreadcrumb('BREADCRUMB');
     final breadcrumbMessage = RaygunBreadcrumbMessage(

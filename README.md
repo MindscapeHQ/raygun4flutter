@@ -142,6 +142,8 @@ All arguments but `error` are optional. This method is mainly a convenience wrap
 
 Call `Raygun.sendCustom(className, reason, tags, customData, stackTrace)` to send custom errors to Raygun with your own customised `className` and `reason`. As with `.sendException()`, `tags`, `customData` and `stackTrace` are optional.
 
+You can also provide an optional `innerError` `Exception` object that will be attached to the error report.
+
 For example:
 
 ```dart
@@ -154,6 +156,7 @@ Raygun.sendCustom(
     'custom2': 42,
   },
   stackTrace: StackTrace.current,
+  innerError: Exception('Error!'),
 );
 ```
 
