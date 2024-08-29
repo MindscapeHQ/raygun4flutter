@@ -349,6 +349,30 @@ Then, upload this file to the **Js Source Map Center** in your Raygun project's 
 
 You can find more information regarding source maps within our documentation site - [Source Maps for JavaScript](https://raygun.com/documentation/language-guides/javascript/crash-reporting/source-maps/).
 
+### Uploading source maps with Raygun CLI
+
+Raygun CLI is a command-line tool for Raygun.
+
+Install with: 
+
+```
+dart pub global activate raygun_cli
+```
+
+To upload Flutter web sourcemaps to Raygun, navigate to your project root and run the `sourcemap` command with the `platform` armument (`-p`) to `flutter` and set the `uri`, `app-id` and access `token` parameters.
+
+- `uri` is the full URI where your application `main.dart.js` will be installed to.
+- `app-id` the Application ID in Raygun.com.
+- `token` is an access token from https://app.raygun.com/user/tokens.
+
+```
+raygun-cli sourcemap -p flutter --uri=https://example.com/main.dart.js --app-id=APP_ID --token=TOKEN
+```
+
+The `input-map` argument is optional for Flutter web projects. `raygun-cli` will try to find the `main.dart.js.map` file in `build/web/main.dart.js.map` automatically.
+
+For more information see [raygun-cli on pub.dev](https://pub.dev/packages/raygun_cli)
+
 ## Comprehensive sample app
 
 For a working sample app across multiple platforms, check the Flutter project in the `example` directory.
