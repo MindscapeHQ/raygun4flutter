@@ -1,6 +1,6 @@
 name: raygun4flutter
 description: Raygun4flutter package is the official Raygun crash reporting provider for Flutter.
-version: 3.1.0
+version: 3.2.0
 homepage: https://raygun.com
 repository: https://github.com/MindscapeHQ/Raygun4Flutter
 
