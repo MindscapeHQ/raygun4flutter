@@ -420,10 +420,10 @@ packages:
     dependency: "direct main"
     description:
       name: network_info_plus
-      sha256: "0754302af09e58a60c7cd6800029d00e03c68f289a19fd9df31941ab91da8903"
+      sha256: "6a31fa47c1f6e240f1b60de0a57d65a092ac1af7515247660f03643576984eb8"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   network_info_plus_platform_interface:
     dependency: transitive
     description:
