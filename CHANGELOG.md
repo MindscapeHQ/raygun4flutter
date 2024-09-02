@@ -10,6 +10,8 @@
 - chore(deps): bump package_info_plus from 8.0.0 to 8.0.1 (#188)
 - chore(deps): bump network_info_plus from 5.0.3 to 6.0.0 (#187)
 - chore(deps): bump device_info_plus from 10.1.0 to 10.1.1 (#186)
+- chore(deps): bump uuid from 4.4.2 to 4.5.0 (#199)
+- chore(deps): bump network_info_plus from 6.0.0 to 6.0.1 (#198)
 
 ## 3.1.0
 
