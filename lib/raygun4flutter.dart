@@ -94,12 +94,16 @@ class Raygun {
   ///
   /// [stackTrace] optional parameter, if not provided this method will obtain
   /// the current stacktrace automatically.
+  ///
+  /// [innerError] optional [Exception] to attach as "innerError"
+  /// in the error report.
   static Future<void> sendCustom({
     required String className,
     required String reason,
     List<String>? tags,
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
+    Exception? innerError,
   }) async {
     Trace trace;
     if (stackTrace == null) {
@@ -109,7 +113,14 @@ class Raygun {
       trace = Trace.from(stackTrace);
     }
 
-    return CrashReporting.send(className, reason, tags, customData, trace);
+    return CrashReporting.send(
+      className,
+      reason,
+      tags,
+      customData,
+      trace,
+      innerError,
+    );
   }
 
   /// Sets a List of tags which will be sent along with every exception.

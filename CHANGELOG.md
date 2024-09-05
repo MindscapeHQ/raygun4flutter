@@ -1,3 +1,18 @@
+## 3.2.0
+
+- feat: #30 add innerError to sendCustom method (#195)
+- fix: #31 Improve Environment details (#194)
+- docs: add raygun-cli sourcemap to README.md (#196)
+- docs: Add Obfuscation to README.md  (#192)
+- chore: Upgrade dependencies to fix CI build (#193)
+- chore(deps): bump path_provider from 2.1.3 to 2.1.4 (#190)
+- chore(deps): bump shared_preferences from 2.2.3 to 2.3.1 (#189)
+- chore(deps): bump package_info_plus from 8.0.0 to 8.0.1 (#188)
+- chore(deps): bump network_info_plus from 5.0.3 to 6.0.0 (#187)
+- chore(deps): bump device_info_plus from 10.1.0 to 10.1.1 (#186)
+- chore(deps): bump uuid from 4.4.2 to 4.5.0 (#199)
+- chore(deps): bump network_info_plus from 6.0.0 to 6.0.1 (#198)
+
 ## 3.1.0
 
 - fix: Add columnNumber to stack trace (#178)

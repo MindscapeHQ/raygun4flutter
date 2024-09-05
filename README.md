@@ -142,6 +142,8 @@ All arguments but `error` are optional. This method is mainly a convenience wrap
 
 Call `Raygun.sendCustom(className, reason, tags, customData, stackTrace)` to send custom errors to Raygun with your own customised `className` and `reason`. As with `.sendException()`, `tags`, `customData` and `stackTrace` are optional.
 
+You can also provide an optional `innerError` `Exception` object that will be attached to the error report.
+
 For example:
 
 ```dart
@@ -154,6 +156,7 @@ Raygun.sendCustom(
     'custom2': 42,
   },
   stackTrace: StackTrace.current,
+  innerError: Exception('Error!'),
 );
 ```
 
@@ -281,6 +284,48 @@ Raygun.setCustomCrashReportingEndpoint(url)
 
 Please note that setting a custom endpoint will stop Crash Report or Real User Monitoring data from being sent to the Raygun backend.
 
+## Obfuscation
+
+Flutter supports code obfuscation with the `--obfuscate` parameter, this option generates symbol files that can be used to decode the obfuscated stack traces, as described in the section [Obfuscate Dart code](https://docs.flutter.dev/deployment/obfuscate) from the Flutter SDK.
+
+Note that Flutter Web uses sourcemaps instead, which is described in the next section.
+
+To decode obfuscated Flutter stacktraces with Raygun, you will have to copy the stacktrace into a file and run the `flutter symbolize` command manually. In the future, Raygun aims to support this functionality directly in the website.
+
+For example, a file named `stack.txt`. It will look similar to this:
+
+```
+at *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** (file:///***:null)
+at pid: 29207, tid: 29228, name 1.ui (unparsed:null)
+at android arch: arm64 comp: yes sim: no (os::null)
+at build_id: '63956a45f09b3f8410d244053eebd180' (unparsed:null)
+at isolate_dso_base: 708882d000, vm_dso_base: 708882d000 (unparsed:null)
+at isolate_instructions: 7088903b40, vm_instructions: 70888ed000 (unparsed:null)
+at #00 abs 00000070889bcc93 virt 000000000018fc93 _kDartIsolateSnapshotInstructions+0xb9153 (unparsed:null)
+at #01 abs 00000070889464fb virt 00000000001194fb _kDartIsolateSnapshotInstructions+0x429bb (unparsed:null)
+... etc ...
+```
+
+Then, run the decode command passing in the copied stacktrace and the symbol file corresponding to the architecture. For example:
+
+```
+flutter symbolize -i stack.txt -d out/android/app.android-arm64.symbols
+```
+
+The decoded output will be similar to this:
+
+```
+at *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** (file:///***:null)
+at pid: 29207, tid: 29228, name 1.ui (unparsed:null)
+at android arch: arm64 comp: yes sim: no (os::null)
+at build_id: '63956a45f09b3f8410d244053eebd180' (unparsed:null)
+at isolate_dso_base: 708882d000, vm_dso_base: 708882d000 (unparsed:null)
+at isolate_instructions: 7088903b40, vm_instructions: 70888ed000 (unparsed:null)
+at #0      _MyAppState.build.<anonymous closure> (/[redacted]/raygun4flutter/example/lib/main.dart:89:17)
+at #1      _InkResponseState.handleTap (//[redacted]/flutter/packages/flutter/lib/src/material/ink_well.dart:1170:21)
+... etc ...
+```
+
 ## Flutter web source maps
 
 Flutter web applications use `dart2js` to produce a single JavaScript file `main.dart.js`.
@@ -303,6 +348,30 @@ This will generate the source map file, e.g. `main.dart.js.map` inside the `buil
 Then, upload this file to the **Js Source Map Center** in your Raygun project's **Application Settings** and configure them appropriately.
 
 You can find more information regarding source maps within our documentation site - [Source Maps for JavaScript](https://raygun.com/documentation/language-guides/javascript/crash-reporting/source-maps/).
+
+### Uploading source maps with Raygun CLI
+
+Raygun CLI is a command-line tool for Raygun.
+
+Install with: 
+
+```
+dart pub global activate raygun_cli
+```
+
+To upload Flutter web sourcemaps to Raygun, navigate to your project root and run the `sourcemap` command with the `platform` armument (`-p`) to `flutter` and set the `uri`, `app-id` and access `token` parameters.
+
+- `uri` is the full URI where your application `main.dart.js` will be installed to.
+- `app-id` the Application ID in Raygun.com.
+- `token` is an access token from https://app.raygun.com/user/tokens.
+
+```
+raygun-cli sourcemap -p flutter --uri=https://example.com/main.dart.js --app-id=APP_ID --token=TOKEN
+```
+
+The `input-map` argument is optional for Flutter web projects. `raygun-cli` will try to find the `main.dart.js.map` file in `build/web/main.dart.js.map` automatically.
+
+For more information see [raygun-cli on pub.dev](https://pub.dev/packages/raygun_cli)
 
 ## Comprehensive sample app
 
