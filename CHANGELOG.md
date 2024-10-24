@@ -1,3 +1,9 @@
+## 3.2.1
+
+- fix: #29 Package version in client payload (#203) (2024-10-23)
+- chore(deps): bump build_runner from 2.4.12 to 2.4.13 (#201) (2024-10-02)
+- chore(deps): bump uuid from 4.5.0 to 4.5.1 (#202) (2024-10-02)
+
 ## 3.2.0
 
 - feat: #30 add innerError to sendCustom method (#195)
