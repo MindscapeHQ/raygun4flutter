@@ -3,6 +3,11 @@
 - fix: #29 Package version in client payload (#203) (2024-10-23)
 - chore(deps): bump build_runner from 2.4.12 to 2.4.13 (#201) (2024-10-02)
 - chore(deps): bump uuid from 4.5.0 to 4.5.1 (#202) (2024-10-02)
+- chore(deps): bump connectivity_plus from 6.0.5 to 6.1.0 (#205) (2024-11-02)
+- chore(deps): bump network_info_plus from 6.0.1 to 6.1.0 (#207) (2024-11-02)
+- chore(deps): bump path_provider from 2.1.4 to 2.1.5 (#206) (2024-11-02)
+- chore(deps): bump package_info_plus from 8.0.2 to 8.1.0 (#208) (2024-11-02)
+- chore(deps): bump device_info_plus from 10.1.2 to 11.1.0 (#209) (2024-11-02)
 
 ## 3.2.0
 
