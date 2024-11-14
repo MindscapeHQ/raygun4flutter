@@ -9,8 +9,6 @@ The world's best Flutter Crash Reporting solution.
 
 ### Library organisation
 
-Raygun4Flutter is from version 1.0.0 onwards built entirely in Dart and does *not* rely on the native providers [Raygun4Android](https://github.com/MindscapeHQ/raygun4android/blob/master/README.md) and [Raygun4Apple](https://github.com/MindscapeHQ/raygun4apple) anymore as earlier versions of Raygun4Flutter.
-
 The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter users.
 
 ### Requirements
@@ -51,6 +49,10 @@ Check the "Installing" tab on https://pub.dev/packages/raygun4flutter/install fo
 If your application comprises hybrid code both using Flutter and native Android or iOS elements, please be aware that the Raygun4Flutter package will only track and report crashes from Flutter and Dart.
 
 If you have a requirement to track crash reports across various layers and parts of your application written in different technologies you might need to implement the respective native providers for Android, iOS or other platforms of choice as well.
+
+- [Raygun4Android](https://github.com/MindscapeHQ/raygun4android/) for Android apps.
+- [Raygun4Apple](https://github.com/MindscapeHQ/raygun4apple) for iOS and macOS apps.
+- [Raygun4js](https://github.com/MindscapeHQ/raygun4js) for web apps.
 
 #### Android-specific
 
