@@ -55,6 +55,19 @@ void main() {
     expect(capturedBody['details']['userCustomData'], {});
   });
 
+  test('should fill client data', () async {
+    await Raygun.sendException(error: Exception('MESSAGE'));
+    // Client URL and name never change
+    expect(
+      capturedBody['details']['client']['clientUrl'],
+      'https://github.com/MindscapeHQ/raygun4flutter',
+    );
+    expect(capturedBody['details']['client']['name'], 'Raygun4Flutter');
+
+    // Version changes on each release
+    expect(capturedBody['details']['client']['version'], isNotEmpty);
+  });
+
   test('sendException with tags', () async {
     await Raygun.sendException(
       error: Exception('MESSAGE'),
