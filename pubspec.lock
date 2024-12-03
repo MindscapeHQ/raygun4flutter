@@ -433,10 +433,10 @@ packages:
     dependency: "direct main"
     description:
       name: network_info_plus
-      sha256: "89bad7bf9614e78716f0f86c905fe2a850dbdcc00c377968d5260c49c2c6f2eb"
+      sha256: bf9e39e523e9951d741868dc33ac386b0bc24301e9b7c8a7d60dbc34879150a8
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   network_info_plus_platform_interface:
     dependency: transitive
     description:
