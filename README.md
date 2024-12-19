@@ -290,9 +290,23 @@ Please note that setting a custom endpoint will stop Crash Report or Real User M
 
 Flutter supports code obfuscation with the `--obfuscate` parameter, this option generates symbol files that can be used to decode the obfuscated stack traces, as described in the section [Obfuscate Dart code](https://docs.flutter.dev/deployment/obfuscate) from the Flutter SDK.
 
-Note that Flutter Web uses sourcemaps instead, which is described in the next section.
+Note that Flutter Web uses sourcemaps instead, which are described in the next section.
 
-To decode obfuscated Flutter stacktraces with Raygun, you will have to copy the stacktrace into a file and run the `flutter symbolize` command manually. In the future, Raygun aims to support this functionality directly in the website.
+### Using Flutter mobile/native symbols within Raygun
+
+To decode obfuscated Flutter stacktraces within Raygun, you can take advantage of our Flutter Symbols center, located within the Application Settings section of you app. From there, add the version number of your symbols and upload the particular file.
+
+The file name should follow the following convention - `app.{platform}-{architecture}.symbols`
+
+The version is required to match with the `version` located in the crash report. In order to ensure we process your intended crash reports.
+
+To set the `version`, you can add the version during the initialization (`Raygun.init`) or calling `.setVersion()` where it is avaliable. More information can be find in the [Setup and usage section](https://github.com/MindscapeHQ/raygun4flutter?tab=readme-ov-file#setup-and-usage)
+
+Once the symbols have been uploaded, incoming crash reports will be decoded. To symbolicate crash reports that were existing before uploading the symbols to the symbols center, head to the crash report of the identified de-symbolicated crash and scroll fown to the 'Error instance command section. Hit the 'Reprocess' button to start the decoding of the crash report which will eventually show the symbolicated stack trace.  
+
+### Manual processing
+
+To decode obfuscated Flutter stacktraces with Raygun manually, you will have to copy the stacktrace into a file and run the `flutter symbolize` command on your local system.
 
 For example, a file named `stack.txt`. It will look similar to this:
 
