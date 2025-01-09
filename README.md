@@ -304,6 +304,35 @@ To set the `version`, you can add the version during the initialization (`Raygun
 
 Once the symbols have been uploaded, incoming crash reports will be decoded. To symbolicate crash reports that were existing before uploading the symbols to the symbols center, head to the crash report of the identified de-symbolicated crash and scroll fown to the 'Error instance command section. Hit the 'Reprocess' button to start the decoding of the crash report which will eventually show the symbolicated stack trace.  
 
+### Uploading symbols with Raygun CLI
+
+Raygun CLI is a command-line tool for Raygun. You can use this tool to upload symbol files directly from CI.
+
+Install with: 
+
+```
+dart pub global activate raygun_cli
+```
+
+To upload symbol files to Raygun, navigate to your project root and run the `symbols upload` command with the following parameters:
+
+- `path` location of the symbols file.
+- `version` app version.
+- `app-id` the Application ID in Raygun.com.
+- `token` is an access token from https://app.raygun.com/user/tokens.
+
+```
+raygun-cli symbols upload --path=<path to symbols file> --version=<app version> --app-id=APP_ID --token=TOKEN
+```
+
+Obtain a list of the uploaded symbol files with the `symbols list` command:
+
+```
+raygun-cli symbols list --app-id=APP_ID --token=TOKEN
+```
+
+For more information see [raygun-cli on pub.dev](https://pub.dev/packages/raygun_cli).
+
 ### Manual processing
 
 To decode obfuscated Flutter stacktraces with Raygun manually, you will have to copy the stacktrace into a file and run the `flutter symbolize` command on your local system.
