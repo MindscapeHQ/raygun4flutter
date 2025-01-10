@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 class Settings {
   /// The current version of the Raygun4Flutter package.
-  static const kVersion = '3.2.1';
+  static const kVersion = '3.2.2';
 
   static const kDefaultCrashReportingEndpoint =
       'https://api.raygun.com/entries';
