@@ -47,23 +47,14 @@ class NetworkInfo {
 
 extension _ConnectivityResult on ConnectivityResult {
   String _toName() {
-    switch (this) {
-      case ConnectivityResult.wifi:
-        return 'WiFi';
-      case ConnectivityResult.ethernet:
-        return 'Ethernet';
-      case ConnectivityResult.mobile:
-        return 'Mobile';
-      case ConnectivityResult.none:
-        return 'Not Connected';
-      case ConnectivityResult.bluetooth:
-        return 'Bluetooth';
-      case ConnectivityResult.vpn:
-        return 'VPN';
-      case ConnectivityResult.other:
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
+    return switch (this) {
+      ConnectivityResult.wifi => 'WiFi',
+      ConnectivityResult.ethernet => 'Ethernet',
+      ConnectivityResult.mobile => 'Mobile',
+      ConnectivityResult.none => 'Not Connected',
+      ConnectivityResult.bluetooth => 'Bluetooth',
+      ConnectivityResult.vpn => 'VPN',
+      ConnectivityResult.other => 'Other'
+    };
   }
 }

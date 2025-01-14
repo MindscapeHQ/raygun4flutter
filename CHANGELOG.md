@@ -1,3 +1,21 @@
+## 3.2.2
+
+- fix(example): Add Internet permission to Android example project (#219) (2024-12-19)
+- docs: Add raygun-cli symbols command to README.md (#225) (2025-01-09)
+- docs: Add mobile/native symbols docs (#217) (2024-12-20)
+- docs: Update README.md with native plugins links (#211) (2024-11-15)
+- chore(deps): bump json_serializable from 6.9.0 to 6.9.2 (#221) (2025-01-06)
+- chore(deps): bump device_info_plus from 11.1.0 to 11.2.0 (#222) (2025-01-06)
+- chore(deps): bump shared_preferences from 2.3.3 to 2.3.4 (#220) (2025-01-06)
+- chore(deps): bump package_info_plus from 8.1.1 to 8.1.2 (#223) (2025-01-06)
+- chore(deps): bump connectivity_plus from 6.1.0 to 6.1.1 (#224) (2025-01-06)
+- chore(deps): bump network_info_plus from 6.1.0 to 6.1.1 (#214) (2024-12-03)
+- chore(deps): bump package_info_plus from 8.1.0 to 8.1.1 (#216) (2024-12-02)
+- chore(deps): bump json_serializable from 6.8.0 to 6.9.0 (#215) (2024-12-02)
+- chore(deps): bump shared_preferences from 2.3.2 to 2.3.3 (#213) (2024-12-02)
+- chore(deps): bump intl from 0.19.0 to 0.20.1 (#212) (2024-12-02)
+- ci: fix analyze issue (#218) (2024-12-19)
+
 ## 3.2.1
 
 - fix: #29 Package version in client payload (#203) (2024-10-23)
