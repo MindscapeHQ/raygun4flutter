@@ -94,6 +94,7 @@ class _MyAppState extends State<MyApp> {
             // example: Button tap causes async Dart exception
             ElevatedButton(
               onPressed: () async {
+                // ignore: unnecessary_async
                 Future<void> foo() async {
                   throw StateError('This is an async Dart exception.');
                 }

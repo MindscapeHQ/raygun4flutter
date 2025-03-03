@@ -38,11 +38,11 @@ void main() {
     await Raygun.init(apiKey: 'KEY', version: '1.0.0');
   });
 
-  test('init', () async {
+  test('init', () {
     expect(Settings.apiKey, 'KEY');
   });
 
-  test('init with version', () async {
+  test('init with version', () {
     Raygun.init(apiKey: 'KEY', version: 'x.y.z');
     expect(Settings.apiKey, 'KEY');
     expect(Settings.version, 'x.y.z');
