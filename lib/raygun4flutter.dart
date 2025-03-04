@@ -69,7 +69,7 @@ class Raygun {
     List<String>? tags,
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
-  }) async {
+  }) {
     return sendCustom(
       className: error.runtimeType.toString(),
       reason: error.toString(),
@@ -104,7 +104,7 @@ class Raygun {
     Map<String, dynamic>? customData,
     StackTrace? stackTrace,
     Exception? innerError,
-  }) async {
+  }) {
     Trace trace;
     if (stackTrace == null) {
       // if no stackTrace provided, create one
