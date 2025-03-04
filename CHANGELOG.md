@@ -1,3 +1,12 @@
+## 3.2.3
+
+- chore(deps): upgrade dependencies (#240) (2025-03-04)
+- chore(deps): bump shared_preferences from 2.3.4 to 2.5.1 (#231) (2025-02-02)
+- chore(deps): bump json_serializable from 6.9.2 to 6.9.3 (#230) (2025-02-02)
+- chore(deps): bump network_info_plus from 6.1.1 to 6.1.3 (#229) (2025-02-02)
+- chore(deps): bump package_info_plus from 8.1.2 to 8.1.4 (#228) (2025-02-02)
+- chore(deps): bump http from 1.2.2 to 1.3.0 (#232) (2025-02-02)
+
 ## 3.2.2
 
 - fix(example): Add Internet permission to Android example project (#219) (2024-12-19)
