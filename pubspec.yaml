@@ -7,7 +7,7 @@ repository: https://github.com/MindscapeHQ/Raygun4Flutter
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  flutter: ">=3.30.0"
 
 dependencies:
   connectivity_plus: ^6.0.1
