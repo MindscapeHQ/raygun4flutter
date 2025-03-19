@@ -5,7 +5,7 @@
 Building the project requires the [Flutter SDK](https://docs.flutter.dev/get-started/install).
 The minimum version requirement is specified in the `pubspec.yaml`.
 
-The `raygun4flutter` package is at the package root.
+The `raygun4flutter` package is at the repository root.
 
 The `example` folder contains an example app showing the provider capabilities.
 
