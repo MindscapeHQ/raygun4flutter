@@ -38,7 +38,9 @@ Run the example from command line by running `flutter run` inside the `example` 
 
 ## How to contribute?
 
-Get in touch with us here on Github before you undertake any work
+This section is intended for external contributors not part of the Raygun team.
+
+Before you undertake any work, please create a ticket with your proposal,
 so that it can be coordinated with what we're doing.
 
 If you're interested in contributing on a regular basis,
@@ -64,7 +66,7 @@ Fill the PR template and give it a title that follows the [Conventional Commits 
 
 ### Wait for a review
 
-Wait for a review by the team.
+Wait for a review by the Raygun team.
 The team will leave you feedback and might ask you to do changes in your code.
 
 Once the PR is approved, the team will merge it.

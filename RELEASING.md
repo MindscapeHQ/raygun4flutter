@@ -97,7 +97,7 @@ or by following this link: https://github.com/MindscapeHQ/raygun4flutter/compare
 
 You can name the PR `chore: merge to master`.
 
-Then ask for approval by the team.
+Then ask for approval by the Raygun team.
 
 ### Merge, don't squash
 
