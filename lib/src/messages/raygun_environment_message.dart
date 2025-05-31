@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:raygun4flutter/src/messages/raygun_flutter_version.dart';
 
 part 'raygun_environment_message.g.dart';
 
@@ -26,6 +27,8 @@ class RaygunEnvironmentMessage {
   String? board;
   String? deviceCode;
   String? platform;
+
+  RaygunFlutterVersion flutterVersion = RaygunFlutterVersion();
 
   RaygunEnvironmentMessage();
 

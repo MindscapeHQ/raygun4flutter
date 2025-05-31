@@ -30,7 +30,9 @@ RaygunEnvironmentMessage _$RaygunEnvironmentMessageFromJson(
       ..brand = json['brand'] as String?
       ..board = json['board'] as String?
       ..deviceCode = json['deviceCode'] as String?
-      ..platform = json['platform'] as String?;
+      ..platform = json['platform'] as String?
+      ..flutterVersion = RaygunFlutterVersion.fromJson(
+          json['flutterVersion'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$RaygunEnvironmentMessageToJson(
         RaygunEnvironmentMessage instance) =>
@@ -55,4 +57,5 @@ Map<String, dynamic> _$RaygunEnvironmentMessageToJson(
       'board': instance.board,
       'deviceCode': instance.deviceCode,
       'platform': instance.platform,
+      'flutterVersion': instance.flutterVersion,
     };
