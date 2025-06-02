@@ -1,3 +1,13 @@
+## 3.3.0
+
+- feat: #233 FlutterVersion in environment details (#248) (2025-05-31)
+- chore(deps): bump http from 1.3.0 to 1.4.0 (#249) (2025-06-02)
+- chore(deps): bump json_serializable from 6.9.4 to 6.9.5 (#245) (2025-05-02)
+- chore(deps): bump connectivity_plus from 6.1.3 to 6.1.4 (#246) (2025-05-02)
+- chore(deps): bump network_info_plus from 6.1.3 to 6.1.4 (#247) (2025-05-02)
+- chore(deps): bump device_info_plus from 11.3.3 to 11.4.0 (#244) (2025-05-02)
+- chore(deps): bump shared_preferences from 2.5.2 to 2.5.3 (#243) (2025-04-02)
+
 ## 3.2.3
 
 - chore(deps): upgrade dependencies (#240) (2025-03-04)
