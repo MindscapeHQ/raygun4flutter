@@ -178,7 +178,7 @@ void main() {
     await service.store(raygunMessage.toJson());
     await service.store(raygunMessage.toJson());
     await service.store(raygunMessage.toJson());
-    final files = await _getCachedFiles();
+    final files = await CrashReportingPostService.getCachedFiles();
     for (final file in files) {
       print('Found file: ${file.path}');
     }
@@ -206,7 +206,7 @@ void main() {
     final file = File('${cacheDir.path}/error.raygun4');
     await file.writeAsString('asdasdasf{}{}{');
 
-    var files = await _getCachedFiles();
+    var files = await CrashReportingPostService.getCachedFiles();
     expect(files.length, 1);
 
     // should fail with an error
@@ -214,22 +214,15 @@ void main() {
     await service.sendAllStored('KEY');
 
     // should delete all cached files
-    files = await _getCachedFiles();
+    files = await CrashReportingPostService.getCachedFiles();
     expect(files.length, 0);
   });
 }
 
 Future<void> _deleteOldFiles() async {
-  final oldFiles = await _getCachedFiles();
+  final oldFiles = await CrashReportingPostService.getCachedFiles();
   for (final file in oldFiles) {
     print('Deleting old file: ${file.path}');
     await file.delete();
   }
-}
-
-Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
-  final cacheDir = Settings.cacheDirectory!;
-  return cacheDir
-      .listSync()
-      .where((element) => element.path.endsWith('.raygun4'));
 }
