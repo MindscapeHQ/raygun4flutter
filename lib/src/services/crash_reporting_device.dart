@@ -72,9 +72,13 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
     } catch (e) {
       RaygunLogger.e('Error while sending stored payloads: $e');
       RaygunLogger.w('Deleting all cached files');
-      final cachedFiles = await _getCachedFiles();
-      for (final file in cachedFiles) {
-        await file.delete();
+      try {
+        final cachedFiles = await _getCachedFiles();
+        for (final file in cachedFiles) {
+          await file.delete();
+        }
+      } catch (deleteError) {
+        RaygunLogger.e('Failed to delete cached files: $deleteError');
       }
     }
   }
