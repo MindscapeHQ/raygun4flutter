@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:raygun4flutter/src/logging/raygun_logger.dart';
@@ -20,7 +21,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
     RaygunLogger.d('Storing crash for later');
     try {
       final cacheDir = Settings.cacheDirectory ?? await getTemporaryDirectory();
-      final cachedFiles = await _getCachedFiles();
+      final cachedFiles = await getCachedFiles();
       RaygunLogger.d('Currently ${cachedFiles.length} stored');
       if (cachedFiles.length < Settings.maxReportsStoredOnDevice) {
         final timestamp = DateFormat('yyyyMMddHHmmss').format(DateTime.now());
@@ -48,7 +49,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
       return;
     }
     try {
-      final cachedFiles = await _getCachedFiles();
+      final cachedFiles = await getCachedFiles();
       RaygunLogger.d('Currently ${cachedFiles.length} stored');
       for (final file in cachedFiles) {
         try {
@@ -73,7 +74,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
       RaygunLogger.e('Error while sending stored payloads: $e');
       RaygunLogger.w('Deleting all cached files');
       try {
-        final cachedFiles = await _getCachedFiles();
+        final cachedFiles = await getCachedFiles();
         for (final file in cachedFiles) {
           await file.delete();
         }
@@ -83,11 +84,13 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
     }
   }
 
-  Future<Iterable<FileSystemEntity>> _getCachedFiles() async {
+  @visibleForTesting
+  static Future<Iterable<FileSystemEntity>> getCachedFiles() async {
     final cacheDir = Settings.cacheDirectory ?? await getTemporaryDirectory();
     RaygunLogger.d('Cache dir: $cacheDir');
     return cacheDir
-        .listSync()
-        .where((element) => element.path.endsWith('.raygun4'));
+        .list() // returns a Stream<FileSystemEntity>
+        .where((element) => element.path.endsWith('.raygun4'))
+        .toList(); // convert to Future<List<FileSystemEntity>>
   }
 }
