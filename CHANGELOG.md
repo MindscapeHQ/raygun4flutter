@@ -1,6 +1,7 @@
 ## 3.3.0
 
 - feat: #233 FlutterVersion in environment details (#248) (2025-05-31)
+- fix: #254 catch error in `file.delete()` (2025-07-05)
 - chore(deps): bump http from 1.3.0 to 1.4.0 (#249) (2025-06-02)
 - chore(deps): bump json_serializable from 6.9.4 to 6.9.5 (#245) (2025-05-02)
 - chore(deps): bump connectivity_plus from 6.1.3 to 6.1.4 (#246) (2025-05-02)
