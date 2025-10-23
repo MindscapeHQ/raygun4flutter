@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.raygun4flutter_example"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "25.1.8937393" // Using a specific stable NDK version instead of flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
