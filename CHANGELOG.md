@@ -1,3 +1,22 @@
+# CHANGELOG
+
+## 3.3.1
+
+- fix: support wasm (#270) (2025-10-28)
+- chore(deps): bump network_info_plus from 6.1.4 to 7.0.0 (#266) (2025-10-02)
+- chore(deps): bump package_info_plus from 8.3.1 to 9.0.0 (#267) (2025-10-02)
+- chore(deps): bump build_runner from 2.7.0 to 2.9.0 (#265) (2025-10-02)
+- chore(deps): bump json_serializable from 6.11.0 to 6.11.1 (#264) (2025-10-02)
+- chore(deps): bump device_info_plus from 11.5.0 to 12.1.0 (#268) (2025-10-02)
+- chore(deps): bump json_serializable from 6.10.0 to 6.11.0 (#260) (2025-09-04)
+- chore(deps): bump actions/checkout from 4 to 5 (#261) (2025-09-04)
+- chore(deps): bump package_info_plus from 8.3.0 to 8.3.1 (#262) (2025-09-04)
+- chore(deps): bump http from 1.4.0 to 1.5.0 (#263) (2025-09-04)
+- chore(deps): bump build_runner from 2.6.0 to 2.7.0 (#259) (2025-09-02)
+- chore(deps): bump connectivity_plus from 6.1.4 to 6.1.5 (#258) (2025-09-02)
+- chore(deps): bump amannn/action-semantic-pull-request from 5 to 6 (#257) (2025-09-02)
+- chore(deps): bump json_serializable from 6.9.5 to 6.10.0 (#256) (2025-08-02)
+
 ## 3.3.0
 
 - feat: #233 FlutterVersion in environment details (#248) (2025-05-31)
