@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 3.3.2
+
+- chore(deps): bump http from 1.5.0 to 1.6.0 (#277) (2025-12-02)
+- chore(deps): bump device_info_plus from 12.2.0 to 12.3.0 (#276) (2025-12-02)
+- chore(deps): bump json_serializable from 6.11.1 to 6.11.3 (#278) (2025-12-02)
+- chore(deps): bump uuid from 4.5.1 to 4.5.2 (#279) (2025-12-02)
+- chore(deps): bump build_runner from 2.10.1 to 2.10.4 (#275) (2025-12-02)
+- chore(deps): bump actions/checkout from 5 to 6 (#274) (2025-12-02)
+- chore(deps): bump build_runner from 2.7.0 to 2.10.1 (#272) (2025-11-02)
+- chore(deps): bump device_info_plus from 12.1.0 to 12.2.0 (#273) (2025-11-02)
+
 ## 3.3.1
 
 - fix: support wasm (#270) (2025-10-28)
