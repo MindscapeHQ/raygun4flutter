@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.3.3
+
+- chore(deps): bump shared_preferences from 2.5.3 to 2.5.4 (#281) (2026-01-05)
+
 ## 3.3.2
 
 - chore(deps): bump http from 1.5.0 to 1.6.0 (#277) (2025-12-02)
