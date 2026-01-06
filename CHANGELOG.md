@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.4.0
+
+- chore(deps): update multiple dependencies (#283) (2026-01-06)
+
 ## 3.3.3
 
 - chore(deps): bump shared_preferences from 2.5.3 to 2.5.4 (#281) (2026-01-05)
