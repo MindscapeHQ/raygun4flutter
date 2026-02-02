@@ -13,9 +13,9 @@ RaygunClientMessage _$RaygunClientMessageFromJson(Map<String, dynamic> json) =>
       ..version = json['version'] as String;
 
 Map<String, dynamic> _$RaygunClientMessageToJson(
-        RaygunClientMessage instance) =>
-    <String, dynamic>{
-      'clientUrl': instance.clientUrl,
-      'name': instance.name,
-      'version': instance.version,
-    };
+  RaygunClientMessage instance,
+) => <String, dynamic>{
+  'clientUrl': instance.clientUrl,
+  'name': instance.name,
+  'version': instance.version,
+};

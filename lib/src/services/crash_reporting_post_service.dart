@@ -9,9 +9,7 @@ import 'package:raygun4flutter/src/utils/response.dart';
 abstract class CrashReportingPostServiceBase {
   late http.Client _client;
 
-  CrashReportingPostServiceBase({
-    http.Client? client,
-  }) {
+  CrashReportingPostServiceBase({http.Client? client}) {
     _client = client ?? http.Client();
   }
 

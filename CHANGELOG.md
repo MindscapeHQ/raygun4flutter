@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.5.0
+
+- chore: bump minimum Dart SDK to 3.9.0 (required by json_annotation 4.10.0)
+- chore(deps): bump json_serializable from 6.11.3 to 6.12.0
+- chore(deps): bump json_annotation from 4.9.0 to 4.10.0
+- chore(deps): bump build_runner from 2.10.4 to 2.10.5
+
 ## 3.4.0
 
 - chore(deps): update multiple dependencies (#283) (2026-01-06)

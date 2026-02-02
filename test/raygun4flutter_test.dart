@@ -100,17 +100,19 @@ void main() {
     expect(capturedBody['details']['error']['className'], 'CLASSNAME');
 
     // innerError should be exception message and type
-    expect(capturedBody['details']['error']['innerError']['message'],
-        'Exception: MESSAGE');
-    expect(capturedBody['details']['error']['innerError']['className'],
-        '_Exception');
+    expect(
+      capturedBody['details']['error']['innerError']['message'],
+      'Exception: MESSAGE',
+    );
+    expect(
+      capturedBody['details']['error']['innerError']['className'],
+      '_Exception',
+    );
   });
 
   test('Breadcrumb', () async {
     Raygun.recordBreadcrumb('BREADCRUMB');
-    final breadcrumbMessage = RaygunBreadcrumbMessage(
-      message: 'BREADCRUMB',
-    );
+    final breadcrumbMessage = RaygunBreadcrumbMessage(message: 'BREADCRUMB');
     expect(
       Settings.breadcrumbs.single.toJson()['message'],
       breadcrumbMessage.toJson()['message'],
@@ -127,10 +129,7 @@ void main() {
   test('UserId with ID', () async {
     Raygun.setUserId('ID');
     final raygunUserInfo = RaygunUserInfo(identifier: 'ID');
-    expect(
-      Settings.userInfo.toJson(),
-      raygunUserInfo.toJson(),
-    );
+    expect(Settings.userInfo.toJson(), raygunUserInfo.toJson());
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody['details']['user'], raygunUserInfo.toJson());
   });
@@ -138,10 +137,7 @@ void main() {
   test('UserId to null', () async {
     Raygun.setUserId(null);
     final raygunUserInfo = RaygunUserInfo();
-    expect(
-      Settings.userInfo.toJson(),
-      raygunUserInfo.toJson(),
-    );
+    expect(Settings.userInfo.toJson(), raygunUserInfo.toJson());
     await Raygun.sendException(error: Exception('MESSAGE'));
     expect(capturedBody['details']['user'], raygunUserInfo.toJson());
   });

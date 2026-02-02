@@ -7,8 +7,9 @@ part of 'network_info.dart';
 // **************************************************************************
 
 NetworkInfo _$NetworkInfoFromJson(Map<String, dynamic> json) => NetworkInfo()
-  ..iPAddress =
-      (json['iPAddress'] as List<dynamic>).map((e) => e as String).toList()
+  ..iPAddress = (json['iPAddress'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList()
   ..networkConnectivityState = json['networkConnectivityState'] as String?;
 
 Map<String, dynamic> _$NetworkInfoToJson(NetworkInfo instance) =>

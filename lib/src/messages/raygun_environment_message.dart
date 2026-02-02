@@ -34,8 +34,6 @@ class RaygunEnvironmentMessage {
 
   Map<String, dynamic> toJson() => _$RaygunEnvironmentMessageToJson(this);
 
-  factory RaygunEnvironmentMessage.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunEnvironmentMessage.fromJson(Map<String, dynamic> json) =>
       _$RaygunEnvironmentMessageFromJson(json);
 }

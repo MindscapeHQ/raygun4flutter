@@ -14,11 +14,7 @@ class RaygunLogger {
 
   static void d(String message) {
     if (kDebugMode) {
-      developer.log(
-        '[RAYGUN][D] $message',
-        level: 500,
-        name: 'raygun4flutter',
-      );
+      developer.log('[RAYGUN][D] $message', level: 500, name: 'raygun4flutter');
     }
     if (testMode) {
       print(message);
@@ -26,33 +22,21 @@ class RaygunLogger {
   }
 
   static void i(String message) {
-    developer.log(
-      '[RAYGUN][I] $message',
-      level: 800,
-      name: 'raygun4flutter',
-    );
+    developer.log('[RAYGUN][I] $message', level: 800, name: 'raygun4flutter');
     if (testMode) {
       print(message);
     }
   }
 
   static void w(String message) {
-    developer.log(
-      '[RAYGUN][W] $message',
-      level: 900,
-      name: 'raygun4flutter',
-    );
+    developer.log('[RAYGUN][W] $message', level: 900, name: 'raygun4flutter');
     if (testMode) {
       print(message);
     }
   }
 
   static void e(String message) {
-    developer.log(
-      '[RAYGUN][E] $message',
-      level: 1000,
-      name: 'raygun4flutter',
-    );
+    developer.log('[RAYGUN][E] $message', level: 1000, name: 'raygun4flutter');
     if (testMode) {
       print(message);
     }
