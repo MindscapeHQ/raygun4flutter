@@ -13,8 +13,6 @@ class RaygunClientMessage {
 
   Map<String, dynamic> toJson() => _$RaygunClientMessageToJson(this);
 
-  factory RaygunClientMessage.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunClientMessage.fromJson(Map<String, dynamic> json) =>
       _$RaygunClientMessageFromJson(json);
 }

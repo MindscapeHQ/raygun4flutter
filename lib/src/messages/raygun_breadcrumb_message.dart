@@ -38,9 +38,7 @@ class RaygunBreadcrumbMessage {
 
   Map<String, dynamic> toJson() => _$RaygunBreadcrumbMessageToJson(this);
 
-  factory RaygunBreadcrumbMessage.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunBreadcrumbMessage.fromJson(Map<String, dynamic> json) =>
       _$RaygunBreadcrumbMessageFromJson(json);
 }
 

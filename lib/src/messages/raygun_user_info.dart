@@ -55,8 +55,6 @@ class RaygunUserInfo {
 
   Map<String, dynamic> toJson() => _$RaygunUserInfoToJson(this);
 
-  factory RaygunUserInfo.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunUserInfo.fromJson(Map<String, dynamic> json) =>
       _$RaygunUserInfoFromJson(json);
 }

@@ -52,10 +52,7 @@ class CrashReporting {
 
     final response = await CrashReportingPostService(
       client: Settings.customHttpClient,
-    ).postCrashReporting(
-      Settings.apiKey ?? '',
-      msgToSend.toJson(),
-    );
+    ).postCrashReporting(Settings.apiKey ?? '', msgToSend.toJson());
 
     if (response.isSuccess) {
       Settings.breadcrumbs.clear();
@@ -67,8 +64,9 @@ class CrashReporting {
   }
 
   static Future<void> sendStored() async {
-    await CrashReportingPostService(client: Settings.customHttpClient)
-        .sendAllStored(Settings.apiKey ?? '');
+    await CrashReportingPostService(
+      client: Settings.customHttpClient,
+    ).sendAllStored(Settings.apiKey ?? '');
   }
 }
 
@@ -85,8 +83,9 @@ Future<RaygunMessage> _buildMessage(
     raygunMessage.details.error!.setStackTrace(trace);
   }
   if (innerError != null) {
-    raygunMessage.details.error!.innerError =
-        RaygunErrorMessage.fromException(innerError);
+    raygunMessage.details.error!.innerError = RaygunErrorMessage.fromException(
+      innerError,
+    );
   }
 
   raygunMessage.details.client = RaygunClientMessage();

@@ -16,8 +16,6 @@ class RaygunFlutterVersion {
 
   Map<String, dynamic> toJson() => _$RaygunFlutterVersionToJson(this);
 
-  factory RaygunFlutterVersion.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunFlutterVersion.fromJson(Map<String, dynamic> json) =>
       _$RaygunFlutterVersionFromJson(json);
 }

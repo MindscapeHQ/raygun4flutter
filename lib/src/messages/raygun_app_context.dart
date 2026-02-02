@@ -10,8 +10,6 @@ class RaygunAppContext {
 
   Map<String, dynamic> toJson() => _$RaygunAppContextToJson(this);
 
-  factory RaygunAppContext.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory RaygunAppContext.fromJson(Map<String, dynamic> json) =>
       _$RaygunAppContextFromJson(json);
 }

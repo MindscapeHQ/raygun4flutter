@@ -27,9 +27,7 @@ class NetworkInfo {
     }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
-    return [
-      if (ip4 != null) ip4,
-    ];
+    return [if (ip4 != null) ip4];
   }
 
   static Future<String> getConnectivityState() async {
@@ -39,9 +37,7 @@ class NetworkInfo {
 
   Map<String, dynamic> toJson() => _$NetworkInfoToJson(this);
 
-  factory NetworkInfo.fromJson(
-    Map<String, dynamic> json,
-  ) =>
+  factory NetworkInfo.fromJson(Map<String, dynamic> json) =>
       _$NetworkInfoFromJson(json);
 }
 
@@ -54,7 +50,7 @@ extension _ConnectivityResult on ConnectivityResult {
       ConnectivityResult.none => 'Not Connected',
       ConnectivityResult.bluetooth => 'Bluetooth',
       ConnectivityResult.vpn => 'VPN',
-      ConnectivityResult.other => 'Other'
+      ConnectivityResult.other => 'Other',
     };
   }
 }

@@ -25,10 +25,7 @@ class Raygun {
   ///
   /// [version] is optional, if not provided it will be obtained from your
   /// pubspec.yaml.
-  static Future<void> init({
-    required String apiKey,
-    String? version,
-  }) async {
+  static Future<void> init({required String apiKey, String? version}) async {
     Settings.apiKey = apiKey;
     setVersion(version);
     // Send stored crash reports
@@ -50,9 +47,7 @@ class Raygun {
   ///
   /// [version] The version of your application, format x.x.x.x, where x is a
   /// positive integer.
-  static Future<void> setVersion(
-    String? version,
-  ) async {
+  static Future<void> setVersion(String? version) async {
     if (version != null) {
       Settings.version = version;
     } else {
