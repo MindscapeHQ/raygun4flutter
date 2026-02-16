@@ -60,8 +60,8 @@ See `RELEASING.md` for the full release process. The version appears in **two pl
 
 ### CI
 
-- PR workflow validates the PR title follows Conventional Commits.
-- No automated test runner in CI currently — run `flutter test` locally before submitting.
+- PR workflow (`pr.yml`) validates the PR title follows Conventional Commits.
+- Main workflow (`main.yml`) runs on PRs to `master`/`develop` and on push: `dart format --set-exit-if-changed .`, `flutter analyze`, and `flutter test`. It also builds the example app for Android, iOS, macOS, Linux, and Web.
 
 ## Common tasks
 
