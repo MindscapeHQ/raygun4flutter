@@ -126,6 +126,40 @@ void main() {
     expect(Settings.breadcrumbs, isEmpty);
   });
 
+  test('Breadcrumb level is serialised as string', () async {
+    Raygun.recordBreadcrumbObject(
+      RaygunBreadcrumbMessage(
+        message: 'debug msg',
+        level: RaygunBreadcrumbLevel.debug,
+      ),
+    );
+    Raygun.recordBreadcrumbObject(
+      RaygunBreadcrumbMessage(
+        message: 'info msg',
+        level: RaygunBreadcrumbLevel.info,
+      ),
+    );
+    Raygun.recordBreadcrumbObject(
+      RaygunBreadcrumbMessage(
+        message: 'warning msg',
+        level: RaygunBreadcrumbLevel.warning,
+      ),
+    );
+    Raygun.recordBreadcrumbObject(
+      RaygunBreadcrumbMessage(
+        message: 'error msg',
+        level: RaygunBreadcrumbLevel.error,
+      ),
+    );
+    await Raygun.sendException(error: Exception('MESSAGE'));
+    final breadcrumbs = capturedBody['details']['breadcrumbs'] as List;
+    // recordBreadcrumbObject inserts at index 0, so order is reversed
+    expect(breadcrumbs[3]['level'], 'debug');
+    expect(breadcrumbs[2]['level'], 'info');
+    expect(breadcrumbs[1]['level'], 'warning');
+    expect(breadcrumbs[0]['level'], 'error');
+  });
+
   test('UserId with ID', () async {
     Raygun.setUserId('ID');
     final raygunUserInfo = RaygunUserInfo(identifier: 'ID');
