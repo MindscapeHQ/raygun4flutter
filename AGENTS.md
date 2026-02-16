@@ -57,6 +57,7 @@ The version appears in **two places** that must be kept in sync:
 
 - Branch off `develop` (not `master`).
 - PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (enforced by CI).
+- PR descriptions **must** follow the template in `pull_request_template.md`. Read it before creating a PR and fill in all sections.
 - Release branches are named `release/x.y.z`.
 - PRs merge into `develop`; `develop` is periodically merged to `master`.
 
