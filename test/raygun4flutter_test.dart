@@ -133,11 +133,7 @@ void main() {
         level: RaygunBreadcrumbLevel.debug,
       ),
     );
-    Raygun.recordBreadcrumbObject(
-      RaygunBreadcrumbMessage(
-        message: 'info msg',
-      ),
-    );
+    Raygun.recordBreadcrumbObject(RaygunBreadcrumbMessage(message: 'info msg'));
     Raygun.recordBreadcrumbObject(
       RaygunBreadcrumbMessage(
         message: 'warning msg',
