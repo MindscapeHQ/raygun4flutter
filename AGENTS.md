@@ -48,10 +48,7 @@ All message models use **`json_annotation`** + **`json_serializable`** with code
 
 ### Versioning
 
-The version appears in **two places** that must be kept in sync:
-
-1. `pubspec.yaml` → `version:`
-2. `lib/src/services/settings.dart` → `Settings.kVersion`
+See `RELEASING.md` for the full release process. The version appears in **two places** that must be kept in sync — see that file for details.
 
 ### Branching & PRs
 
