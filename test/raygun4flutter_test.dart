@@ -136,7 +136,6 @@ void main() {
     Raygun.recordBreadcrumbObject(
       RaygunBreadcrumbMessage(
         message: 'info msg',
-        level: RaygunBreadcrumbLevel.info,
       ),
     );
     Raygun.recordBreadcrumbObject(
