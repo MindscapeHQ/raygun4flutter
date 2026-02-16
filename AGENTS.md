@@ -42,7 +42,7 @@ All message models use **`json_annotation`** + **`json_serializable`** with code
   ```
   dart run build_runner build --delete-conflicting-outputs
   ```
-- Enum values sent to the API **must be strings**, not integers. Use `@JsonValue('stringValue')` on enum members, not numeric indices.
+- Enum values sent to the API **must be strings**, not integers. Use `@JsonEnum` to annotate the enum class.
 - The `.g.dart` files **must** be committed — they are not gitignored.
 - Verify serialisation matches the [Raygun API spec](https://raygun.com/documentation/product-guides/crash-reporting/api/) and the Raygun4JS reference implementation.
 
