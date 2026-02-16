@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.1
+
+- fix: serialise breadcrumb level as string instead of integer (#290) (2026-02-17)
+
 ## 3.5.0
 
 - chore: bump minimum Dart SDK to 3.9.0 (required by json_annotation 4.10.0)
