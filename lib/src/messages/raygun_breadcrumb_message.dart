@@ -42,13 +42,5 @@ class RaygunBreadcrumbMessage {
       _$RaygunBreadcrumbMessageFromJson(json);
 }
 
-enum RaygunBreadcrumbLevel {
-  @JsonValue(0)
-  debug,
-  @JsonValue(1)
-  info,
-  @JsonValue(2)
-  warning,
-  @JsonValue(3)
-  error,
-}
+@JsonEnum()
+enum RaygunBreadcrumbLevel { debug, info, warning, error }

@@ -35,8 +35,8 @@ Map<String, dynamic> _$RaygunBreadcrumbMessageToJson(
 };
 
 const _$RaygunBreadcrumbLevelEnumMap = {
-  RaygunBreadcrumbLevel.debug: 0,
-  RaygunBreadcrumbLevel.info: 1,
-  RaygunBreadcrumbLevel.warning: 2,
-  RaygunBreadcrumbLevel.error: 3,
+  RaygunBreadcrumbLevel.debug: 'debug',
+  RaygunBreadcrumbLevel.info: 'info',
+  RaygunBreadcrumbLevel.warning: 'warning',
+  RaygunBreadcrumbLevel.error: 'error',
 };
