@@ -43,12 +43,12 @@ class RaygunBreadcrumbMessage {
 }
 
 enum RaygunBreadcrumbLevel {
-  @JsonValue(0)
+  @JsonValue('debug')
   debug,
-  @JsonValue(1)
+  @JsonValue('info')
   info,
-  @JsonValue(2)
+  @JsonValue('warning')
   warning,
-  @JsonValue(3)
+  @JsonValue('error')
   error,
 }
