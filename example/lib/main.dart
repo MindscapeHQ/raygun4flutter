@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     // example: init with app version
-    Raygun.init(apiKey: '', version: '1.2.3');
+    Raygun.init(apiKey: '', version: '1.2.4');
 
     // example: set custom tags to all error messages
     Raygun.setTags(['tag1', 'tag2']);
