@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.5.2
+
+- fix: example app fixes for release build testing (#292) (2026-02-17)
+- chore(deps): bump json_serializable from 6.12.0 to 6.13.0 (#296) (2026-03-02)
+- chore(deps): bump uuid from 4.5.2 to 4.5.3 (#297) (2026-03-02)
+- chore(deps): bump build_runner from 2.10.5 to 2.11.1 (#294) (2026-03-02)
+- chore: reset example app version to 0.0.0+1 (#298) (2026-03-02)
+
 ## 3.5.1
 
 - fix: serialise breadcrumb level as string instead of integer (#290) (2026-02-17)
