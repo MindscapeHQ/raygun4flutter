@@ -50,6 +50,7 @@ extension _ConnectivityResult on ConnectivityResult {
       ConnectivityResult.none => 'Not Connected',
       ConnectivityResult.bluetooth => 'Bluetooth',
       ConnectivityResult.vpn => 'VPN',
+      ConnectivityResult.satellite => 'Satellite',
       ConnectivityResult.other => 'Other',
     };
   }
