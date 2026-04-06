@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.5.3
+
+- fix: bump connectivity_plus to 7.1.0 and handle satellite connectivity (#306) (2026-04-04)
+- chore(deps): bump device_info_plus from 12.3.0 to 12.4.0 (#305) (2026-04-02)
+- chore(deps): bump build_runner from 2.11.1 to 2.13.1 (#303) (2026-04-02)
+- chore(deps): bump shared_preferences from 2.5.4 to 2.5.5 (#302) (2026-04-02)
+- chore(deps): bump json_serializable from 6.13.0 to 6.13.1 (#301) (2026-04-02)
+- chore(deps): bump marocchino/sticky-pull-request-comment from 2 to 3 (#300) (2026-04-02)
+
 ## 3.5.2
 
 - fix: example app fixes for release build testing (#292) (2026-02-17)
