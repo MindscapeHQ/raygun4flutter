@@ -5,3 +5,7 @@ targets:
         generate_for:
           include:
             - lib/**
+        options:
+          # Emit explicit `.toJson()` calls for nested @JsonSerializable fields
+          # so `toJson()` returns a fully-serialised Map. See issue #313.
+          explicit_to_json: true
