@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.5.4
+
+- fix: emit nested toJson() for json_serializable models (#313) (#315) (2026-05-04)
+- test: expand unit test coverage for public API and serialisation (#314) (2026-05-04)
+- chore(deps): bump json_serializable from 6.13.1 to 6.13.2 (#309) (2026-05-04)
+- chore(deps): bump build_runner from 2.13.1 to 2.15.0 (#310) (2026-05-04)
+- chore(deps): bump connectivity_plus from 7.1.0 to 7.1.1 (#311) (2026-05-04)
+- chore(deps): bump package_info_plus from 9.0.0 to 9.0.1 (#312) (2026-05-04)
+
 ## 3.5.3
 
 - fix: bump connectivity_plus to 7.1.0 and handle satellite connectivity (#306) (2026-04-04)
