@@ -56,5 +56,5 @@ Map<String, dynamic> _$RaygunEnvironmentMessageToJson(
   'board': instance.board,
   'deviceCode': instance.deviceCode,
   'platform': instance.platform,
-  'flutterVersion': instance.flutterVersion,
+  'flutterVersion': instance.flutterVersion.toJson(),
 };

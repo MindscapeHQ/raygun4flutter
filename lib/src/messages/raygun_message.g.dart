@@ -16,5 +16,5 @@ RaygunMessage _$RaygunMessageFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RaygunMessageToJson(RaygunMessage instance) =>
     <String, dynamic>{
       'occurredOn': instance.occurredOn,
-      'details': instance.details,
+      'details': instance.details.toJson(),
     };

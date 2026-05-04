@@ -13,6 +13,7 @@ import 'package:raygun4flutter/src/messages/raygun_error_message.dart';
 import 'package:raygun4flutter/src/messages/raygun_message.dart';
 import 'package:raygun4flutter/src/services/crash_reporting_device.dart';
 import 'package:raygun4flutter/src/services/settings.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -486,14 +487,38 @@ void main() {
     middle.innerError = inner;
     outer.innerError = middle;
 
-    // Round-trip through JSON encoding so nested toJson() is invoked
-    // (the generated serialiser stores the inner object as-is).
-    final json = jsonDecode(jsonEncode(outer.toJson())) as Map<String, dynamic>;
+    final json = outer.toJson();
     expect(json['className'], 'Outer');
     expect(json['innerError']['className'], 'Middle');
     expect(json['innerError']['innerError']['className'], 'Inner');
     expect(json['innerError']['innerError']['message'], 'inner message');
     expect(json['innerError']['innerError']['innerError'], isNull);
+  });
+
+  test('toJson returns a Map for nested fields (regression for #313)', () {
+    // Direct guard for the bug fixed by enabling explicit_to_json.
+    // RaygunErrorMessage's nested innerError and stackTrace entries must
+    // be Maps, not the underlying RaygunErrorMessage /
+    // RaygunErrorStackTraceLineMessage instances.
+    final outer = RaygunErrorMessage('Outer', 'outer message');
+    outer.innerError = RaygunErrorMessage('Inner', 'inner message');
+    outer.setStackTrace(Trace.current());
+
+    final json = outer.toJson();
+    expect(json['innerError'], isA<Map<String, dynamic>>());
+    expect(json['stackTrace'], isA<List>());
+    expect((json['stackTrace'] as List).first, isA<Map<String, dynamic>>());
+
+    // RaygunMessage / RaygunMessageDetails should follow suit so the
+    // entire payload is a fully-serialised Map tree.
+    final message = RaygunMessage();
+    message.details.error = outer;
+    final messageJson = message.toJson();
+    expect(messageJson['details'], isA<Map<String, dynamic>>());
+    expect(
+      (messageJson['details'] as Map<String, dynamic>)['error'],
+      isA<Map<String, dynamic>>(),
+    );
   });
 
   test('onBeforeSend can mutate tags before send', () async {

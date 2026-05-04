@@ -25,6 +25,6 @@ Map<String, dynamic> _$RaygunErrorMessageToJson(RaygunErrorMessage instance) =>
     <String, dynamic>{
       'message': instance.message,
       'className': instance.className,
-      'innerError': instance.innerError,
-      'stackTrace': instance.stackTrace,
+      'innerError': instance.innerError?.toJson(),
+      'stackTrace': instance.stackTrace.map((e) => e.toJson()).toList(),
     };
