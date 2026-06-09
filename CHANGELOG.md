@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.6.0
+
+- chore(deps): bump package_info_plus, network_info_plus and device_info_plus (#317) (2026-06-03)
+- chore(deps): bump json_annotation from 4.11.0 to 4.12.0 (#318) (2026-06-03)
+- chore(deps): bump json_serializable from 6.13.2 to 6.14.0 (#319) (2026-06-03)
+- chore(deps): refresh dependency lockfiles (#320) (2026-06-09)
+- chore(ci): harden build and dependency checks (#321) (2026-06-09)
+
 ## 3.5.4
 
 - fix: emit nested toJson() for json_serializable models (#313) (#315) (2026-05-04)
