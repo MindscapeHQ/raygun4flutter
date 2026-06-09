@@ -27,6 +27,33 @@ To check the code, run `flutter analyze`.
 
 To format the code, run `dart format .` (note the `.` at the end).
 
+### Dependency and generated file policy
+
+The root package and example app both commit their `pubspec.lock` files. CI
+installs dependencies with `flutter pub get --enforce-lockfile`, so update the
+matching lockfile whenever changing a `pubspec.yaml` or intentionally refreshing
+dependencies.
+
+Dependency updates should usually be isolated to dependency-specific PRs, either
+from Dependabot or from running `flutter pub upgrade` deliberately. Review the
+lockfile diff alongside any manifest change so transitive dependency changes are
+visible.
+
+Message models under `lib/src/messages/` use `json_serializable` and commit their
+generated `.g.dart` files. After changing a model or JSON annotation, regenerate
+the files with:
+
+```
+dart run build_runner build
+```
+
+Before release or when changing package metadata, validate the package contents
+with:
+
+```
+flutter pub publish --dry-run
+```
+
 ### Running from Visual Code
 
 Run the example project directly from VSCode by opening the `example/lib/main.dart`
@@ -70,4 +97,3 @@ Wait for a review by the Raygun team.
 The team will leave you feedback and might ask you to do changes in your code.
 
 Once the PR is approved, the team will merge it.
-
