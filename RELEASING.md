@@ -90,19 +90,21 @@ GitHub will create a tag for you, you don't need to create the tag manually.
 
 You can also generate the release notes automatically.
 
-## Merge to `master`
+## `master` branch promotion
 
-Once the release process is completed, it would be good to merge `develop` into `master`.
+The normal release process ends after publishing the package, merging the
+release PR into `develop`, and creating the GitHub Release.
 
-### Create a merge PR
+Do not routinely merge `develop` into `master` as part of a release. Only open a
+`develop` to `master` PR when the team explicitly decides that `master` should be
+updated for a specific reason.
 
-Create a PR manually where `develop` merges into `master`
-or by following this link: https://github.com/MindscapeHQ/raygun4flutter/compare/develop...master
+If a `master` promotion is explicitly requested, create a PR manually where
+`develop` merges into `master` or by following this link:
+https://github.com/MindscapeHQ/raygun4flutter/compare/develop...master
 
 You can name the PR `chore: merge to master`.
 
 Then ask for approval by the Raygun team.
 
-### Merge, don't squash
-
-Do not squash this PR, instead, just merge. That will create a merge commit.
+Do not squash this PR. Use a merge commit.
