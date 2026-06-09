@@ -40,11 +40,17 @@ All message models use **`json_annotation`** + **`json_serializable`** with code
 - Model files live in `lib/src/messages/` and have a corresponding `.g.dart` file.
 - **Never hand-edit `.g.dart` files.** After changing any model or `@JsonValue`/`@JsonKey` annotation, regenerate with:
   ```
-  dart run build_runner build --delete-conflicting-outputs
+  dart run build_runner build
   ```
 - Enum values sent to the API **must be strings**, not integers. Use `@JsonEnum` to annotate the enum class.
 - The `.g.dart` files **must** be committed — they are not gitignored.
 - Verify serialisation matches the [Raygun API spec](https://raygun.com/documentation/product-guides/crash-reporting/api/) and the Raygun4JS reference implementation.
+
+### Dependency and package validation
+
+- The root package and example app both commit `pubspec.lock` files.
+- CI installs dependencies with `flutter pub get --enforce-lockfile`; dependency or version changes must include matching lockfile updates.
+- CI runs `flutter pub publish --dry-run` to validate package contents.
 
 ### Versioning
 
@@ -67,11 +73,11 @@ See `RELEASING.md` for the full release process. The version appears in **two pl
 
 | Task | Command |
 |---|---|
-| Get dependencies | `flutter pub get` |
+| Get dependencies | `flutter pub get --enforce-lockfile` |
 | Run tests | `flutter test` |
 | Analyse code | `flutter analyze` |
 | Format code | `dart format .` |
-| Regenerate `.g.dart` files | `dart run build_runner build --delete-conflicting-outputs` |
+| Regenerate `.g.dart` files | `dart run build_runner build` |
 | Publish dry-run | `flutter pub publish --dry-run` |
 
 ## Testing approach

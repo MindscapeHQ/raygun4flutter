@@ -26,9 +26,12 @@ where `x.y.z` is the Major, Minor and Patch release numbers.
 Update the `version` in the `pubspec.yaml` file.
 As well, update the `kVersion` in `lib/src/services/settings.dart`.
 
-### Run pub get
+### Update lockfile
 
-Run `flutter pub get` to update the version in the `pubspec.lock`.
+Run `flutter pub get` to update the version in `pubspec.lock`, then keep the
+updated lockfile in the release PR. CI installs dependencies with
+`flutter pub get --enforce-lockfile`, so the release PR must include any
+lockfile changes caused by the version update.
 
 ### Update CHANGELOG.md
 
@@ -42,7 +45,8 @@ git log --pretty=format:"- %s (%as)"
 
 ### Run publish dry-run
 
-Run a publish dry-run to ensure no errors appear:
+Run a publish dry-run from a clean git state to validate the package contents
+before review and before publishing:
 
 ```
 flutter pub publish --dry-run
@@ -102,4 +106,3 @@ Then ask for approval by the Raygun team.
 ### Merge, don't squash
 
 Do not squash this PR, instead, just merge. That will create a merge commit.
-

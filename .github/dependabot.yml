@@ -9,6 +9,7 @@ updates:
 # Github Actions dependencies updates config
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: "monthly"
     commit-message:
@@ -18,6 +19,7 @@ updates:
 # raygun4flutter
   - package-ecosystem: "pub"
     directory: "/"
+    target-branch: "develop"
     schedule:
       interval: "monthly"
     commit-message:
@@ -27,6 +29,7 @@ updates:
 # example app
   - package-ecosystem: "pub"
     directory: "/example"
+    target-branch: "develop"
     schedule:
       interval: "monthly"
     commit-message:
@@ -36,4 +39,3 @@ updates:
       # Package in example is accessed by path, 
       # do not update in pubspec.
       - dependency-name: "raygun4flutter"
-
