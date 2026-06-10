@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.6.1
+
+- fix: restore pub.dev downgrade compatibility (#325) (2026-06-11)
+
 ## 3.6.0
 
 - chore(deps): bump package_info_plus, network_info_plus and device_info_plus (#317) (2026-06-03)
