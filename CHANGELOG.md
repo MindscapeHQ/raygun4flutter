@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.6.2
+
+- chore(deps): bump actions/checkout from 6 to 7 (#327) (2026-07-20)
+- chore(deps): refresh dependency lockfiles (#333) (2026-07-20)
+
 ## 3.6.1
 
 - fix: restore pub.dev downgrade compatibility (#325) (2026-06-11)
