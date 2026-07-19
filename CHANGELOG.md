@@ -3,7 +3,11 @@
 ## 3.6.2
 
 - chore(deps): bump actions/checkout from 6 to 7 (#327) (2026-07-20)
-- chore(deps): refresh dependency lockfiles (#333) (2026-07-20)
+- chore(deps): bump connectivity_plus from 7.1.1 to 7.3.0 (#333) (2026-07-20)
+- chore(deps): bump device_info_plus from 13.1.0 to 13.2.0 (#333) (2026-07-20)
+- chore(deps): bump intl from 0.20.2 to 0.20.3 (#333) (2026-07-20)
+- chore(deps): bump package_info_plus from 10.1.0 to 10.2.1 (#333) (2026-07-20)
+- chore(deps): bump path_provider from 2.1.5 to 2.1.6 (#333) (2026-07-20)
 
 ## 3.6.1
 
