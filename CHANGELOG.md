@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.6.3
+
+- chore(deps): bump connectivity_plus from 7.3.0 to 7.3.1 (#335) (2026-08-02)
+- chore(deps): bump uuid from 4.5.3 to 4.6.0 (#336) (2026-08-02)
+- chore(deps): bump network_info_plus from 8.1.0 to 8.2.1 (#337) (2026-08-02)
+  - Note: network_info_plus 8.2.x raises Apple platform minimums in SPM manifests.
+
 ## 3.6.2
 
 - chore(deps): bump actions/checkout from 6 to 7 (#327) (2026-07-20)
