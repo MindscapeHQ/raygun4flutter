@@ -50,6 +50,30 @@ jobs:
       - name: Validate package publishing
         run: flutter pub publish --dry-run
 
+  minimum_sdk:
+    name: Minimum supported SDK
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.35.0"
+
+      - name: Install dependencies compatible with the minimum SDK
+        run: |
+          rm pubspec.lock example/pubspec.lock
+          flutter pub get
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
   # Build Android example
   android_example_build:
     runs-on: macos-26
