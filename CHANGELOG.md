@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.7.0
+
+- chore(deps): consolidate September dependency and toolchain updates (#342) (2026-09-02)
+- ci: raise the minimum supported Flutter version to 3.35.0 and verify it in CI (#343) (2026-09-02)
+
 ## 3.6.3
 
 - chore(deps): bump connectivity_plus from 7.3.0 to 7.3.1 (#335) (2026-08-02)
