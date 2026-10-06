@@ -27,7 +27,7 @@ class NetworkInfo {
     }
     final info = plus.NetworkInfo();
     final ip4 = await info.getWifiIP();
-    return [if (ip4 != null) ip4];
+    return [?ip4];
   }
 
   static Future<String> getConnectivityState() async {
