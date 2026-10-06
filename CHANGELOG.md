@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.7.1
+
+- chore(deps): bump build_runner from 2.16.0 to 2.16.1 (#348) (2026-10-06)
+- chore(deps): pin example lint for Dart 3.9 (#346) (2026-10-06)
+- chore(deps): bump lint from 2.8.0 to 2.14.0 (#347) (2026-10-06)
+
 ## 3.7.0
 
 - chore(deps): consolidate September dependency and toolchain updates (#342) (2026-09-02)
