@@ -13,7 +13,8 @@ The file `lib/raygun4flutter.dart` provides the main API entry point for Flutter
 
 ### Requirements
 
-- Dart SDK 3.3.0+
+- Dart SDK 3.9.0+
+- Flutter SDK 3.35.0+
 
 As of release 1.0.0 we've started to improve support for Flutter Desktop and Web. The package seems to be working fine with these targets but we'd appreciate any additional feedback on Github.
 
@@ -425,4 +426,3 @@ For a working sample app across multiple platforms, check the Flutter project in
 ## Known issues
 
 1. `setMaxReportsStoredOnDevice` is not exposed and is currently set to 64.
-

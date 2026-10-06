@@ -25,6 +25,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # Newer lint releases require a newer Dart SDK than Flutter 3.35 provides.
   lint: 2.10.0
 
 # For information on the generic Dart part of this file, see the
