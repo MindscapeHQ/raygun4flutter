@@ -88,7 +88,7 @@ class CrashReportingPostService extends CrashReportingPostServiceBase {
   static Future<Iterable<FileSystemEntity>> getCachedFiles() async {
     final cacheDir = Settings.cacheDirectory ?? await getTemporaryDirectory();
     RaygunLogger.d('Cache dir: $cacheDir');
-    return cacheDir
+    return await cacheDir
         .list() // returns a Stream<FileSystemEntity>
         .where((element) => element.path.endsWith('.raygun4'))
         .toList(); // convert to Future<List<FileSystemEntity>>
