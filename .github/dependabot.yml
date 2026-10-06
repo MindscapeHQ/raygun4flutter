@@ -39,3 +39,6 @@ updates:
       # Package in example is accessed by path, 
       # do not update in pubspec.
       - dependency-name: "raygun4flutter"
+      # lint 2.11.0+ requires a newer Dart SDK than the package minimum.
+      - dependency-name: "lint"
+        versions: [">=2.11.0"]
