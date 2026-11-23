@@ -13,28 +13,94 @@ permissions:
   contents: read
 
 jobs:
-  scan-pr:
-    if: github.event_name == 'pull_request'
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       actions: read
       contents: read
       security-events: write
-    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@32d3cd482bdadfb38b186c0ad1b031902d55d932 # v2.7.1
-    with:
-      # Read-only fork and Dependabot tokens cannot upload SARIF. Scanning still runs.
-      upload-sarif: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' }}
-      scan-args: |-
-        --lockfile=pubspec.lock
-        --lockfile=example/pubspec.lock
+    env:
+      # OSV-Scanner Action v2.7.1, linux/amd64 release image.
+      # Update this digest explicitly when upgrading OSV; Dependabot does not manage env values.
+      OSV_IMAGE: ghcr.io/google/osv-scanner-action@sha256:46564b2ffec78c2c668afbbb09ff1b6ed4605caeb27d02df9894809cb5b02653
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-  scan-full:
-    if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@32d3cd482bdadfb38b186c0ad1b031902d55d932 # v2.7.1
-    with:
-      scan-args: |-
-        --lockfile=pubspec.lock
-        --lockfile=example/pubspec.lock
+      - name: Scan both lockfiles
+        id: scan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/osv-results"
+          scan() {
+            local status=0
+            # Call the scanner directly, bypassing the image's exit-code wrapper.
+            docker run --rm \
+              -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE:ro" \
+              -v "$RUNNER_TEMP/osv-results:$RUNNER_TEMP/osv-results" \
+              -w "$GITHUB_WORKSPACE" --entrypoint /root/osv-scanner "$OSV_IMAGE" \
+              scan source --format=json --output-file="$RUNNER_TEMP/osv-results/$1.json" \
+              --lockfile=pubspec.lock --lockfile=example/pubspec.lock || status=$?
+            case "$status" in
+              0|1) ;; # Clean or findings: the reporter decides the vulnerability gate.
+              *) echo "::error::OSV $1 scan failed operationally (exit $status)"; exit "$status" ;;
+            esac
+            # Never allow the reporter to treat missing or invalid results as clean.
+            test -s "$RUNNER_TEMP/osv-results/$1.json"
+            jq -e 'type == "object" and (.results | type == "array")' "$RUNNER_TEMP/osv-results/$1.json" > /dev/null
+          }
+          if [ "$EVENT_NAME" = pull_request ]; then
+            git checkout --detach "$BASE_SHA"
+            scan old
+            git checkout --detach "$GITHUB_SHA"
+          fi
+          scan new
+
+      - name: Report vulnerabilities
+        id: report
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          args=(--new="$RUNNER_TEMP/osv-results/new.json"
+                --output="$RUNNER_TEMP/osv-results/results.sarif"
+                --fail-on-vuln=true --gh-annotations=true)
+          if [ "$EVENT_NAME" = pull_request ]; then
+            args+=(--old="$RUNNER_TEMP/osv-results/old.json")
+          fi
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE:ro" \
+            -v "$RUNNER_TEMP/osv-results:$RUNNER_TEMP/osv-results" \
+            -w "$GITHUB_WORKSPACE" --entrypoint /root/osv-reporter "$OSV_IMAGE" "${args[@]}"
+
+      - name: Upload scan results
+        if: ${{ !cancelled() && (steps.report.outcome == 'success' || steps.report.outcome == 'failure') }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: osv-results
+          path: ${{ runner.temp }}/osv-results
+          if-no-files-found: error
+          retention-days: 5
+
+      - name: Upload to code scanning
+        # Restricted events still scan and gate findings, but cannot upload SARIF.
+        # Squash-merged Dependabot commits can also restrict push-event tokens.
+        if: >-
+          !cancelled() && (steps.report.outcome == 'success' || steps.report.outcome == 'failure') &&
+          github.actor != 'dependabot[bot]' &&
+          (github.event_name != 'pull_request' ||
+           (github.event.pull_request.head.repo.full_name == github.repository &&
+            github.event.pull_request.user.login != 'dependabot[bot]')) &&
+          (github.event_name != 'push' ||
+           (github.event.head_commit.author.username != 'dependabot[bot]' &&
+            github.event.head_commit.author.name != 'dependabot[bot]'))
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          sarif_file: ${{ runner.temp }}/osv-results/results.sarif
