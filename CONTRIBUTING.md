@@ -3,7 +3,11 @@
 ## Project and library organisation
 
 Building the project requires the [Flutter SDK](https://docs.flutter.dev/get-started/install).
-The minimum version requirement is specified in the `pubspec.yaml`.
+The minimum supported SDK versions for package consumers are specified in `pubspec.yaml`.
+For contributor builds using the committed lockfiles, use the Flutter version
+pinned in `.github/workflows/main.yml` (currently 3.47.2), rather than the package
+minimum of Flutter 3.35.0. The lockfiles require Flutter 3.47 or newer and Dart 3.13
+or newer; older SDKs cannot run `flutter pub get --enforce-lockfile` successfully.
 
 The `raygun4flutter` package is at the repository root.
 

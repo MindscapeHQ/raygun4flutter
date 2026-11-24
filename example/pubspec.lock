@@ -438,7 +438,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.7.1"
+    version: "3.7.2"
   record_use:
     dependency: transitive
     description:

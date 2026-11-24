@@ -28,7 +28,7 @@ example/                       # Example Flutter app
 
 ### Dart & Flutter
 
-- **SDK constraint**: `>=3.9.0 <4.0.0`, Flutter `>=3.30.0`
+- **SDK constraint**: `>=3.9.0 <4.0.0`, Flutter `>=3.35.0`. For locked contributor builds, use the Flutter version pinned in `.github/workflows/main.yml` (currently 3.47.2); see `CONTRIBUTING.md`.
 - **Linting**: Uses `package:lint/analysis_options_package.yaml`. Run `flutter analyze`.
 - **Formatting**: Run `dart format .`
 - **Tests**: Run `flutter test`. Tests use `flutter_test` and `package:http/testing.dart` MockClient to capture sent JSON payloads.
