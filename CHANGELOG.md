@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.7.2
+
+- chore(deps): refresh Flutter dependency lockfiles (#355) (2026-11-24)
+- ci: harden dependency security workflows (#356) (2026-11-24)
+- docs: distinguish the supported minimum SDK from the SDK required for locked contributor builds.
+
 ## 3.7.1
 
 - chore(deps): bump build_runner from 2.16.0 to 2.16.1 (#348) (2026-10-06)
